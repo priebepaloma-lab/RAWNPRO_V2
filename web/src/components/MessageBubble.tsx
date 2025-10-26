@@ -43,6 +43,10 @@ export default function MessageBubble({ role, text }: Props) {
     }
   }
 
+  const isLong = (displayText ?? "").length > 800;
+  const [expanded, setExpanded] = React.useState(false);
+  const shownText = isLong && !expanded ? displayText.slice(0, 800) + "…" : displayText;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -65,7 +69,19 @@ export default function MessageBubble({ role, text }: Props) {
             {profile.name}
           </span>
         ) : null}
-        {displayText}
+        <div className="whitespace-pre-wrap leading-relaxed">
+          {shownText}
+        </div>
+        {isLong && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-1 text-xs font-semibold text-emerald-700 hover:underline focus:outline-none"
+            aria-expanded={expanded}
+          >
+            {expanded ? "mostrar menos" : "mostrar mais"}
+          </button>
+        )}
       </div>
     </motion.div>
   );
