@@ -5,6 +5,7 @@
   "scripts": {
     "build": "cd web && npm run build",
     "dev": "cd web && npm run dev",
-    "start": "cd web && npm start"
+    "start": "cd web && npm start",
+    "vercel-build": "cd web && npm run build"
   }
 }

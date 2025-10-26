@@ -15,6 +15,7 @@ Interface de chat conversacional focada em simplicidade, organização e privaci
 Acesse o app em: [https://rawnpro.vercel.app](https://rawnpro.vercel.app)
 
 ## Estrutura do projeto
+
 - `/web`: Front-end (Next.js + TypeScript)
 - `/api`: Backend (Node.js)
 - `/infra`: CI/CD e deploy
