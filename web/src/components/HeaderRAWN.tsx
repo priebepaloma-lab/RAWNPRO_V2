@@ -3,8 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import { MoreVertical } from "lucide-react";
+import MenuFloating from "./MenuFloating";
 
 export default function HeaderRAWN() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
     <header
       className="sticky top-0 z-20 h-14 w-full border-b border-rawn-border-panel bg-rawn-bg-base/95 backdrop-blur-panel"
@@ -33,12 +36,16 @@ export default function HeaderRAWN() {
           </div>
         </div>
         <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-rawn-border-neon/30 text-rawn-accent-neon transition-all hover:bg-rawn-accent-neon/10 hover:shadow-neon-focus"
           aria-label="Menu de opções"
+          aria-expanded={isMenuOpen}
         >
           <MoreVertical size={20} />
         </button>
       </div>
+
+      <MenuFloating isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </header>
   );
 }

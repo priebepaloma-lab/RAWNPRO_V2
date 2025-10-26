@@ -60,6 +60,14 @@ export default function MessageBubble({
     isLong && !expanded ? displayText.slice(0, 800) + "…" : displayText;
   const canActions = role === "system";
 
+  // Detecta se é conteúdo instrutivo (tem estrutura, listas, ou é longo)
+  const isInstructionalContent =
+    !isUser &&
+    (displayText.length > 200 ||
+      /(\n-|\n\d+\.|#{1,4}\s|Objetivo:|Estrutura:|Diretrizes:|Fontes:)/i.test(
+        displayText
+      ));
+
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(displayText);
@@ -169,6 +177,13 @@ export default function MessageBubble({
           >
             {expanded ? "mostrar menos" : "mostrar mais"}
           </button>
+        )}
+        {isInstructionalContent && (
+          <div className="mt-3 border-t border-neutral-200 pt-2 text-[11px] italic text-neutral-500">
+            Este conteúdo tem caráter educativo e não substitui acompanhamento
+            profissional. Se sentir dor, desconforto ou agravamento de sintomas,
+            procure um especialista.
+          </div>
         )}
         {canActions && (
           <div className="mt-2 flex items-center gap-2 text-xs text-neutral-700">
