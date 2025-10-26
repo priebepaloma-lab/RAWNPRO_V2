@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import LayoutChat from "@/components/LayoutChat";
+import { useFirstRunGate } from "@/hooks/useFirstRunGate";
 
 export default function Page() {
+  useFirstRunGate();
+
   return (
     <LayoutChat
       initialMessages={[
