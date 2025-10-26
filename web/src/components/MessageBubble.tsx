@@ -82,7 +82,7 @@ export default function MessageBubble({
           "max-w-[78%] rounded-2xl px-4 py-2 text-sm shadow-sm",
           isUser
             ? "bg-[#00FF9C] text-black rounded-br-md"
-            : "bg-[#EAF8F5] text-black rounded-bl-md",
+            : "bg-[#EAF8F5] text-black rounded-bl-md prose prose-sm prose-zinc max-w-none",
         ].join(" ")}
       >
         {isUser && profile?.name ? (

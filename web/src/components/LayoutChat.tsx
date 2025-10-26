@@ -130,14 +130,17 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         ...prev,
         { id: sysId, role: "system", text: content },
       ]);
-    } catch (e) {
+    } catch (e: any) {
       const errId = Math.random().toString(36).slice(2);
+      const errorMsg = e?.message
+        ? `Desculpe, ocorreu um erro: ${e.message}`
+        : "Desculpe, ocorreu um erro ao obter a resposta.";
       setMessages((prev) => [
         ...prev,
         {
           id: errId,
           role: "system",
-          text: "Desculpe, ocorreu um erro ao obter a resposta.",
+          text: errorMsg,
         },
       ]);
     } finally {
