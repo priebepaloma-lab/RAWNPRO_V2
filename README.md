@@ -41,6 +41,8 @@ RAWNPRO_V2/
 
 Acesse: **http://localhost:3000**
 
+> Nota: Estamos usando Next.js 15.1.x no diretório `web/` para evitar um bug conhecido do Turbopack no 16.x durante o desenvolvimento local. Se quiser atualizar para o Next 16, recomendamos testar primeiro em um branch separado.
+
 ## 📦 Deploy na Vercel
 
 ### Passo 1: Importar Projeto
@@ -64,13 +66,15 @@ Adicione no painel da Vercel:
 OPENAI_API_KEY=sk-proj-...
 ```
 
+> Importante: Atualize a `OPENAI_API_KEY` no painel da Vercel sempre que a chave for rotacionada localmente.
+
 ### Passo 4: Deploy
 
 Clique em **Deploy** e aguarde o build finalizar.
 
 ## 🛠️ Stack Tecnológica
 
-- **Next.js 16** (App Router + Turbopack)
+- **Next.js 15.1.x** (App Router)
 - **React 19** + TypeScript
 - **Tailwind CSS v3**
 - **Framer Motion** (animações)
