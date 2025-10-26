@@ -7,6 +7,49 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        rawn: {
+          bg: {
+            base: "#0A0A0A",
+            "gradient-from": "#030303",
+            "gradient-to": "#101010",
+            surface: "rgba(255,255,255,0.04)",
+            user: "#111415",
+          },
+          text: {
+            primary: "#EAF8F5",
+            secondary: "#BFECE1",
+            muted: "#9ECFBE",
+          },
+          accent: {
+            neon: "#00FF9C",
+            lime: "#B2F542",
+          },
+          border: {
+            neon: "rgba(0,255,156,0.5)",
+            panel: "rgba(0,255,156,0.15)",
+          },
+        },
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
+      borderRadius: {
+        xs: "8px",
+        sm: "12px",
+        md: "14px",
+        lg: "18px",
+        xl: "24px",
+        pill: "999px",
+      },
+      boxShadow: {
+        "neon-soft": "0 0 20px rgba(0,255,156,0.10)",
+        "neon-glow": "0 0 12px rgba(0,255,156,0.50)",
+        "neon-focus": "0 0 8px rgba(0,255,156,0.30)",
+      },
+      backdropBlur: {
+        panel: "12px",
+      },
       typography: {
         DEFAULT: {
           css: {
@@ -61,11 +104,11 @@ module.exports = {
             "code::before": { content: '""' },
             "code::after": { content: '""' },
             a: {
-              color: "#059669",
+              color: "#00FF9C",
               textDecoration: "underline",
               fontWeight: "500",
               "&:hover": {
-                color: "#047857",
+                color: "#B2F542",
               },
             },
             blockquote: {

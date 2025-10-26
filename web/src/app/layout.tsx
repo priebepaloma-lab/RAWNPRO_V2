@@ -3,17 +3,17 @@ import "../styles/globals.css";
 import { ProfileProvider } from "./profile/ProfileContext";
 
 export const metadata = {
-  title: "RAWN PRO V2",
-  description: "RAWN PRO V2 — skeleton",
+  title: "RAWN PRO",
+  description: "Ciência em conversa. Clareza em ação.",
   metadataBase: new URL("http://localhost:3000"),
   icons: {
-    icon: "/icon.svg",
-    apple: "/apple-icon.svg",
+    icon: "/brand/Favicon rawn pro.png",
+    apple: "/brand/Favicon rawn pro.png",
   },
   openGraph: {
-    title: "RAWN PRO V2",
-    description: "RAWN PRO — interface e IA",
-    images: ["/opengraph-image.svg"],
+    title: "RAWN PRO",
+    description: "Inteligência de performance humana",
+    images: ["/brand/Tela Walcome rawn pro.png"],
     url: "https://rawn.pro",
     siteName: "RAWN PRO",
     locale: "pt_BR",
@@ -21,9 +21,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RAWN PRO V2",
-    description: "RAWN PRO — interface e IA",
-    images: ["/twitter-image.svg"],
+    title: "RAWN PRO",
+    description: "Inteligência de performance humana",
+    images: ["/brand/Tela Walcome rawn pro.png"],
   },
 };
 

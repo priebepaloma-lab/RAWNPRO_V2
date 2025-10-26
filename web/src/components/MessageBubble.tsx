@@ -27,7 +27,7 @@ export default function MessageBubble({
   if (role === "system" && text.toLowerCase().includes("apagado")) {
     return (
       <motion.div
-        className="text-center text-neutral-400 italic py-2"
+        className="text-center text-rawn-text-muted italic py-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
@@ -79,10 +79,10 @@ export default function MessageBubble({
     >
       <div
         className={[
-          "max-w-[78%] rounded-2xl px-4 py-2.5 text-sm shadow-sm",
+          "max-w-[78%] px-4 py-2.5 text-sm shadow-sm",
           isUser
-            ? "bg-[#00FF9C] text-black rounded-br-md"
-            : "bg-[#EAF8F5] text-black rounded-bl-md prose prose-zinc max-w-none [&>div]:!leading-relaxed",
+            ? "bg-[#00FF9C] text-black rounded-2xl rounded-br-sm"
+            : "bg-[#F5F5F5] text-black rounded-2xl rounded-bl-sm prose prose-zinc max-w-none [&>div]:!leading-relaxed",
         ].join(" ")}
       >
         {isUser && profile?.name ? (

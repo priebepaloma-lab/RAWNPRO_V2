@@ -149,7 +149,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0A0A0A] to-[#101010] text-zinc-100">
+    <div className="flex min-h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
       <HeaderRAWN />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-4">
         <motion.div
@@ -190,7 +190,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         </motion.div>
       </main>
       {isTyping && (
-        <div className="mx-auto w-full max-w-3xl px-4 py-2 text-sm italic text-neutral-400 animate-pulse">
+        <div className="mx-auto w-full max-w-3xl px-4 py-2 text-sm italic text-rawn-text-muted animate-pulse">
           digitando...
         </div>
       )}
