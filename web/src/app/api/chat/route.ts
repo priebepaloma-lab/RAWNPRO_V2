@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 const SYSTEM_PROMPT = `Você é o assistente do RAWN PRO V2. Responda de forma clara, objetiva e amigável, seguindo o tom profissional dos documentos do projeto. Quando útil, seja sucinto e estruturado com tópicos curtos. Evite respostas muito longas e mantenha foco na tarefa do usuário.`;
 
-type Msg = { role: "system" | "user"; content: string };
+type Msg = { role: "system" | "user" | "assistant"; content: string };
 
 export async function POST(req: Request) {
   try {
@@ -51,19 +51,34 @@ export async function POST(req: Request) {
       })),
     ];
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: chatMessages,
-      temperature: 0.2,
-    });
+    try {
+      const completion = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: chatMessages,
+        temperature: 0.2,
+      });
 
-    const content = completion.choices?.[0]?.message?.content ?? "";
-    return NextResponse.json({ role: "system", content });
+      const content = completion.choices?.[0]?.message?.content ?? "";
+      return NextResponse.json({ role: "system", content });
+    } catch (err: any) {
+      // Normaliza erros da OpenAI para depuração leve no cliente
+      const status = typeof err?.status === "number" ? err.status : 500;
+      const code = err?.code ?? err?.type ?? "unknown_error";
+      const message = err?.message || "Erro desconhecido da OpenAI";
+      console.error("/api/chat openai error", { status, code, message });
+      return NextResponse.json(
+        {
+          error: "Falha ao obter resposta da OpenAI.",
+          details: `${code}: ${message}`,
+        },
+        { status }
+      );
+    }
   } catch (err: any) {
     console.error("/api/chat error", err);
     return NextResponse.json(
       {
-        error: "Falha ao obter resposta da OpenAI.",
+        error: "Falha ao processar a solicitação.",
         details: String(err?.message ?? err),
       },
       { status: 500 }

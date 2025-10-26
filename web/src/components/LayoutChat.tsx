@@ -77,21 +77,51 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
       };
 
       async function call(attempt = 1): Promise<string> {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        // timeout curto para evitar travas esporádicas
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+          });
+          clearTimeout(timeout);
 
-        if (!res.ok) {
-          if (attempt < 2 && (res.status === 429 || res.status >= 500)) {
-            await new Promise((r) => setTimeout(r, 700));
+          if (!res.ok) {
+            if (
+              attempt < 3 &&
+              (res.status === 429 || res.status >= 500 || res.status === 408)
+            ) {
+              const delay = 500 * Math.pow(2, attempt - 1); // 500ms, 1000ms
+              await new Promise((r) => setTimeout(r, delay));
+              return call(attempt + 1);
+            }
+            const errPayload = await res.json().catch(() => ({} as any));
+            const details = errPayload?.details
+              ? `: ${errPayload.details}`
+              : "";
+            throw new Error(`HTTP ${res.status}${details}`);
+          }
+          const data = (await res.json()) as {
+            role: "system";
+            content: string;
+          };
+          return data.content;
+        } catch (e: any) {
+          clearTimeout(timeout);
+          // Re-tenta falhas de rede/abort
+          if (
+            attempt < 3 &&
+            (e?.name === "AbortError" || /network/i.test(String(e?.message)))
+          ) {
+            const delay = 500 * Math.pow(2, attempt - 1);
+            await new Promise((r) => setTimeout(r, delay));
             return call(attempt + 1);
           }
-          throw new Error(`HTTP ${res.status}`);
+          throw e;
         }
-        const data = (await res.json()) as { role: "system"; content: string };
-        return data.content;
       }
 
       const content = await call();

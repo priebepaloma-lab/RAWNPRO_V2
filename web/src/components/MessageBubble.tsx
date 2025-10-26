@@ -126,7 +126,9 @@ export default function MessageBubble({
                 </a>
               ),
               code: ({ children }) => (
-                <code className="rounded bg-black/10 px-1 py-0.5">{children}</code>
+                <code className="rounded bg-black/10 px-1 py-0.5">
+                  {children}
+                </code>
               ),
             }}
           >
