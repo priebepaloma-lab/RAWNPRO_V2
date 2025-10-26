@@ -17,6 +17,7 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
+    // Observação: evitamos logar a API key em produção.
 
     const body = await req.json();
     const messages = (body?.messages ?? []) as Msg[];
