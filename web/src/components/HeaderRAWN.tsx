@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { User } from "lucide-react";
 
 export default function HeaderRAWN() {
   return (
@@ -16,12 +18,13 @@ export default function HeaderRAWN() {
             ONLINE
           </span>
         </div>
-        <button
-          className="rounded-md px-2 py-1 text-[#00FF9C] transition hover:bg-white/5"
-          aria-label="Opções"
+        <Link
+          href="/profile"
+          className="rounded-md p-2 text-[#00FF9C] transition hover:bg-white/5"
+          aria-label="Abrir perfil do usuário"
         >
-          ...
-        </button>
+          <User size={20} color="#00FF9C" />
+        </Link>
       </div>
     </header>
   );

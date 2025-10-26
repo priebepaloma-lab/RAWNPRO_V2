@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/globals.css";
+import { ProfileProvider } from "./profile/ProfileContext";
 
 export const metadata = {
   title: "RAWN PRO V2",
@@ -33,7 +34,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        <ProfileProvider>{children}</ProfileProvider>
+      </body>
     </html>
   );
 }
