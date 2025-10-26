@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Copy, RefreshCw } from "lucide-react";
 import { useProfile } from "@/app/profile/ProfileContext";
 
@@ -88,7 +90,49 @@ export default function MessageBubble({
             {profile.name}
           </span>
         ) : null}
-        <div className="whitespace-pre-wrap leading-relaxed">{shownText}</div>
+        <div className="leading-relaxed">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              h1: ({ children }) => (
+                <h3 className="font-semibold text-base mb-2">{children}</h3>
+              ),
+              h2: ({ children }) => (
+                <h3 className="font-semibold text-base mb-2">{children}</h3>
+              ),
+              h3: ({ children }) => (
+                <h4 className="font-semibold text-sm mb-2">{children}</h4>
+              ),
+              p: ({ children }) => <p className="mb-2">{children}</p>,
+              ul: ({ children }) => (
+                <ul className="list-disc pl-5 space-y-1 mb-2">{children}</ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal pl-5 space-y-1 mb-2">{children}</ol>
+              ),
+              li: ({ children }) => <li>{children}</li>,
+              strong: ({ children }) => (
+                <strong className="font-semibold">{children}</strong>
+              ),
+              em: ({ children }) => <em className="italic">{children}</em>,
+              a: ({ children, href }) => (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-700 underline"
+                >
+                  {children}
+                </a>
+              ),
+              code: ({ children }) => (
+                <code className="rounded bg-black/10 px-1 py-0.5">{children}</code>
+              ),
+            }}
+          >
+            {shownText}
+          </ReactMarkdown>
+        </div>
         {isLong && (
           <button
             type="button"
