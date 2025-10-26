@@ -20,17 +20,30 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const messages = (body?.messages ?? []) as Msg[];
+    const profile = body?.profile ?? {};
     if (!Array.isArray(messages)) {
       return NextResponse.json(
-        { error: "Payload inválido. Envie { messages: [{ role, content }] }." },
+        {
+          error:
+            "Payload inválido. Envie { messages: [{ role, content }], profile }.",
+        },
         { status: 400 }
       );
     }
 
+    // Preâmbulo cognitivo dinâmico
+    const systemPrompt = `\nVocê está interagindo com ${
+      profile.name || "o usuário"
+    }.\nSeu estilo deve ser ${
+      profile.style || "humano"
+    } e seu foco principal é ${
+      profile.focus || "rotina"
+    }.\nUse o tom RAWN PRO: direto, técnico e empático.\n`;
+
     const client = new OpenAI({ apiKey });
 
     const chatMessages = [
-      { role: "system" as const, content: SYSTEM_PROMPT },
+      { role: "system" as const, content: systemPrompt + "\n" + SYSTEM_PROMPT },
       ...messages.map((m) => ({
         role: m.role,
         content: String(m.content ?? ""),

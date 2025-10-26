@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useProfile } from "@/app/profile/ProfileContext";
 import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
@@ -15,6 +16,7 @@ type Props = {
 export default function LayoutChat({ initialMessages = [] }: Props) {
   const [messages, setMessages] = React.useState<Msg[]>(initialMessages);
   const [isTyping, setIsTyping] = React.useState(false);
+  const { profile } = useProfile();
 
   // chave de armazenamento local
   const STORAGE_KEY = "rawn.chat.history";
@@ -71,6 +73,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
           ...messages.map((m) => ({ role: m.role, content: m.text })),
           { role: "user" as const, content: value },
         ],
+        profile,
       };
 
       const res = await fetch("/api/chat", {

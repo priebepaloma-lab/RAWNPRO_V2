@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useProfile } from "@/app/profile/ProfileContext";
 
 type Props = {
   role: "user" | "system";
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export default function MessageBubble({ role, text }: Props) {
+  const { profile } = useProfile();
+
   // mensagem de sistema especial (feedback de limpeza)
   if (role === "system" && text.toLowerCase().includes("apagado")) {
     return (
@@ -24,6 +27,21 @@ export default function MessageBubble({ role, text }: Props) {
   }
 
   const isUser = role === "user";
+
+  // Adaptação de tom para respostas do sistema
+  let displayText = text;
+  if (role === "system" && profile?.style) {
+    if (profile.style === "humano" || profile.style === "humanizado") {
+      displayText = displayText + " 😊";
+    } else if (profile.style === "técnico") {
+      displayText = displayText.replace(/\!+/g, ".");
+    } else if (profile.style === "sintético") {
+      displayText = displayText.replace(
+        /(.+?)([.!?])?$/,
+        (_m: string, p: string) => p + "."
+      );
+    }
+  }
 
   return (
     <motion.div
@@ -42,7 +60,12 @@ export default function MessageBubble({ role, text }: Props) {
             : "bg-[#EAF8F5] text-black rounded-bl-md",
         ].join(" ")}
       >
-        {text}
+        {isUser && profile?.name ? (
+          <span className="block text-xs font-semibold text-right text-neutral-700 mb-1">
+            {profile.name}
+          </span>
+        ) : null}
+        {displayText}
       </div>
     </motion.div>
   );
