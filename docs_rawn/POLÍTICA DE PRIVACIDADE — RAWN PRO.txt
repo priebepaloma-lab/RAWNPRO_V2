@@ -1,0 +1,57 @@
+POLÍTICA DE PRIVACIDADE — RAWN PRO  
+ 
+1. Propósito  
+Esta Política de Privacidade explica como o RAWN PRO coleta, utiliza e protege 
+informações durante o uso do aplicativo.  
+O sistema foi desenvolvido sob o princípio da privacidade integral: o controle 
+total dos dados pertence exclusivamente ao usuário . 
+2. Princípios Fundamentais  
+• Privacidade por design  — o sistema foi arquitetado para operar com o mínimo 
+necessário de dados.  
+• Controle local  — as informações permanecem apenas no dispositivo do 
+usuário.  
+• Transparência  — o usuário entende o que é processado, quando e para quê.  
+• Segurança e conformidade  — aderência plena à LGPD (Lei nº 13.709/2018) e ao 
+GDPR (Regulamento Europeu de Proteção de Dados).  
+3. Dados Coletados e Processados  
+O RAWN PRO não coleta nome, e -mail, CPF, localização, nem qualquer 
+informação pessoal identificável.  
+O aplicativo armazena apenas preferências e histórico de interação , localmente 
+no dispositivo, para preservar a continuidade da experiência conversacional.  
+Esses dados nunca são enviados a servidores externos  e não são utilizados 
+para treinamento de algoritmos . 
+4. Armazenamento Local e Exclusão de Dados  
+Todas as informações são gravadas apenas no dispositivo do usuário, em área 
+criptografada.  
+A função “Apagar meus dados” remove de forma definitiva todo o histórico.  
+Nenhum dado é retido, copiado ou transferido após a exclusão.  
+5. Uso de Inteligência Artificial  
+O RAWN PRO utiliza modelo de linguagem configurado para operar sob 
+parâmetros éticos, científicos e seguros.  
+As respostas são geradas em tempo real, sem reidentificação, rastreamento ou 
+associação de informações pessoais.  
+6. Compartilhamento de Dados  
+O RAWN PRO não compartilha dados com terceiros , nem com empresas, 
+parceiros, anunciantes ou plataformas externas.  
+Não há uso de cookies, rastreadores, nem ferramentas de análise 
+comportamental.  
+7. Segurança e Integridade da Informação  
+• Comunicação criptografada com protocolos HTTPS e TLS.  
+• Armazenamento local protegido por criptografia AES.  
+• Nenhum dado sensível transita fora do ambiente do usuário.  
+• Ausência total de back -end com acesso a informações pessoais.  
+8. Direitos do Usuário  
+O usuário pode, a qualquer momento:  
+• Excluir dados armazenados localmente.  
+• Encerrar o uso sem necessidade de solicitação externa.  
+• Solicitar esclarecimentos por meio do canal oficial de contato.  
+9. Base Legal e Conformidade  
+O RAWN PRO cumpre integralmente as disposições da LGPD e do GDPR, 
+respeitando os princípios de finalidade, adequação, necessidade e segurança.  
+Não há tratamento de dados sensíveis ou transferência internacional de 
+informações.  
+10. Alterações desta Política  
+A Política pode ser atualizada periodicamente para refletir melhorias técnicas ou 
+exigências legais.  
+A nova versão será disponibilizada dentro do próprio aplicativo, e o uso contínuo 
+implicará aceitação das novas condições.

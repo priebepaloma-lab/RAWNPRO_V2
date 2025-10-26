@@ -1,0 +1,88 @@
+EDITAR PERFIL — RAWN PRO  
+(Dark Mode / Identidade RAWN PRO)  
+1. Estrutura visual  
+Layout  
+• Fundo preto profundo (#0A0A0A) com leve gradiente radial (#030303 → 
+#101010).  
+• Container central translúcido (backdrop -filter: blur(12px), 
+rgba(255,255,255,0.04)).  
+• Largura máxima: 720px, centralizado.  
+• Padding interno generoso (32px desktop, 20px mobile).  
+• Tipografia Inter, cor #EAF8F5, peso regular; títulos em semibold.  
+• Campos com bordas neon suaves (#00FF9C, opacidade 0.5).  
+• Hover/focus: glow verde (#00FF9C, 0.25em blur).  
+• Botão fixo no rodapé: verde neon sólido com texto branco e leve glow.  
+ 
+2. Conteúdo textual e UX copy  
+Título  
+Editar Perfil  
+Subtexto introdutório  
+Essas informações ajudam o RAWN PRO a entender seu ponto de partida e 
+adaptar as orientações com segurança e precisão.  
+Os dados ficam apenas no seu dispositivo e podem ser apagados a qualquer 
+momento.  
+ 
+Campo: Nome  
+Como prefere ser chamado nas conversas.  
+[input type="text" placeholder="Ex: Rafael ou Rafa"]  
+ 
+Campo: Faixa de idade  
+Selecione sua faixa de idade:  
+• 14 a 18 anos  
+• 19 a 39 anos  
+• 40 a 60 anos  
+• 60 anos ou mais  
+[select options com glow suave]  
+ 
+Campo: Nível de prática  
+Escolha o estágio que melhor representa sua experiência atual:  
+• Iniciante  
+• Intermediário  
+• Avançado  
+[radiobutton group com estado ativo neon]  
+ 
+Campo: Objetivo principal  
+Indique o foco que melhor representa sua meta atual:  
+• Emagrecimento  
+• Ganho de músculos  
+• Performance  
+• Resistência  
+• Mobilidade  
+• Vitalidade  
+[radiobutton ou select vertical – estilo “botão pill” neon ao selecionar]  
+ 
+Campo: Limitação ou condição especial  
+Descreva, se desejar, qualquer fator físico, clínico ou circunstancial que o RAWN 
+PRO deva considerar para garantir segurança nas orientações.  
+[textarea multilinha translúcido, borda neon discreta]  
+ 
+Sessão de Privacidade e Segurança  
+Essas informações são armazenadas apenas no seu dispositivo.  
+O RAWN PRO não envia, compartilha nem armazena dados em servidores 
+externos.  
+Você pode apagá -los a qualquer momento em “Apagar meus dados”.  
+ 
+Botão principal (fixo na base da tela)  
+[ CTA ] SALVAR E VOLTAR AO CHAT  
+• Fundo: #00FF9C  
+• Texto: #0A0A0A  
+• Hover: brilho suave e elevação (box -shadow 0 0 12px rgba(0,255,156,0.5))  
+• Estado ativo: pulsação curta (ease -in-out 200ms)  
+ 
+3. Microinterações e feedback  
+• Ao salvar:  
+Mensagem flutuante (toast, 2s) → “Perfil atualizado. Suas respostas foram 
+calibradas.”  
+• Ao retornar ao chat:  
+RAWN PRO responde automaticamente:  
+“Tudo pronto. Suas orientações agora estão ajustadas ao seu perfil.”  
+ 
+4. Coerência com o sistema visual RAWN PRO  
+• Mantém coerência total com as mensagens e o composer definidos no 
+documento -base  
+DESIGN IDENTICO AO WHATSAPP  
+. 
+• Reforça a atmosfera “laboratório de performance humana” — minimalismo 
+técnico, contraste alto e fluidez holográfica.  
+• Nenhum ícone adicional, nenhuma distração — foco total na clareza e na 
+experiência.

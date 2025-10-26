@@ -1,0 +1,201 @@
+tokens.json  — Design System RAWN PRO  
+Define cores, fontes, espaçamentos e efeitos visuais.  
+{ 
+  "name": "RAWN_PRO_TOKENS",  
+  "version": "1.0.0",  
+  "platform": ["ios", "android"],  
+  "theme": "dark",  
+  "colors": {  
+    "background": "#0A0A0A",  
+    "backgroundGradient": ["#030303", "#101010"],  
+    "surface": "rgba(255,255,255,0.04)",  
+    "textPrimary": "#EAF8F5",  
+    "textSecondary": "#BFECE1",  
+    "textMuted": "#9ECFBE",  
+    "accent": "#00FF9C",  
+    "accentSecondary": "#B2F542",  
+    "border": "rgba(0,255,156,0.25)",  
+    "error": "#FF4E4E"  
+  }, 
+  "typography": {  
+    "fontFamily": "Inter",  
+    "titleLarge": { "size": 20, "weight": "600", "lineHeight": 26 },  
+    "titleMedium": { "size": 18, "weight": "600", "lineHeight": 24 },  
+    "body": { "size": 16, "weight": "400", "lineHeight": 22 },  
+    "caption": { "size": 14, "weight": "400", "lineHeight": 20 },  
+    "label": { "size": 15, "weight": "500", "lineHeight": 20 }  
+  }, 
+  "radius": { "sm": 8, "md": 14, "lg": 18, "pill": 999 },  
+  "spacing": { "xs": 4, "sm": 8, "md": 16, "lg": 24, "xl": 32 },  
+  "shadow": {  
+    "soft": "0 0 20px rgba(0,255,156,0.1)",  
+    "glow": "0 0 12px rgba(0,255,156,0.5)"  
+  }, 
+  "effects": {  
+    "blur": { "value": 12, "background": "rgba(255,255,255,0.04)" },  
+    "focusGlow": "0 0 8px rgba(0,255,156,0.3)"  
+  }, 
+  "hitTarget": { "min": 44 }  
+} 
+ 
+   screens.json  — Estrutura das Telas e Fluxo  
+Define rotas, componentes e lógica de interação.  
+{ 
+  "screens": {  
+    "Welcome": {  
+      "route": "/welcome",  
+      "layout": {  
+        "type": "scroll",  
+        "sections": [  
+          { "type": "logo", "size": 32, "position": "top -left" },  
+          { "type": "title", "text": "RAWN PRO" },  
+          { "type": "subtitle", "text": "Ciência em conversa. Clareza em ação." },  
+          { 
+            "type": "paragraph",  
+            "text": "Inteligência de performance humana. Tudo acontece em uma 
+conversa segura e privada."  
+          }, 
+          { "type": "button", "label": "Continuar", "action": "go:/consent" }  
+        ] 
+      } 
+    }, 
+    "Consent": {  
+      "route": "/consent",  
+      "header": { "title": "Antes de começar" },  
+      "content": {  
+        "title": "Li e aceito os Termos e Políticas do RAWN PRO.",  
+        "links": [  
+          { "label": "Termos de Uso", "route": "/terms" },  
+          { "label": "Política de Privacidade", "route": "/privacy" }  
+        ], 
+        "checkbox": { "label": "Concordo com os Termos e Políticas", "required": true }  
+      }, 
+      "cta": { "label": "Aceitar e continuar", "action": "go:/profile" }  
+    }, 
+    "Profile": {  
+      "route": "/profile",  
+      "header": { "title": "EDITAR PERFIL" },  
+      "form": [  
+        { "type": "text", "label": "Nome", "placeholder": "Como prefere ser chamado" },  
+        { 
+          "type": "select",  
+          "label": "Faixa de idade",  
+          "options": ["14 a 18", "19 a 39", "40 a 60", "60+"]  
+        }, 
+        { 
+          "type": "radio",  
+          "label": "Nível de prática",  
+          "options": ["Iniciante", "Intermediário", "Avançado"]  
+        }, 
+        { 
+          "type": "radio",  
+          "label": "Objetivo principal",  
+          "options": ["Emagrecimento", "Ganho de músculos", "Performance", 
+"Resistência", "Mobilidade", "Vitalidade"]  
+        }, 
+        { 
+          "type": "textarea",  
+          "label": "Limitação ou condição especial",  
+          "placeholder": "Ex: lesão, cirurgia recente, etc. (opcional)"  
+        } 
+      ], 
+      "footer": { "label": "Salvar e voltar ao chat", "action": "go:/chat" }  
+    }, 
+    "Chat": {  
+      "route": "/chat",  
+      "header": {  
+        "title": "RAWN PRO",  
+        "subtitle": "ONLINE",  
+        "menuIcon": " ⋮" 
+      }, 
+      "messageList": {  
+        "assistantBubble": {  
+          "background": "rgba(0,255,156,0.08)",  
+          "border": "rgba(0,255,156,0.3)"  
+        }, 
+        "userBubble": {  
+          "background": "#111415",  
+          "border": "rgba(255,255,255,0.12)"  
+        } 
+      }, 
+      "composer": {  
+        "placeholder": "Escreva sua mensagem...",  
+        "buttonIcon": "send"  
+      }, 
+      "menu": {  
+        "items": [  
+          "Editar Perfil",  
+          "Sobre o RAWN PRO",  
+          "Termos de Uso",  
+          "Política de Privacidade",  
+          "Política LGPD",  
+          "Aviso de Responsabilidade"  
+        ] 
+      } 
+    }, 
+    "About": { "route": "/about", "title": "SOBRE O RAWN PRO" },  
+    "Terms": { "route": "/terms", "title": "TERMOS DE USO" },  
+    "Privacy": { "route": "/privacy", "title": "POLÍTICA DE PRIVACIDADE" },  
+    "LGPD": { "route": "/lgpd", "title": "POLÍTICA LGPD" },  
+    "Disclaimer": { "route": "/disclaimer", "title": "AVISO DE RESPONSABILIDADE" }  
+  }, 
+  "storage": { "provider": "SecureStore", "namespace": "RAWN_PRO_APP" }  
+} 
+ 
+   copy.md — Textos da Interface e Conteúdo  
+ 
+# RAWN PRO — Copy Base v1.0  
+ 
+## Welcome  
+**Título:** RAWN PRO   
+**Subtítulo:** Ciência em conversa. Clareza em ação.   
+**Texto:** Inteligência de performance humana. Tudo acontece em uma conversa 
+segura e privada.   
+**Botão:** Continuar  
+ 
+--- 
+ 
+## Consent  
+**Título:** Antes de começar   
+**Mensagem:** Li e aceito os Termos e Políticas do RAWN PRO.   
+**Checkbox:** Concordo com os Termos e Políticas   
+**Botão:** Aceitar e continuar   
+ 
+--- 
+ 
+## Profile  
+**Título:** Editar Perfil   
+**Campos:**  
+- Nome   
+- Faixa de idade: 14 a 18 | 19 a 39 | 40 a 60 | 60+   
+- Nível de prática: Iniciante | Intermediário | Avançado   
+- Objetivo principal: Emagrecimento | Ganho de músculos | Performance | 
+Resistência | Mobilidade | Vitalidade   
+- Limitação ou condição especial   
+ 
+**Rodapé:**   
+Privacidade e segurança: todas as informações ficam apenas no seu dispositivo.   
+ 
+--- 
+ 
+## Chat  
+**Header:** RAWN PRO — ONLINE   
+**Placeholder:** Escreva sua mensagem...   
+**Mensagens do sistema:**   
+- Perfil atualizado. Suas respostas foram calibradas.   
+- Tudo pronto. Suas orientações agora estão ajustadas ao seu perfil.   
+ 
+**Menu:**   
+Editar Perfil   
+Sobre o RAWN PRO   
+Termos de Uso   
+Política de Privacidade   
+Política LGPD   
+Aviso de Responsabilidade   
+ 
+--- 
+ 
+## Aviso Ético  
+Este conteúdo tem caráter educativo e não substitui acompanhamento 
+profissional.   
+Se sentir dor, desconforto ou agravamento de sintomas, procure um especialista.

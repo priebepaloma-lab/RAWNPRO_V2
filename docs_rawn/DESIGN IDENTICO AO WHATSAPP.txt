@@ -1,0 +1,72 @@
+DESIGN IDENT ICO AO WHATSAPP – MAS COM REFINAMENTO PREMIUM E 
+BRANDING RA WN PRO  – CONFORME DESCRITIVO E IMAGENS DE RASCUNHO.  
+ 
+Design Overview  – Interface pushes uma estética “human performance lab” com 
+dark mode profundo, acentos neon e visual minimalista.  
+• Paleta: 
+• Base: background quase preto ( #030303  a #101010) em gradiente 
+radial.  
+• Acentos: verde neon/menta ( #00FF9C  / rgba(0,255,156,…) ) para 
+highlights, bordas e CTA; amarelo -lima suave ( #B2F542 ) em peças 
+da landing.  
+• Tipografia clara ( #F4FDF0 , #EAF8F5 ) com opacidades para 
+hierarquia.  
+• Tipografia : 
+• Primária:  Inter  (system stack fallback).  
+• Corpo 16px,  line-height  ~1.55.  
+• Títulos da marca em uppercase condensado; “ONLINE” badge com 
+letter-spacing largo nos headers.  
+• Elementos de interface (botões, labels) usam peso médio/semibold 
+para legibilidade.  
+• Layout geral : 
+• Página  /coach  ocupa viewport inteiro.  
+• Header fixo com branding à esquerda (logo circular 80px, título + 
+status) e menu flutuante à direita.  
+• Corpo com lista de mensagens centralizada (largura máx. 720px) 
+sobre fundo translúcido.  
+• Composer fixado ao rodapé, com shell translúcido e input pill.  
+• Branding : 
+• Logotipo (verde/branco) com  next/image , encaixado em container 
+circular com gradiente radial + borda verde translucente.  
+• Status “ONLINE” sempre visível, reforçando disponibilidade.  
+• Componentes de mensagem : 
+• MessageBubble  alterna classes  --assistant  (verde translúcido, borda 
+neon) e  --user  (preto grafite com borda cinza).  
+• Bubbles usam blur e bordas arredondadas, sem cantos 
+retangulares, transmitindo fluidez.  
+• Rodapé técnico incluído no texto conforme termos da mensagem.  
+• Composer : 
+• Input ovalado, borda neon semitransparente.  
+• Placeholder cinza esmaecido, foco com  box-shadow  verde suave.  
+• Botão enviar: círculo com borda neon sólida, ícone SVG em stroke 
+único; hover/focus elevam levemente e acrescentam glow.  
+• Menu flutuante : 
+• Botão quadrado com cantos arredondados, ícone hamburger 
+minimal.  
+• Painel dropdown translúcido, blur, lista vertical,  gap  curto.  
+• Hover com deslocamento lateral (translateX) e mudança de cor para 
+neon.  
+• Landing  index.html : 
+• Mesma paleta; texto centralizado, headline neon, CTA pill com hover 
+elevando e sombra verde -amarela.  
+• Mensagem principal ressaltando missão (“Inteligência aplicada…”).  
+• Responsividade : 
+• Breakpoints em 768px e 480px reduzem paddings, tamanho do logo, 
+gap do composer.  
+• Conteúdo mantém -se centralizado com  min()  e clamp()  para 
+larguras.  
+• Acessibilidade / UX : 
+• sr-only  helper para texto invisível mas lido por screen readers.  
+• Estados  :focus-visible  replicam glow para navegação por teclado.  
+• Persistência de conversa via  sessionStorage  (UX).  
+• Textura visual : 
+• Uso extensivo de  backdrop -filter: blur(...)  para criar camadas 
+translúcidas futuristas.  
+• Bordas com opacidade baixa dão sensação holográfica sem 
+poluição.  
+• Repetição de curvas (logo, input, botões) reforça linguagem 
+orgânica.  
+Resumo: O design mistura laboratório futurista + coaching premium: fundo 
+escuro limpo, acentos neon disciplinados, tipografia técnica e layouts centrados. 
+Mantém foco em legibilidade, contraste e sensação de 
+confidencialidade/sofisticação.

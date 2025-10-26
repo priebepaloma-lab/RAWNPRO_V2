@@ -1,0 +1,359 @@
+1) DESIGN TOKENS E ESQUEMA DE TELAS — JSON TÉCNICO  
+ 
+{ 
+  "meta": {  
+    "product": "RAWN PRO",  
+    "platforms": ["ios", "android"],  
+    "firstRunGate": "mandatory_consent",  
+    "referenceDesign": "WhatsApp -like dark premium with neon accents"  
+  }, 
+  "tokens": {  
+    "color": {  
+      "bg.base": "#0A0A0A",  
+      "bg.gradient.from": "#030303",  
+      "bg.gradient.to": "#101010",  
+      "text.primary": "#EAF8F5",  
+      "text.secondary": "#BFECE1",  
+      "text.muted": "#9ECFBE",  
+      "accent.neon": "#00FF9C",  
+      "accent.lime": "#B2F542",  
+      "border.neonSoft": "rgba(0,255,156,0.5)",  
+      "border.panel": "rgba(0,255,156,0.15)",  
+      "panel.translucent": "rgba(255,255,255,0.04)",  
+      "shadow.neon": "rgba(0,255,156,0.10)"  
+    }, 
+    "typography": {  
+      "family.primary": "Inter",  
+      "scale": {  
+        "title.lg": {"size": 20, "weight": "600", "lineHeight": 26},  
+        "title.md": {"size": 18, "weight": "600", "lineHeight": 24},  
+        "body": {"size": 16, "weight": "400", "lineHeight": 24},  
+        "caption": {"size": 14, "weight": "400", "lineHeight": 20},  
+        "label": {"size": 15, "weight": "500", "lineHeight": 20}  
+      } 
+    }, 
+    "radius": {  
+      "xs": 8,  
+      "sm": 12,  
+      "md": 14,  
+      "lg": 18,  
+      "xl": 24,  
+      "pill": 999  
+    }, 
+    "elevation": {  
+      "panel": "0 0 20px rgba(0,255,156,0.10)",  
+      "glow": "0 0 12px rgba(0,255,156,0.50)"  
+    }, 
+    "spacing": {  
+      "xxs": 4, "xs": 8, "sm": 12, "md": 16, "lg": 20, "xl": 24, "xxl": 32  
+    }, 
+    "effects": {  
+      "focusGlow": {"shadow": "0 0 8px rgba(0,255,156,0.30)"},  
+      "backdropBlur": {"blur": 12, "bg": "panel.translucent"}  
+    }, 
+    "hitTarget": { "min": 44 }  
+  }, 
+  "layout": {  
+    "maxWidth": 720,  
+    "safeAreas": { "respectStatusBar": true, "respectHomeIndicator": true }  
+  }, 
+  "components": {  
+    "Header": {  
+      "height": 56,  
+      "bg": "bg.base",  
+      "left": {"type": "brandLogo", "size": 32},  
+      "title": {"typography": "title.md", "color": "text.primary", "uppercase": true},  
+      "subtitle": {"text": "ONLINE", "color": "text.secondary", "upper": true, "tracking": 
+1.2},  
+      "right": {"type": "iconButton", "icon": "kebab", "diameter": 36, "style": 
+"neonCircle"}  
+    }, 
+    "Composer": {  
+      "height": 56,  
+      "bg": "bg.base",  
+      "input": {  
+        "placeholder": "Escreva sua mensagem...",  
+        "radius": "pill",  
+        "border": "border.neonSoft",  
+        "paddingH": 16,  
+        "textStyle": "body"  
+      }, 
+      "sendButton": {"diameter": 40, "style": "neonCircle"}  
+    }, 
+    "MenuFloating": {  
+      "width": 260,  
+      "radius": "md",  
+      "paddingV": 10,  
+      "bg": "bg.base",  
+      "border": "border.panel",  
+      "shadow": "elevation.panel",  
+      "item": {  
+        "height": 44,  
+        "paddingH": 20,  
+        "bullet": {"size": 5, "color": "accent.neon"},  
+        "text": {"style": "label", "color": "text.primary"},  
+        "hover": {"bg": "rgba(0,255,156,0.06)", "text": "accent.neon"}  
+      }, 
+      "itemsOrder": [  
+        "Editar Perfil",  
+        "Sobre o RAWN PRO",  
+        "Termos de Uso",  
+        "Política de Privacidade",  
+        "Política LGPD",  
+        "Aviso de Responsabilidade"  
+      ] 
+    }, 
+    "Panel": {  
+      "container": {  
+        "bg": "panel.translucent",  
+        "radius": "lg",  
+        "border": "border.panel",  
+        "padding": "xl",  
+        "backdrop": "effects.backdropBlur"  
+      }, 
+      "title": {"style": "title.lg", "color": "text.primary"},  
+      "subtitle": {"style": "body", "color": "text.secondary"}  
+    }, 
+    "PrimaryCTA": {  
+      "height": 48,  
+      "radius": "pill",  
+      "bg": "accent.neon",  
+      "textColor": "bg.base",  
+      "shadow": "elevation.glow",  
+      "state": {  
+        "pressed": {"scale": 0.98, "shadow": "none"},  
+        "disabled": {"opacity": 0.5}  
+      } 
+    } 
+  }, 
+  "screens": {  
+    "OnboardingWelcome": {  
+      "route": "/welcome",  
+      "header": "hidden",  
+      "sections": [  
+        {"type": "brandHero", "title": "RAWN PRO", "subtitle": "Ciência em conversa. 
+Clareza em ação."},  
+        {"type": "copy", "text": "Inteligência de performance humana. Tudo acontece 
+em uma conversa segura e privada."},  
+        {"type": "primaryCTA", "label": "Continuar", "action": "go:/consent"}  
+      ] 
+    }, 
+    "ConsentGate": {  
+      "route": "/consent",  
+      "header": {"title": "Antes de começar"},  
+      "panel": {  
+        "title": "Li e aceito os Termos e Políticas do RAWN PRO.",  
+        "links": [  
+          {"label": "Termos de Uso", "route": "/terms"},  
+          {"label": "Política de Privacidade", "route": "/privacy"}  
+        ], 
+        "checkbox": {"label": "Concordo com os Termos e Políticas", "required": true}  
+      }, 
+      "footerCTAs": [  
+        {"type": "PrimaryCTA", "label": "Aceitar e continuar", "action": "go:/profile", 
+"enabledIf": "checkbox.checked"}  
+      ] 
+    }, 
+    "ProfileEdit": {  
+      "route": "/profile",  
+      "header": {"title": "EDITAR PERFIL"},  
+      "form": [  
+        {"field": "name", "label": "Nome", "type": "text", "placeholder": "Como prefere 
+ser chamado"},  
+        {"field": "ageBand", "label": "Faixa de idade", "type": "select", "options": ["14 –
+18", "19–39", "40–60", "60+"]},  
+        {"field": "level", "label": "Nível de prática", "type": "radio", "options": ["Iniciante", 
+"Intermediário", "Avançado"]},  
+        {"field": "goal", "label": "Objetivo principal", "type": "radio", "options": 
+["Emagrecimento","Ganho de 
+músculos","Performance","Resistência","Mobilidade","Vitalidade"]},  
+        {"field": "limitations", "label": "Limitação ou condição especial", "type": 
+"textarea", "placeholder": "Opcional"}  
+      ], 
+      "footer": {"primary": {"label": "Salvar e voltar ao chat", "action": "go:/chat"}}  
+    }, 
+    "Chat": {  
+      "route": "/chat",  
+      "header": "Header",  
+      "body": {"type": "messageList", "maxWidth": 720, "bubbleStyles": {  
+        "assistant": {"bg": "rgba(0,255,156,0.08)", "border": "accent.neon", "radius": 
+18},  
+        "user": {"bg": "#111415", "border": "rgba(255,255,255,0.12)", "radius": 18}  
+      }}, 
+      "composer": "Composer",  
+      "menu": "MenuFloating"  
+    }, 
+    "MenuLinks": {  
+      "Editar Perfil": "/profile",  
+      "Sobre o RAWN PRO": "/about",  
+      "Termos de Uso": "/terms",  
+      "Política de Privacidade": "/privacy",  
+      "Política LGPD": "/privacy/lgpd",  
+      "Aviso de Responsabilidade": "/disclaimer"  
+    }, 
+    "Documents": {  
+      "About": {"route": "/about", "header": {"title": "SOBRE O RAWN PRO"}},  
+      "Terms": {"route": "/terms", "header": {"title": "TERMOS DE USO"}},  
+      "Privacy": {"route": "/privacy", "header": {"title": "POLÍTICA DE PRIVACIDADE"}},  
+      "LGPD": {"route": "/privacy/lgpd", "header": {"title": "POLÍTICA LGPD"}},  
+      "Disclaimer": {"route": "/disclaimer", "header": {"title": "AVISO DE 
+RESPONSABILIDADE"}}  
+    } 
+  }, 
+  "a11y": {  
+    "minContrast": 4.5,  
+    "hitTargetMin": 44,  
+    "focusVisibleGlow": true,  
+    "dynamicType": true  
+  }, 
+  "motion": {  
+    "screenTransition": {"type": "slideHorizontal", "duration": 250, "easing": 
+"easeOut"},  
+    "menuOpen": {"type": "fadeDown", "duration": 200},  
+    "press": {"type": "scale", "to": 0.98, "duration": 120}  
+  } 
+} 
+ 
+ 
+ 
+2) WIREFRAME TEXTUAL — DOCUMENTAÇÃO (MOBILE iOS/ANDROID)  
+Diretrizes de base  
+• Tipografia  Inter em todo o app. Títulos Semibold 18 –20px, corpo 15 –16px, 
+rótulos 15px.  
+• Cores dark profundo com acentos neon/menta #00FF9C . Painéis 
+translúcidos com blur.  
+DESIGN IDENTICO AO WHATSAPP  
+• Áreas seguras : respeitar SafeArea  iOS e barras do Android 
+(status/navigation).  
+• Alvos de toque : mínimo 44×44 pt/dp.  
+• Animações : transições laterais curtas; menu flutuante com fade + slide 
+suave.  
+• Somente primeira execução : gate jurídico obrigatório. Depois, acesso 
+direto ao chat.  
+ 
+Tela 1 — Boas-vindas  
+Layout  
+• Fundo gradiente radial #030303 → #101010 . 
+• Logotipo RAWN no topo esquerdo (32px).  
+• Título “RAWN PRO” Inter 20/600, #EAF8F5 . 
+• Subtítulo “Ciência em conversa. Clareza em ação.” Inter 16/400, #BFECE1 . 
+• Painel introdutório translúcido com blur (radius 18, padding 24).  
+• CTA primário fixo na base: “Continuar” pill 48px, fundo #00FF9C , texto 
+#0A0A0A , glow leve.  
+Ação  
+• Tap em “Continuar” → Tela 2 – Consentimento . 
+ 
+Tela 2 — Consentimento (gate jurídico)  
+Header  
+• Título: “Antes de começar” Inter 18/600.  
+Corpo  
+• Painel translúcido com blur.  
+• Título interno: “Li e aceito os Termos e Políticas do RAWN PRO.” Inter 
+16/600.  
+• Links inline: “Termos de Uso” e “Política de Privacidade”.  
+• Checkbox obrigatório “Concordo com os Termos e Políticas”.  
+Footer  
+• CTA primário “Aceitar e continuar” (desabilitado até checkbox).  
+• Ao aceitar → Tela 3 – Editar Perfil . 
+• Persistência local: flag consentAccepted=true . 
+Conteúdo jurídico  
+• Carrega a versão estável dos documentos (scrolláveis).  
+TERMOS DE USO — RAWN PRO  
+POLÍTICA DE PRIVACIDADE — RAWN …  
+ 
+Tela 3 — Editar Perfil  
+Header  
+• Título ALL CAPS “EDITAR PERFIL” Inter 18/600.  
+Form  
+• Campo Nome: input pill, borda neon suave.  
+• Faixa de idade: select ou radio (14 –18, 19–39, 40–60, 60+).  
+• Nível de prática: radio (Iniciante, Intermediário, Avançado).  
+• Objetivo principal: radio em colunas ou lista vertical (Emagrecimento, 
+Ganho de músculos, Performance, Resistência, Mobilidade, Vitalidade).  
+• Limitação/Condição especial: textarea translúcido.  
+• Sessão “Privacidade e segurança”: texto curto reforçando armazenamento 
+local.  
+Footer  
+• Botão fixo: “Salvar e voltar ao chat”.  
+• Toast 2s “Perfil atualizado. Suas respostas foram calibradas.”  
+• Navega para Tela 4 – Chat. 
+Estilo e medidas  
+• Max-width 720, padding 20 –32, radius 14 –18, foco com glow neon.  
+• Layout e microestética conforme design oficial.  
+DESIGN IDENTICO AO WHATSAPP  
+ 
+Tela 4 — Chat (principal)  
+Header  
+• Esquerda: logo circular 32px.  
+• Título: “RAWN PRO” Inter 18/600, branco.  
+• Subtítulo: “ONLINE” Inter 14/500, #BFECE1 , com tracking largo.  
+• Direita: botão kebab circular 36px com borda neon translúcida.  
+Lista de mensagens  
+• Largura máx. 720, centralizada.  
+• Bubbles arredondadas com blur sutil.  
+• Assistant : fundo rgba(0,255,156,0.08) , borda menta suave, rodapé técnico 
+quando a mensagem for prescritiva.  
+• User: fundo #111415, borda rgba(255,255,255,0.12) . 
+Composer  
+• Input pill preto, borda rgba(0,255,156,0.5) , placeholder #9ECFBE . 
+• Botão enviar 40px, círculo com ícone stroke, hover com glow e leve 
+elevação.  
+Menu flutuante  
+• Abrir pelo kebab.  
+• Container 260px, radius 14, bg #0A0A0A , borda rgba(0,255,156,0.15) , 
+sombra neon sutil.  
+• Itens altura 44px, bullet de 5px verde antes do texto.  
+• Ordem: Editar Perfil, Sobre o RAWN PRO, Termos de Uso, Política de 
+Privacidade, Política LGPD, Aviso de Responsabilidade.  
+• Fechamento ao clicar fora ou selecionar item.  
+ 
+Tela 5 — Sobre o RAWN PRO  
+Header  
+• Título ALL CAPS “SOBRE O RAWN PRO”.  
+Corpo  
+• Texto institucional aprovado, em parágrafos curtos, com a mesma 
+tipografia e contraste.  
+SOBRE O RAWN PRO  
+ 
+Telas 6–8 — Documentos  
+6) Termos de Uso  
+• Header título ALL CAPS.  
+• Conteúdo scrollável no painel translúcido com headings numerados, 
+conforme documento.  
+TERMOS DE USO — RAWN PRO  
+7) Política de Privacidade  
+• Header título ALL CAPS.  
+• Conteúdo scrollável, com seções 1 –10, igual ao documento.  
+POLÍTICA DE PRIVACIDADE — RAWN …  
+8) Política LGPD e Aviso de Responsabilidade  
+• Estrutura textual concisa, scrollável, mesmo padrão visual.  
+Navegação  
+• Voltar pelo ícone back padrão do header.  
+• Estados preservados ao retornar ao chat.  
+ 
+Responsividade e plataforma  
+• iOS: respeitar Safe Area; status bar clara; efeito de borracha no scroll 
+desabilitado nas folhas de documento para evitar “salto”; haptics leves no 
+abrir/fechar menu.  
+• Android: Navigation bar imersiva; ripple discreto nos botões; performance 
+60fps mantendo sombras como elevation  nativo quando possível.  
+• Dimensões alvo : 360×640 a 430×932 dp/pt.  
+• Performance : limitar blur a painéis principais; evitar aninhamento 
+profundo de sombras; cache de imagens do logo.  
+ 
+Regras de produto e segurança  
+• Gate jurídico obrigatório  na primeira execução. Sem aceite, não há acesso 
+ao chat.  
+• Persistência local  de perfil e consentimento; função “Apagar meus dados” 
+remove tudo localmente.  
+• Conteúdo científico  e tom do coach alinhados ao System Prompt oficial 
+em todas as respostas.  
+SYSTEM PROMPT  
+ 
+QA de consistência visual  
+Checklist rápido com base no design oficial:  
+• Dark profundo com gradiente radial discreto.  
+• Acentos neon menta #00FF9C  para bordas, highlights e CTAs.  
+• Tipografia Inter em todo o app.  
+• Bubbles com bordas arredondadas e blur.  
+• Composer fixado, input pill, botão enviar circular.
