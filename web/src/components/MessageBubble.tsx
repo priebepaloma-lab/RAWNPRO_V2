@@ -79,10 +79,10 @@ export default function MessageBubble({
     >
       <div
         className={[
-          "max-w-[78%] rounded-2xl px-4 py-2 text-sm shadow-sm",
+          "max-w-[78%] rounded-2xl px-4 py-2.5 text-sm shadow-sm",
           isUser
             ? "bg-[#00FF9C] text-black rounded-br-md"
-            : "bg-[#EAF8F5] text-black rounded-bl-md prose prose-sm prose-zinc max-w-none",
+            : "bg-[#EAF8F5] text-black rounded-bl-md prose prose-zinc max-w-none [&>div]:!leading-relaxed",
         ].join(" ")}
       >
         {isUser && profile?.name ? (
@@ -90,46 +90,71 @@ export default function MessageBubble({
             {profile.name}
           </span>
         ) : null}
-        <div className="leading-relaxed">
+        <div className="prose-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => (
-                <h3 className="font-semibold text-base mb-2">{children}</h3>
+                <h3 className="!font-semibold !text-[1.0625rem] !mt-3 !mb-2 !leading-tight">
+                  {children}
+                </h3>
               ),
               h2: ({ children }) => (
-                <h3 className="font-semibold text-base mb-2">{children}</h3>
+                <h3 className="!font-semibold !text-[1rem] !mt-2.5 !mb-1.5 !leading-tight">
+                  {children}
+                </h3>
               ),
               h3: ({ children }) => (
-                <h4 className="font-semibold text-sm mb-2">{children}</h4>
+                <h4 className="!font-semibold !text-[0.9375rem] !mt-2 !mb-1.5 !leading-tight">
+                  {children}
+                </h4>
               ),
-              p: ({ children }) => <p className="mb-2">{children}</p>,
+              h4: ({ children }) => (
+                <h5 className="!font-semibold !text-[0.875rem] !mt-2 !mb-1 !leading-tight">
+                  {children}
+                </h5>
+              ),
+              p: ({ children }) => (
+                <p className="!my-2 !leading-relaxed">{children}</p>
+              ),
               ul: ({ children }) => (
-                <ul className="list-disc pl-5 space-y-1 mb-2">{children}</ul>
+                <ul className="!list-disc !pl-5 !space-y-0.5 !my-2">
+                  {children}
+                </ul>
               ),
               ol: ({ children }) => (
-                <ol className="list-decimal pl-5 space-y-1 mb-2">{children}</ol>
+                <ol className="!list-decimal !pl-5 !space-y-0.5 !my-2">
+                  {children}
+                </ol>
               ),
-              li: ({ children }) => <li>{children}</li>,
+              li: ({ children }) => (
+                <li className="!my-0.5 !leading-relaxed">{children}</li>
+              ),
               strong: ({ children }) => (
-                <strong className="font-semibold">{children}</strong>
+                <strong className="!font-semibold">{children}</strong>
               ),
-              em: ({ children }) => <em className="italic">{children}</em>,
+              em: ({ children }) => <em className="!italic">{children}</em>,
               a: ({ children, href }) => (
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-emerald-700 underline"
+                  className="!text-emerald-700 !underline !font-medium hover:!text-emerald-800 !transition-colors"
                 >
                   {children}
                 </a>
               ),
               code: ({ children }) => (
-                <code className="rounded bg-black/10 px-1 py-0.5">
+                <code className="!rounded !bg-black/10 !px-1.5 !py-0.5 !text-[0.9em] !font-mono">
                   {children}
                 </code>
               ),
+              blockquote: ({ children }) => (
+                <blockquote className="!border-l-4 !border-neutral-300 !pl-4 !italic !my-3">
+                  {children}
+                </blockquote>
+              ),
+              hr: () => <hr className="!border-neutral-200 !my-4" />,
             }}
           >
             {shownText}
