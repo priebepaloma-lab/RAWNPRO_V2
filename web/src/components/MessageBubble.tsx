@@ -9,6 +9,20 @@ type Props = {
 };
 
 export default function MessageBubble({ role, text }: Props) {
+  // mensagem de sistema especial (feedback de limpeza)
+  if (role === "system" && text.toLowerCase().includes("apagado")) {
+    return (
+      <motion.div
+        className="text-center text-neutral-400 italic py-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+      >
+        {text}
+      </motion.div>
+    );
+  }
+
   const isUser = role === "user";
 
   return (

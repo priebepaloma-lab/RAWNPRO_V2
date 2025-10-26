@@ -4,6 +4,7 @@ import React from "react";
 import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
+import { motion } from "framer-motion";
 
 type Msg = { id: string; role: "user" | "system"; text: string };
 
@@ -15,15 +16,60 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   const [messages, setMessages] = React.useState<Msg[]>(initialMessages);
   const [isTyping, setIsTyping] = React.useState(false);
 
+  // chave de armazenamento local
+  const STORAGE_KEY = "rawn.chat.history";
+
+  // carrega histórico persistido ao montar
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Msg[];
+        if (Array.isArray(parsed)) {
+          setMessages(parsed);
+        }
+      }
+    } catch {
+      // falha silenciosa para não quebrar a UI
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // sincroniza sempre que mensagens mudarem
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      // ignore
+    }
+  }, [messages]);
+
   async function handleSend(text: string) {
+    const value = text.trim();
+
+    // comando /limpar (case-insensitive)
+    if (/^\/limpar\b/i.test(value)) {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+      const sysId = Date.now().toString();
+      setMessages([
+        { id: sysId, role: "system", text: "Histórico apagado com sucesso." },
+      ]);
+      setIsTyping(false);
+      return;
+    }
+
     const id = Math.random().toString(36).slice(2);
-    setMessages((prev) => [...prev, { id, role: "user", text }]);
+    setMessages((prev) => [...prev, { id, role: "user", text: value }]);
 
     try {
       const payload = {
         messages: [
           ...messages.map((m) => ({ role: m.role, content: m.text })),
-          { role: "user" as const, content: text },
+          { role: "user" as const, content: value },
         ],
       };
 
@@ -59,15 +105,21 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
     <div className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0A0A0A] to-[#101010] text-zinc-100">
       <HeaderRAWN />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-4">
-        <section
-          className="flex-1 space-y-3"
-          role="list"
-          aria-label="Mensagens do chat"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         >
-          {messages.map((m) => (
-            <MessageBubble key={m.id} role={m.role} text={m.text} />
-          ))}
-        </section>
+          <section
+            className="flex-1 space-y-3"
+            role="list"
+            aria-label="Mensagens do chat"
+          >
+            {messages.map((m) => (
+              <MessageBubble key={m.id} role={m.role} text={m.text} />
+            ))}
+          </section>
+        </motion.div>
       </main>
       {isTyping && (
         <div className="mx-auto w-full max-w-3xl px-4 py-2 text-sm italic text-neutral-400 animate-pulse">

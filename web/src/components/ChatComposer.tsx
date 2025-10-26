@@ -30,7 +30,7 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
       >
         <input
           aria-label="Escreva sua mensagem"
-          placeholder="Escreva sua mensagem..."
+          placeholder="Escreva sua mensagem... (ou digite /limpar)"
           className="flex-1 rounded-lg border border-white/10 bg-zinc-900/70 px-4 py-3 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:ring-2 focus:ring-[#00FF9C]"
           value={text}
           onChange={(e) => setText(e.target.value)}
