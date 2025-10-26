@@ -6,17 +6,23 @@ interface Profile {
   name: string;
   focus: string;
   style: string;
+  ageRange?: string;
+  level?: string;
+  goal?: string;
+  limitation?: string;
 }
 
 interface ProfileContextValue {
   profile: Profile;
   updateProfile: (data: Partial<Profile>) => void;
+  saveProfile: (data: Partial<Profile>) => void;
 }
 
 const defaultProfile: Profile = { name: "", focus: "rotina", style: "humano" };
 const ProfileContext = createContext<ProfileContextValue>({
   profile: defaultProfile,
   updateProfile: () => {},
+  saveProfile: () => {},
 });
 
 const STORAGE_KEY = "rawn.user.profile";
@@ -46,8 +52,11 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateProfile = (data: Partial<Profile>) =>
     setProfile((prev) => ({ ...prev, ...data }));
 
+  const saveProfile = (data: Partial<Profile>) =>
+    setProfile((prev) => ({ ...prev, ...data }));
+
   return (
-    <ProfileContext.Provider value={{ profile, updateProfile }}>
+    <ProfileContext.Provider value={{ profile, updateProfile, saveProfile }}>
       {children}
     </ProfileContext.Provider>
   );

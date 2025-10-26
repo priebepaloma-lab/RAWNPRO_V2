@@ -35,9 +35,9 @@ export default function DocPage({ title, children }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="rounded-lg border border-rawn-border-panel bg-rawn-bg-surface/50 p-6 backdrop-blur-sm md:p-8"
+          className="rounded-lg border border-rawn-border-panel bg-[#4A4A4A] p-6 backdrop-blur-sm md:p-8"
         >
-          <div className="prose prose-invert prose-sm max-w-none prose-headings:text-rawn-text-primary prose-p:text-rawn-text-secondary prose-a:text-rawn-accent-neon prose-a:no-underline hover:prose-a:text-rawn-accent-lime prose-strong:text-rawn-text-primary prose-ul:text-rawn-text-secondary prose-ol:text-rawn-text-secondary">
+          <div className="prose prose-sm max-w-none prose-headings:text-white prose-p:text-white prose-a:text-rawn-accent-neon prose-a:no-underline hover:prose-a:text-rawn-accent-lime prose-strong:text-white prose-ul:text-white prose-ol:text-white prose-li:text-white">
             {children}
           </div>
         </motion.div>

@@ -90,7 +90,7 @@ export default function MessageBubble({
           "max-w-[78%] px-4 py-2.5 text-sm shadow-sm",
           isUser
             ? "bg-[#00FF9C] text-black rounded-2xl rounded-br-sm"
-            : "bg-[#F5F5F5] text-black rounded-2xl rounded-bl-sm prose prose-zinc max-w-none [&>div]:!leading-relaxed",
+            : "bg-[#4A4A4A] text-white rounded-2xl rounded-bl-sm prose prose-invert max-w-none [&>div]:!leading-relaxed",
         ].join(" ")}
       >
         {isUser && profile?.name ? (
@@ -147,22 +147,22 @@ export default function MessageBubble({
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="!text-emerald-700 !underline !font-medium hover:!text-emerald-800 !transition-colors"
+                  className="!text-rawn-accent-neon !underline !font-medium hover:!text-rawn-accent-lime !transition-colors"
                 >
                   {children}
                 </a>
               ),
               code: ({ children }) => (
-                <code className="!rounded !bg-black/10 !px-1.5 !py-0.5 !text-[0.9em] !font-mono">
+                <code className="!rounded !bg-white/20 !px-1.5 !py-0.5 !text-[0.9em] !font-mono">
                   {children}
                 </code>
               ),
               blockquote: ({ children }) => (
-                <blockquote className="!border-l-4 !border-neutral-300 !pl-4 !italic !my-3">
+                <blockquote className="!border-l-4 !border-white/30 !pl-4 !italic !my-3">
                   {children}
                 </blockquote>
               ),
-              hr: () => <hr className="!border-neutral-200 !my-4" />,
+              hr: () => <hr className="!border-white/20 !my-4" />,
             }}
           >
             {shownText}
@@ -172,25 +172,25 @@ export default function MessageBubble({
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="mt-1 text-xs font-semibold text-emerald-700 hover:underline focus:outline-none"
+            className="mt-1 text-xs font-semibold text-rawn-accent-neon hover:underline focus:outline-none"
             aria-expanded={expanded}
           >
             {expanded ? "mostrar menos" : "mostrar mais"}
           </button>
         )}
         {isInstructionalContent && (
-          <div className="mt-3 border-t border-neutral-200 pt-2 text-[11px] italic text-neutral-500">
+          <div className="mt-3 border-t border-white/20 pt-2 text-[11px] italic text-white/70">
             Este conteúdo tem caráter educativo e não substitui acompanhamento
             profissional. Se sentir dor, desconforto ou agravamento de sintomas,
             procure um especialista.
           </div>
         )}
         {canActions && (
-          <div className="mt-2 flex items-center gap-2 text-xs text-neutral-700">
+          <div className="mt-2 flex items-center gap-2 text-xs text-white/90">
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/70 hover:bg-white transition-colors"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/10 hover:bg-white/20 transition-colors"
               aria-label="Copiar resposta"
             >
               <Copy size={14} /> copiar
@@ -199,7 +199,7 @@ export default function MessageBubble({
               <button
                 type="button"
                 onClick={onRegenerate}
-                className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/70 hover:bg-white transition-colors"
+                className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/10 hover:bg-white/20 transition-colors"
                 aria-label="Regenerar resposta"
               >
                 <RefreshCw size={14} /> regenerar
