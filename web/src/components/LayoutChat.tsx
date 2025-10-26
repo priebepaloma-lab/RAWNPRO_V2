@@ -76,18 +76,29 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         profile,
       };
 
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      async function call(attempt = 1): Promise<string> {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = (await res.json()) as { role: "system"; content: string };
+        if (!res.ok) {
+          if (attempt < 2 && (res.status === 429 || res.status >= 500)) {
+            await new Promise((r) => setTimeout(r, 700));
+            return call(attempt + 1);
+          }
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = (await res.json()) as { role: "system"; content: string };
+        return data.content;
+      }
+
+      const content = await call();
       const sysId = Math.random().toString(36).slice(2);
       setMessages((prev) => [
         ...prev,
-        { id: sysId, role: "system", text: data.content },
+        { id: sysId, role: "system", text: content },
       ]);
     } catch (e) {
       const errId = Math.random().toString(36).slice(2);
