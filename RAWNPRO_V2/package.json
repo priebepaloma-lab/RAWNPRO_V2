@@ -1,0 +1,14 @@
+{
+  "name": "rawn-pro-v2",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "web",
+    "api"
+  ],
+  "scripts": {
+    "dev": "npm --workspace web run dev",
+    "build": "npm --workspace web run build",
+    "lint": "npm --workspace web run lint"
+  }
+}
