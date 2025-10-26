@@ -21,11 +21,13 @@ RAWNPRO_V2/
 ## 🚀 Desenvolvimento Local
 
 1. **Instalar dependências**
+
    ```bash
    npm install
    ```
 
 2. **Configurar variáveis de ambiente**
+
    ```bash
    cd web
    cp .env.example .env.local
@@ -42,23 +44,28 @@ Acesse: **http://localhost:3000**
 ## 📦 Deploy na Vercel
 
 ### Passo 1: Importar Projeto
+
 1. Acesse [vercel.com](https://vercel.com)
 2. Clique em **Add New Project**
 3. Importe o repositório `RAWNPRO_V2` do GitHub
 
 ### Passo 2: Configurar Build
+
 - **Framework Preset:** Next.js
 - **Root Directory:** `web/`
 - **Build Command:** `npm run build` (padrão)
 - **Output Directory:** `.next` (padrão)
 
 ### Passo 3: Variáveis de Ambiente
+
 Adicione no painel da Vercel:
+
 ```
 OPENAI_API_KEY=sk-proj-...
 ```
 
 ### Passo 4: Deploy
+
 Clique em **Deploy** e aguarde o build finalizar.
 
 ## 🛠️ Stack Tecnológica
