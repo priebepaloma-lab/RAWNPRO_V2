@@ -1,0 +1,15 @@
+{
+  "folders": [
+    { "path": "web" },
+    { "path": "api" },
+    { "path": "infra" }
+  ],
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "github.copilot",
+      "formulahendry.code-runner"
+    ]
+  }
+}
