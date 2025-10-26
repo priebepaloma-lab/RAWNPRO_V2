@@ -25,34 +25,24 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="mb-8"
+          className="mb-6 md:mb-8"
         >
           <Image
             src="/brand/Tela Walcome rawn pro.png"
             alt="RAWN PRO"
-            width={240}
-            height={240}
+            width={280}
+            height={280}
             priority
-            className="drop-shadow-neon-soft"
+            className="drop-shadow-neon-soft w-[220px] h-auto md:w-[280px]"
           />
         </motion.div>
 
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-4xl font-bold text-white mb-3 tracking-tight"
-        >
-          RAWN PRO
-        </motion.h1>
-
-        {/* Subtitle */}
+        {/* Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-lg text-rawn-text-secondary mb-12 leading-relaxed"
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-lg md:text-xl text-rawn-text-secondary mb-10 md:mb-12 leading-relaxed"
         >
           Ciência em conversa.
           <br />
@@ -67,7 +57,7 @@ export default function WelcomePage() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleContinue}
-          className="w-full max-w-xs rounded-pill bg-rawn-accent-neon px-8 py-4 text-base font-semibold text-black shadow-neon-glow transition-all hover:shadow-neon-focus hover:bg-rawn-accent-lime focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon focus:ring-offset-2 focus:ring-offset-rawn-bg-base"
+          className="w-full max-w-xs rounded-pill bg-rawn-accent-neon px-8 py-4 md:py-4.5 text-base font-semibold text-black shadow-neon-glow transition-all hover:shadow-neon-focus hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon focus:ring-offset-2 focus:ring-offset-rawn-bg-base"
         >
           Continuar
         </motion.button>
@@ -77,7 +67,7 @@ export default function WelcomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="mt-8 text-xs text-rawn-text-muted"
+          className="pt-6 md:pt-8 text-xs text-rawn-text-muted"
         >
           Ao continuar, você concorda com nossos Termos e Políticas
         </motion.p>

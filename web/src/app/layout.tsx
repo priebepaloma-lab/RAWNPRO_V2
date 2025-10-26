@@ -1,6 +1,8 @@
 import React from "react";
 import "../styles/globals.css";
 import { ProfileProvider } from "./profile/ProfileContext";
+import ClientLayout from "@/components/ClientLayout";
+import { ToastProvider } from "@/components/ToastProvider";
 
 export const metadata = {
   title: "RAWN PRO",
@@ -35,7 +37,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ProfileProvider>{children}</ProfileProvider>
+        <ToastProvider>
+          <ProfileProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </ProfileProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -4,10 +4,12 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useProfile } from "./ProfileContext";
+import { useToast } from "@/components/ToastProvider";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { profile, saveProfile } = useProfile();
+  const toast = useToast();
 
   const [formData, setFormData] = React.useState({
     name: profile?.name || "",
@@ -24,6 +26,13 @@ export default function ProfilePage() {
 
     // Marca que o primeiro acesso foi concluído
     localStorage.setItem("firstRunComplete", "true");
+    // Marca para feedback ao retornar ao chat
+    localStorage.setItem("profileSaved", "true");
+
+    // Feedback imediato
+    try {
+      toast.success("Perfil atualizado");
+    } catch {}
 
     // Redireciona para o chat
     router.push("/");
@@ -56,11 +65,11 @@ export default function ProfilePage() {
           <h1 className="text-3xl font-semibold text-white mb-3">
             Editar Perfil
           </h1>
-          <p className="text-sm text-rawn-text-secondary leading-relaxed max-w-xl mx-auto">
+          <p className="text-sm text-white/90 leading-relaxed max-w-xl mx-auto">
             Essas informações ajudam o RAWN PRO a entender seu ponto de partida
             e adaptar as orientações com segurança e precisão.
           </p>
-          <p className="text-xs text-rawn-text-muted mt-2">
+          <p className="text-xs text-white/70 mt-2">
             Os dados ficam apenas no seu dispositivo e podem ser apagados a
             qualquer momento.
           </p>
@@ -68,7 +77,7 @@ export default function ProfilePage() {
 
         {/* Form Container */}
         <form onSubmit={handleSubmit}>
-          <div className="rounded-lg border border-rawn-border-panel bg-rawn-bg-surface/50 backdrop-blur-sm p-8 mb-6 space-y-6">
+          <div className="rounded-lg border border-rawn-border-panel bg-[#4A4A4A] backdrop-blur-sm p-8 mb-6 space-y-6">
             {/* Nome */}
             <div>
               <label
@@ -84,7 +93,7 @@ export default function ProfilePage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Ex: Rafael ou Rafa"
-                className="w-full rounded-md border border-rawn-border-neon/50 bg-transparent px-4 py-3 text-sm text-white placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/30 transition-all"
+                className="w-full rounded-md border border-white/25 bg-[#3A3A3A] px-4 py-3 text-sm text-white placeholder:text-white/70 focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/35 transition-all"
               />
             </div>
 
@@ -101,7 +110,7 @@ export default function ProfilePage() {
                 name="ageRange"
                 value={formData.ageRange}
                 onChange={handleChange}
-                className="w-full rounded-md border border-rawn-border-neon/50 bg-rawn-bg-base px-4 py-3 text-sm text-white focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/30 transition-all"
+                className="w-full rounded-md border border-white/25 bg-[#3A3A3A] px-4 py-3 text-sm text-white focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/35 transition-all"
               >
                 <option value="">Selecione</option>
                 <option value="14-18">14 a 18 anos</option>
@@ -124,7 +133,7 @@ export default function ProfilePage() {
                       "flex-1 min-w-[120px] rounded-md border px-4 py-3 text-center text-sm font-medium cursor-pointer transition-all",
                       formData.level === level
                         ? "border-rawn-accent-neon bg-rawn-accent-neon/10 text-rawn-accent-neon shadow-neon-focus"
-                        : "border-rawn-border-neon/30 text-rawn-text-secondary hover:border-rawn-accent-neon/50 hover:text-rawn-text-primary",
+                        : "border-white/20 text-white/80 hover:border-rawn-accent-neon/50 hover:text-white",
                     ].join(" ")}
                   >
                     <input
@@ -161,7 +170,7 @@ export default function ProfilePage() {
                       "rounded-md border px-4 py-3 text-center text-sm font-medium cursor-pointer transition-all",
                       formData.goal === goal
                         ? "border-rawn-accent-neon bg-rawn-accent-neon/10 text-rawn-accent-neon shadow-neon-focus"
-                        : "border-rawn-border-neon/30 text-rawn-text-secondary hover:border-rawn-accent-neon/50 hover:text-rawn-text-primary",
+                        : "border-white/20 text-white/80 hover:border-rawn-accent-neon/50 hover:text-white",
                     ].join(" ")}
                   >
                     <input
@@ -189,7 +198,7 @@ export default function ProfilePage() {
                   (opcional)
                 </span>
               </label>
-              <p className="text-xs text-rawn-text-secondary mb-3">
+              <p className="text-xs text-white/80 mb-3">
                 Descreva, se desejar, qualquer fator físico, clínico ou
                 circunstancial que o RAWN PRO deva considerar para garantir
                 segurança nas orientações.
@@ -201,13 +210,13 @@ export default function ProfilePage() {
                 onChange={handleChange}
                 rows={4}
                 placeholder="Ex: Tenho problema no joelho direito, evito impacto..."
-                className="w-full rounded-md border border-rawn-border-neon/30 bg-transparent px-4 py-3 text-sm text-white placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/30 transition-all resize-none"
+                className="w-full rounded-md border border-white/25 bg-[#3A3A3A] px-4 py-3 text-sm text-white placeholder:text-white/70 focus:border-rawn-accent-neon focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon/35 transition-all resize-none"
               />
             </div>
 
             {/* Privacy Notice */}
-            <div className="border-t border-rawn-border-panel pt-6">
-              <p className="text-xs text-rawn-text-muted leading-relaxed">
+            <div className="border-t border-white/15 pt-6">
+              <p className="text-xs text-white/70 leading-relaxed">
                 Essas informações são armazenadas apenas no seu dispositivo. O
                 RAWN PRO não envia, compartilha nem armazena dados em servidores
                 externos. Você pode apagá-los a qualquer momento.
@@ -224,7 +233,7 @@ export default function ProfilePage() {
             className={[
               "w-full rounded-pill px-8 py-4 text-base font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-rawn-bg-base",
               isValid
-                ? "bg-rawn-accent-neon text-black shadow-neon-glow hover:shadow-neon-focus hover:bg-rawn-accent-lime focus:ring-rawn-accent-neon cursor-pointer"
+                ? "bg-rawn-accent-neon text-black shadow-neon-glow hover:shadow-neon-focus hover:brightness-110 focus:ring-rawn-accent-neon cursor-pointer"
                 : "bg-rawn-bg-surface text-rawn-text-muted cursor-not-allowed opacity-50",
             ].join(" ")}
           >

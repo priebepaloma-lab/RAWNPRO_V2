@@ -31,6 +31,21 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
           setMessages(parsed);
         }
       }
+
+      // Mensagem automática após salvar o perfil
+      const justSaved = localStorage.getItem("profileSaved");
+      if (justSaved) {
+        const sysId = Math.random().toString(36).slice(2);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: sysId,
+            role: "system",
+            text: "Tudo pronto. Suas orientações agora estão ajustadas ao seu perfil.",
+          },
+        ]);
+        localStorage.removeItem("profileSaved");
+      }
     } catch {
       // falha silenciosa para não quebrar a UI
     }

@@ -4,10 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useToast } from "@/components/ToastProvider";
 
 export default function ConsentPage() {
   const router = useRouter();
   const [accepted, setAccepted] = React.useState(false);
+  const toast = useToast();
 
   const handleAccept = () => {
     if (!accepted) return;
@@ -15,6 +17,10 @@ export default function ConsentPage() {
     // Persiste consentimento no localStorage
     localStorage.setItem("consentAccepted", "true");
     localStorage.setItem("consentDate", new Date().toISOString());
+
+    try {
+      toast.success("Consentimento registrado");
+    } catch {}
 
     // Redireciona para o perfil
     router.push("/profile");
@@ -40,15 +46,15 @@ export default function ConsentPage() {
         </div>
 
         {/* Content Box */}
-        <div className="rounded-lg border border-rawn-border-panel bg-[#0F0F0F] p-6 mb-6">
-          <div className="space-y-4 text-sm text-rawn-text-secondary">
+        <div className="rounded-lg border border-white/15 bg-[#4A4A4A] p-6 mb-6">
+          <div className="space-y-4 text-sm text-white/90">
             <p>
               O <strong className="text-white">RAWN PRO</strong> é um sistema de
               inteligência aplicada à performance humana com caráter
               exclusivamente educacional.
             </p>
             <p>Ao utilizar o aplicativo, você declara estar ciente de que:</p>
-            <ul className="list-disc list-inside space-y-2 pl-2">
+            <ul className="list-disc list-inside space-y-2 pl-2 text-white/90">
               <li>Todo conteúdo tem finalidade educacional, não clínica</li>
               <li>
                 O sistema não substitui acompanhamento profissional
@@ -63,26 +69,26 @@ export default function ConsentPage() {
                 compartilhados
               </li>
             </ul>
-            <div className="pt-4 border-t border-rawn-border-panel">
-              <p className="text-xs text-rawn-text-muted">
+            <div className="pt-4 border-t border-white/15">
+              <p className="text-xs text-white/70">
                 Para mais detalhes, consulte:
               </p>
               <div className="flex flex-wrap gap-3 mt-3">
                 <Link
                   href="/terms"
-                  className="text-xs text-rawn-accent-neon hover:text-rawn-accent-lime underline transition-colors"
+                  className="text-xs text-rawn-accent-neon hover:brightness-110 underline transition-colors"
                 >
                   Termos de Uso
                 </Link>
                 <Link
                   href="/privacy"
-                  className="text-xs text-rawn-accent-neon hover:text-rawn-accent-lime underline transition-colors"
+                  className="text-xs text-rawn-accent-neon hover:brightness-110 underline transition-colors"
                 >
                   Política de Privacidade
                 </Link>
                 <Link
                   href="/disclaimer"
-                  className="text-xs text-rawn-accent-neon hover:text-rawn-accent-lime underline transition-colors"
+                  className="text-xs text-rawn-accent-neon hover:brightness-110 underline transition-colors"
                 >
                   Aviso de Responsabilidade
                 </Link>
@@ -97,9 +103,9 @@ export default function ConsentPage() {
             type="checkbox"
             checked={accepted}
             onChange={(e) => setAccepted(e.target.checked)}
-            className="mt-1 h-5 w-5 rounded border-rawn-border-neon bg-transparent checked:bg-rawn-accent-neon checked:border-rawn-accent-neon focus:ring-2 focus:ring-rawn-accent-neon focus:ring-offset-2 focus:ring-offset-rawn-bg-base cursor-pointer transition-all"
+            className="mt-1 h-5 w-5 rounded border-white/30 bg-transparent checked:bg-rawn-accent-neon checked:border-rawn-accent-neon focus:ring-2 focus:ring-rawn-accent-neon focus:ring-offset-2 focus:ring-offset-rawn-bg-base cursor-pointer transition-all"
           />
-          <span className="text-sm text-rawn-text-secondary group-hover:text-rawn-text-primary transition-colors">
+          <span className="text-sm text-white/85 group-hover:text-white transition-colors">
             Concordo com os Termos de Uso, Política de Privacidade e Aviso de
             Responsabilidade do RAWN PRO
           </span>
@@ -114,7 +120,7 @@ export default function ConsentPage() {
           className={[
             "w-full rounded-pill px-8 py-4 text-base font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-rawn-bg-base",
             accepted
-              ? "bg-rawn-accent-neon text-black shadow-neon-glow hover:shadow-neon-focus hover:bg-rawn-accent-lime focus:ring-rawn-accent-neon cursor-pointer"
+              ? "bg-rawn-accent-neon text-black shadow-neon-glow hover:shadow-neon-focus hover:brightness-110 focus:ring-rawn-accent-neon cursor-pointer"
               : "bg-rawn-bg-surface text-rawn-text-muted cursor-not-allowed opacity-50",
           ].join(" ")}
         >
