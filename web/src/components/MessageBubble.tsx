@@ -2,14 +2,23 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Copy, RefreshCw } from "lucide-react";
 import { useProfile } from "@/app/profile/ProfileContext";
 
 type Props = {
   role: "user" | "system";
   text: string;
+  // ações opcionais para respostas do assistente
+  onRegenerate?: () => void;
+  isLast?: boolean;
 };
 
-export default function MessageBubble({ role, text }: Props) {
+export default function MessageBubble({
+  role,
+  text,
+  onRegenerate,
+  isLast,
+}: Props) {
   const { profile } = useProfile();
 
   // mensagem de sistema especial (feedback de limpeza)
@@ -45,7 +54,17 @@ export default function MessageBubble({ role, text }: Props) {
 
   const isLong = (displayText ?? "").length > 800;
   const [expanded, setExpanded] = React.useState(false);
-  const shownText = isLong && !expanded ? displayText.slice(0, 800) + "…" : displayText;
+  const shownText =
+    isLong && !expanded ? displayText.slice(0, 800) + "…" : displayText;
+  const canActions = role === "system";
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(displayText);
+    } catch {
+      // ignore
+    }
+  }
 
   return (
     <motion.div
@@ -69,9 +88,7 @@ export default function MessageBubble({ role, text }: Props) {
             {profile.name}
           </span>
         ) : null}
-        <div className="whitespace-pre-wrap leading-relaxed">
-          {shownText}
-        </div>
+        <div className="whitespace-pre-wrap leading-relaxed">{shownText}</div>
         {isLong && (
           <button
             type="button"
@@ -81,6 +98,28 @@ export default function MessageBubble({ role, text }: Props) {
           >
             {expanded ? "mostrar menos" : "mostrar mais"}
           </button>
+        )}
+        {canActions && (
+          <div className="mt-2 flex items-center gap-2 text-xs text-neutral-700">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/70 hover:bg-white transition-colors"
+              aria-label="Copiar resposta"
+            >
+              <Copy size={14} /> copiar
+            </button>
+            {isLast && onRegenerate && (
+              <button
+                type="button"
+                onClick={onRegenerate}
+                className="inline-flex items-center gap-1 rounded-md px-2 py-1 bg-white/70 hover:bg-white transition-colors"
+                aria-label="Regenerar resposta"
+              >
+                <RefreshCw size={14} /> regenerar
+              </button>
+            )}
+          </div>
         )}
       </div>
     </motion.div>

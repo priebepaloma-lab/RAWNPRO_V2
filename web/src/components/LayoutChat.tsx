@@ -118,9 +118,30 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
             role="list"
             aria-label="Mensagens do chat"
           >
-            {messages.map((m) => (
-              <MessageBubble key={m.id} role={m.role} text={m.text} />
-            ))}
+            {messages.map((m, idx) => {
+              const isLast = idx === messages.length - 1 && m.role === "system";
+              return (
+                <MessageBubble
+                  key={m.id}
+                  role={m.role}
+                  text={m.text}
+                  isLast={isLast}
+                  onRegenerate={
+                    isLast
+                      ? () => {
+                          // reenvia a última mensagem do usuário
+                          const lastUser = [...messages]
+                            .reverse()
+                            .find((mm) => mm.role === "user");
+                          if (lastUser?.text) {
+                            handleSend(lastUser.text);
+                          }
+                        }
+                      : undefined
+                  }
+                />
+              );
+            })}
           </section>
         </motion.div>
       </main>
