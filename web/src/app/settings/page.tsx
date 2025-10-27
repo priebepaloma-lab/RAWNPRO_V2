@@ -11,6 +11,50 @@ export default function SettingsPage() {
   const toast = useToast();
   const [showModal, setShowModal] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const modalRef = React.useRef<HTMLDivElement>(null);
+  const cancelButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  // Focus trap no modal
+  React.useEffect(() => {
+    if (!showModal) return;
+
+    // Foca no botão cancelar quando modal abre
+    cancelButtonRef.current?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !isDeleting) {
+        setShowModal(false);
+      }
+
+      // Trap focus dentro do modal
+      if (e.key === "Tab") {
+        const focusableElements = modalRef.current?.querySelectorAll(
+          'button:not(:disabled), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusableElements || focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement;
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [showModal, isDeleting]);
 
   const handleDeleteData = () => {
     setIsDeleting(true);
@@ -173,8 +217,13 @@ export default function SettingsPage() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 px-4"
             onClick={() => !isDeleting && setShowModal(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
           >
             <motion.div
+              ref={modalRef}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -183,14 +232,23 @@ export default function SettingsPage() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
+                <div
+                  className="flex-shrink-0 w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center"
+                  aria-hidden="true"
+                >
                   <AlertTriangle size={24} className="text-red-400" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-2">
+                  <h3
+                    id="modal-title"
+                    className="text-lg font-semibold text-white mb-2"
+                  >
                     Confirmar exclusão de dados
                   </h3>
-                  <p className="text-sm text-white/80 leading-relaxed">
+                  <p
+                    id="modal-description"
+                    className="text-sm text-white/80 leading-relaxed"
+                  >
                     Esta ação é <strong>irreversível</strong>. Todos os seus
                     dados serão permanentemente apagados deste dispositivo:
                   </p>
@@ -204,10 +262,12 @@ export default function SettingsPage() {
 
               <div className="flex gap-3">
                 <button
+                  ref={cancelButtonRef}
                   type="button"
                   onClick={() => setShowModal(false)}
                   disabled={isDeleting}
-                  className="flex-1 rounded-md border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 rounded-md border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Cancelar exclusão"
                 >
                   Cancelar
                 </button>
@@ -215,7 +275,12 @@ export default function SettingsPage() {
                   type="button"
                   onClick={handleDeleteData}
                   disabled={isDeleting}
-                  className="flex-1 rounded-md bg-red-500 px-4 py-3 text-sm font-semibold text-white hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 rounded-md bg-red-500 px-4 py-3 text-sm font-semibold text-white hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-400"
+                  aria-label={
+                    isDeleting
+                      ? "Apagando dados"
+                      : "Confirmar exclusão de todos os dados"
+                  }
                 >
                   {isDeleting ? "Apagando..." : "Apagar Tudo"}
                 </button>

@@ -178,7 +178,11 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
       <HeaderRAWN />
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-4">
+      <main
+        className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-4"
+        role="main"
+        aria-label="Conversa com RAWN PRO"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -186,8 +190,10 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         >
           <section
             className="flex-1 space-y-3"
-            role="list"
-            aria-label="Mensagens do chat"
+            role="log"
+            aria-label="Histórico de mensagens"
+            aria-live="polite"
+            aria-atomic="false"
           >
             {messages.map((m, idx) => {
               const isLast = idx === messages.length - 1 && m.role === "system";
