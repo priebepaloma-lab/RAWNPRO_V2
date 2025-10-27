@@ -92,11 +92,12 @@ export default function WelcomeInstall() {
           >
             <div className="relative h-24 w-24">
               <Image
-                src="/brand/Tela Walcome rawn pro.png"
+                src="/brand/Favicon rawn pro.png"
                 alt="RAWN PRO"
                 width={120}
                 height={120}
                 className="object-contain"
+                priority
               />
             </div>
           </motion.div>
@@ -169,15 +170,13 @@ export default function WelcomeInstall() {
               </div>
             )}
 
-            {/* Removido: ação de pular para simplificar a decisão de instalar */}
+            {/* marcador de build para validar atualização no device */}
+            <p className="text-center text-[10px] text-white/40">
+              build mobile-1
+            </p>
           </motion.div>
         </div>
       </motion.div>
     </div>
   );
-
-  {
-    /* Build marker para confirmar versão no dispositivo */
-  }
-  <p className="text-center text-[10px] text-white/40">build 97dc90f</p>;
 }
