@@ -12,6 +12,7 @@ type MenuItem = {
 
 const menuItems: MenuItem[] = [
   { label: "Editar Perfil", href: "/profile" },
+  { label: "Planos e Assinaturas", href: "/plans" },
   { label: "Configurações", href: "/settings" },
   { label: "Sobre o RAWN PRO", href: "/about" },
   { label: "Termos de Uso", href: "/terms" },

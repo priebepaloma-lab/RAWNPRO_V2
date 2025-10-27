@@ -5,6 +5,7 @@ Olá! Preciso que você crie um blueprint completo e funcional para o Make.com (
 ## Contexto do Projeto
 
 Estou vendendo assinaturas de um app SaaS chamado RAWN PRO através da Kiwify. Preciso automatizar o processo de:
+
 1. Receber notificação de pagamento da Kiwify
 2. Validar os dados
 3. Notificar meu backend Next.js
@@ -13,12 +14,14 @@ Estou vendendo assinaturas de um app SaaS chamado RAWN PRO através da Kiwify. P
 ## Produtos na Kiwify
 
 **Plano Mensal:**
+
 - Product ID: `uSs6hgG`
 - Checkout URL: https://pay.kiwify.com.br/uSs6hgG
 - Preço: R$ 49,90/mês (primeira cobrança R$ 19,90)
 - Tipo: Assinatura recorrente
 
 **Plano Lifetime:**
+
 - Product ID: `ocIXXfO`
 - Checkout URL: https://pay.kiwify.com.br/ocIXXfO
 - Preço: R$ 299,00
@@ -27,16 +30,19 @@ Estou vendendo assinaturas de um app SaaS chamado RAWN PRO através da Kiwify. P
 ## Webhook URLs
 
 **Make.com Webhook (entrada):**
+
 ```
 https://hook.us2.make.com/m0nyfkfap2j8fsprumxrqa6qqmkew7um
 ```
 
 **Next.js API Webhook (saída):**
+
 ```
 https://meu-dominio.vercel.app/api/webhooks/kiwify
 ```
 
 **Página de Sucesso:**
+
 ```
 https://meu-dominio.vercel.app/success
 ```
@@ -65,7 +71,9 @@ A Kiwify envia webhooks no seguinte formato:
 ## Requisitos do Blueprint
 
 ### 1. Validação de Status
+
 Processar APENAS estes status:
+
 - `paid` - Pagamento confirmado
 - `approved` - Pedido aprovado
 - `completed` - Transação completa
@@ -73,13 +81,17 @@ Processar APENAS estes status:
 Ignorar: `pending`, `cancelled`, `refunded`, `expired`
 
 ### 2. Identificação de Plano
+
 Baseado no `product_id`:
+
 - Se contém `uSs6hgG` → plan = "mensal"
 - Se contém `ocIXXfO` → plan = "lifetime"
 - Caso contrário → Enviar alerta de erro
 
 ### 3. Notificação ao Next.js
+
 Fazer POST para `/api/webhooks/kiwify` com:
+
 ```json
 {
   "order_id": "{{order_id}}",
@@ -94,7 +106,9 @@ Fazer POST para `/api/webhooks/kiwify` com:
 ```
 
 ### 4. Redirecionamento do Cliente
+
 Após processar, redirecionar (HTTP 302) para:
+
 ```
 /success?order_id={{order_id}}&plan={{plan}}&email={{customer.email}}
 ```
@@ -141,19 +155,22 @@ Por favor, forneça:
 ## Casos de Uso Reais
 
 **Cenário 1: Cliente compra Mensal**
+
 ```
-Kiwify envia webhook → Make valida status "paid" → 
+Kiwify envia webhook → Make valida status "paid" →
 Identifica product_id "uSs6hgG" = mensal →
 POST para Next.js com dados →
 Redireciona para /success?order_id=ABC&plan=mensal&email=cliente@email.com
 ```
 
 **Cenário 2: Cliente compra Lifetime**
+
 ```
 Similar, mas identifica "ocIXXfO" = lifetime
 ```
 
 **Cenário 3: Webhook de cancelamento**
+
 ```
 Status = "cancelled" → Router ignora → Não processa
 ```
