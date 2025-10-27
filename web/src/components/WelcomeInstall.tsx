@@ -113,7 +113,8 @@ export default function WelcomeInstall() {
               <p className="flex items-start gap-3 text-white text-sm">
                 <span className="font-bold text-base">1.</span>
                 <span>
-                  Toque no ícone de compartilhar (quadrado com seta para cima)
+                  Toque nos <strong>(...)</strong> no canto inferior esquerdo do
+                  seu navegador
                 </span>
               </p>
               <p className="flex items-start gap-3 text-white text-sm">
