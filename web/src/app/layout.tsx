@@ -13,13 +13,6 @@ export const metadata = {
     icon: "/brand/Favicon rawn pro.png",
     apple: "/brand/Favicon rawn pro.png",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: "#0F0F0F",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -40,6 +33,14 @@ export const metadata = {
     description: "Inteligência de performance humana",
     images: ["/brand/Tela Walcome rawn pro.png"],
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#0F0F0F",
 };
 
 export default function RootLayout({
