@@ -4,6 +4,15 @@ import { ProfileProvider } from "./profile/ProfileContext";
 import ClientLayout from "@/components/ClientLayout";
 import { ToastProvider } from "@/components/ToastProvider";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#000000",
+};
+
 export const metadata = {
   title: "RAWN PRO",
   description: "Ciência em conversa. Clareza em ação.",
@@ -36,14 +45,6 @@ export const metadata = {
     description: "Inteligência de performance humana",
     images: ["/brand/Tela Walcome rawn pro.png"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover",
-  },
-  themeColor: "#000000",
 };
 
 export default function RootLayout({

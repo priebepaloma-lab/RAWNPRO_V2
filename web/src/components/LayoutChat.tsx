@@ -182,9 +182,9 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"
         role="main"
         aria-label="Conversa com RAWN PRO"
-        style={{ 
+        style={{
           WebkitOverflowScrolling: "touch",
-          paddingBottom: "80px"
+          paddingBottom: "80px",
         }}
       >
         <motion.div

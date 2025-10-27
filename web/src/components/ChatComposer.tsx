@@ -22,10 +22,10 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
   }
 
   return (
-    <div 
+    <div
       className="w-full border-t border-rawn-border-panel bg-rawn-bg-base backdrop-blur-panel safe-area-bottom"
       style={{
-        position: 'fixed',
+        position: "fixed",
         bottom: 0,
         left: 0,
         right: 0,
