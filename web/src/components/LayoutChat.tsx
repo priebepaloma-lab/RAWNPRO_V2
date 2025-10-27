@@ -99,6 +99,9 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
 
     const id = Math.random().toString(36).slice(2);
     setMessages((prev) => [...prev, { id, role: "user", text: value }]);
+    
+    // Ativa indicador de digitação
+    setIsTyping(true);
 
     try {
       // Limita histórico a últimas 20 mensagens para evitar contexto excessivo
@@ -243,10 +246,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         </motion.div>
       </main>
       {isTyping && <TypingIndicator />}
-      <ChatComposer
-        onSend={handleSend}
-        onTypingStart={() => setIsTyping(true)}
-      />
+      <ChatComposer onSend={handleSend} />
       <InstallPrompt />
     </div>
   );
