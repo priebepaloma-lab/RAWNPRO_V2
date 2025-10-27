@@ -114,8 +114,7 @@ export default function InstallPrompt() {
                       <span className="font-semibold text-rawn-accent-neon">
                         1.
                       </span>
-                      Toque no botão <strong>Compartilhar</strong> (quadrado com
-                      seta ↑)
+                      Toque no botão <strong>nos três pontinhos</strong> (⋯)
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="font-semibold text-rawn-accent-neon">

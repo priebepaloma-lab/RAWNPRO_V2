@@ -51,25 +51,26 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
           style={{ fontSize: "16px" }}
         />
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.15, rotate: -8 }}
+          whileTap={{ scale: 0.9 }}
           type="submit"
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border-2 border-rawn-accent-neon bg-rawn-accent-neon/10 text-rawn-accent-neon shadow-neon-soft transition-all hover:bg-rawn-accent-neon hover:text-rawn-bg-base hover:shadow-neon-glow active:scale-95 focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon"
+          disabled={!text.trim()}
+          className="flex flex-shrink-0 items-center justify-center transition-all duration-300 focus:outline-none"
           aria-label="Enviar mensagem"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-4 w-4"
-            style={{ transform: "translateX(1px)" }}
+            fill="currentColor"
+            className={[
+              "h-8 w-8 transition-all duration-300",
+              text.trim()
+                ? "text-rawn-accent-neon drop-shadow-[0_0_8px_rgba(0,255,156,0.6)]"
+                : "text-rawn-text-muted/40",
+            ].join(" ")}
+            style={{ transform: "rotate(-45deg)" }}
           >
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
           </svg>
         </motion.button>
       </form>

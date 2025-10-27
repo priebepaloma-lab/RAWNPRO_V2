@@ -5,7 +5,7 @@ import { useProfile } from "@/app/profile/ProfileContext";
 import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
-import InstallPrompt from "@/components/InstallPrompt";
+import WelcomeInstall from "@/components/WelcomeInstall";
 import { motion } from "framer-motion";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/components/ToastProvider";
@@ -197,61 +197,68 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
-      <HeaderRAWN />
-      <main
-        ref={mainRef}
-        className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"
-        role="main"
-        aria-label="Conversa com RAWN PRO"
-        style={{
-          WebkitOverflowScrolling: "touch",
-          paddingBottom: "80px",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+    <>
+      <WelcomeInstall />
+      <div className="flex h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
+        <HeaderRAWN />
+        <main
+          ref={mainRef}
+          className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"
+          role="main"
+          aria-label="Conversa com RAWN PRO"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            paddingBottom: "80px",
+          }}
         >
-          <section
-            className="space-y-3 pb-4"
-            role="log"
-            aria-label="Histórico de mensagens"
-            aria-live="polite"
-            aria-atomic="false"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           >
-            {messages.map((m, idx) => {
-              const isLast = idx === messages.length - 1 && m.role === "system";
-              return (
-                <MessageBubble
-                  key={m.id}
-                  role={m.role}
-                  text={m.text}
-                  isLast={isLast}
-                  onRegenerate={
-                    isLast
-                      ? () => {
-                          // reenvia a última mensagem do usuário
-                          const lastUser = [...messages]
-                            .reverse()
-                            .find((mm) => mm.role === "user");
-                          if (lastUser?.text) {
-                            handleSend(lastUser.text);
+            <section
+              className="space-y-3 pb-4"
+              role="log"
+              aria-label="Histórico de mensagens"
+              aria-live="polite"
+              aria-atomic="false"
+            >
+              {messages.map((m, idx) => {
+                const isLast =
+                  idx === messages.length - 1 && m.role === "system";
+                return (
+                  <MessageBubble
+                    key={m.id}
+                    role={m.role}
+                    text={m.text}
+                    isLast={isLast}
+                    onRegenerate={
+                      isLast
+                        ? () => {
+                            // reenvia a última mensagem do usuário
+                            const lastUser = [...messages]
+                              .reverse()
+                              .find((mm) => mm.role === "user");
+                            if (lastUser?.text) {
+                              handleSend(lastUser.text);
+                            }
                           }
-                        }
-                      : undefined
-                  }
-                />
-              );
-            })}
-            <div ref={messagesEndRef} />
-          </section>
-        </motion.div>
-      </main>
-      {isTyping && <TypingIndicator />}
-      <ChatComposer onSend={handleSend} />
-      <InstallPrompt />
-    </div>
+                        : undefined
+                    }
+                  />
+                );
+              })}
+              <div ref={messagesEndRef} />
+            </section>
+            {isTyping && (
+              <div className="pb-2">
+                <TypingIndicator />
+              </div>
+            )}
+          </motion.div>
+        </main>
+        <ChatComposer onSend={handleSend} />
+      </div>
+    </>
   );
 }
