@@ -14,6 +14,7 @@ html {
   height: 100%;
   position: fixed;
   overscroll-behavior: none;
+  background-color: #000000;
 }
 
 body,
@@ -23,6 +24,7 @@ body,
   overflow: hidden;
   position: fixed;
   overscroll-behavior: none;
+  background-color: #000000;
 }
 
 body {
@@ -31,6 +33,27 @@ body {
     Roboto, "Helvetica Neue", Arial;
   background: radial-gradient(ellipse at center, #101010 0%, #030303 100%);
   background-attachment: fixed;
+}
+
+/* Fix mobile keyboard white flash - force black everywhere */
+input,
+textarea,
+select {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input:focus,
+textarea:focus {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Prevent browser zoom on input focus (iOS Safari) */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea {
+  font-size: 16px !important;
 }
 
 /* Scrollbar customization for dark theme */

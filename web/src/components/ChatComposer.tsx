@@ -31,9 +31,15 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
         <input
           aria-label="Escreva sua mensagem"
           placeholder="Escreva sua mensagem..."
-          className="flex-1 rounded-pill border border-rawn-border-neon bg-rawn-bg-base/50 px-5 py-3 text-sm text-rawn-text-primary outline-none placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:shadow-neon-focus transition-all"
+          className="flex-1 rounded-pill border border-rawn-border-neon bg-rawn-bg-base/50 px-5 py-3 text-base text-rawn-text-primary outline-none placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:shadow-neon-focus transition-all"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          enterKeyHint="send"
+          autoCapitalize="sentences"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          style={{ fontSize: "16px" }}
         />
         <motion.button
           whileHover={{ scale: 1.05 }}

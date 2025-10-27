@@ -176,12 +176,13 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
+    <div className="flex h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary overflow-hidden">
       <HeaderRAWN />
       <main
-        className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-4"
+        className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"
         role="main"
         aria-label="Conversa com RAWN PRO"
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -189,7 +190,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
           transition={{ duration: 0.3 }}
         >
           <section
-            className="flex-1 space-y-3"
+            className="space-y-3 pb-4"
             role="log"
             aria-label="Histórico de mensagens"
             aria-live="polite"
