@@ -82,10 +82,10 @@ export default function MessageBubble({
     >
       <div
         className={[
-          "max-w-[78%] px-4 py-2.5 text-sm shadow-sm",
+          "max-w-[85%] px-4 py-3 text-[15px] shadow-md",
           isUser
-            ? "bg-[#00FF9C] text-black rounded-2xl rounded-br-sm"
-            : "bg-[#4A4A4A] text-white rounded-2xl rounded-bl-sm prose prose-invert max-w-none [&>div]:!leading-relaxed",
+            ? "bg-[#00FF9C] text-black rounded-[18px] rounded-tr-md ml-auto"
+            : "bg-[#2A2A2A] text-white rounded-[18px] rounded-tl-md prose prose-invert max-w-none [&>div]:!leading-relaxed",
         ].join(" ")}
       >
         {isUser && profile?.name ? (
