@@ -64,106 +64,88 @@ export default function WelcomeInstall() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-rawn-bg-base px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
         className="w-full max-w-md"
       >
-        <div className="text-center space-y-6">
-          {/* Logo (sempre colorido) */}
+        <div className="text-center space-y-8">
+          {/* Logo Grande */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
             className="flex justify-center"
           >
-            <div className="relative h-24 w-24">
+            <div className="relative h-32 w-32">
               <Image
                 src="/brand/Favicon rawn pro.png"
                 alt="RAWN PRO"
-                width={120}
-                height={120}
+                width={128}
+                height={128}
                 className="object-contain"
                 priority
               />
             </div>
           </motion.div>
 
-          {/* Título */}
+          {/* Título em caixa alta */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="space-y-2"
           >
-            <h1 className="text-3xl font-bold text-white">
-              Bem-vindo ao{" "}
-              <span className="text-rawn-accent-neon">RAWN PRO</span>
+            <h1 className="text-lg font-bold text-white uppercase leading-tight px-4">
+              TENHA A EXPERIÊNCIA COMPLETA INSTALANDO O APP :
             </h1>
-            <p className="text-rawn-text-muted text-sm leading-relaxed">
-              Para a melhor experiência, instale o app em seu dispositivo
-            </p>
           </motion.div>
 
-          {/* Benefícios removidos para experiência direta */}
-
-          {/* Botão principal de instalação e instruções (quando necessário) */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="space-y-4"
-          >
-            <button
-              onClick={handleInstall}
-              className="w-full rounded-full bg-rawn-accent-neon px-6 py-4 text-base font-bold text-black shadow-neon-glow hover:shadow-neon-intense transition-all flex items-center justify-center gap-2"
+          {/* Instruções simples numeradas - apenas para iOS */}
+          {isIOS && (
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="space-y-4 text-left px-2"
             >
-              <Download size={20} />
-              Instalar agora
-            </button>
+              <p className="flex items-start gap-3 text-white text-sm">
+                <span className="font-bold text-base">1.</span>
+                <span>Toque no ícone de compartilhar (quadrado com seta para cima)</span>
+              </p>
+              <p className="flex items-start gap-3 text-white text-sm">
+                <span className="font-bold text-base">2.</span>
+                <span>Role para baixo e toque em "Adicionar à Tela de Início"</span>
+              </p>
+              <p className="flex items-start gap-3 text-white text-sm">
+                <span className="font-bold text-base">3.</span>
+                <span>Confirme e pronto! Abra o app pelo ícone na sua tela inicial</span>
+              </p>
+            </motion.div>
+          )}
 
-            {/* Instruções iOS sempre visíveis abaixo do botão */}
-            {isIOS && (
-              <div className="bg-rawn-bg-surface/50 border border-rawn-accent-neon/30 rounded-xl p-4 text-left space-y-3">
-                <p className="text-white font-semibold text-sm">
-                  Como instalar no iOS:
-                </p>
-                <div className="space-y-2 text-xs text-white/80">
-                  <p className="flex items-start gap-2">
-                    <span className="font-bold text-rawn-accent-neon min-w-[20px]">
-                      1.
-                    </span>
-                    <span>
-                      Toque nos <strong>três pontinhos (⋯)</strong> na barra
-                      inferior
-                    </span>
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <span className="font-bold text-rawn-accent-neon min-w-[20px]">
-                      2.
-                    </span>
-                    <span>
-                      Role e toque em{" "}
-                      <strong>"Adicionar à Tela de Início"</strong>
-                    </span>
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <span className="font-bold text-rawn-accent-neon min-w-[20px]">
-                      3.
-                    </span>
-                    <span>Confirme e abra pelo ícone na tela inicial</span>
-                  </p>
-                </div>
-              </div>
-            )}
+          {/* Para Android - mostrar botão de instalação */}
+          {!isIOS && deferredPrompt && (
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <button
+                onClick={handleInstall}
+                className="w-full rounded-full bg-rawn-accent-neon px-6 py-4 text-base font-bold text-black shadow-neon-glow hover:shadow-neon-intense transition-all flex items-center justify-center gap-2"
+              >
+                <Download size={20} />
+                Instalar agora
+              </button>
+            </motion.div>
+          )}
 
-            {/* marcador de build para validar atualização no device */}
-            <p className="text-center text-[10px] text-white/40">
-              build mobile-2
-            </p>
-          </motion.div>
+          {/* Marcador de versão visível */}
+          <p className="text-center text-xs text-white/30 font-mono">
+            v5-nocache
+          </p>
         </div>
       </motion.div>
     </div>
