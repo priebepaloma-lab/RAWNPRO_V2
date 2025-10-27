@@ -1,0 +1,26 @@
+# Ignorar diretórios não relacionados ao deploy do web
+api/
+docs/
+docs_rawn/
+infra/
+
+# Dependências
+node_modules/
+**/node_modules/
+
+# Build artifacts
+.next/
+out/
+dist/
+build/
+
+# Environment
+.env*.local
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
