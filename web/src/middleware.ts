@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   response.headers.set("Pragma", "no-cache");
   response.headers.set("Expires", "0");
   response.headers.set("Surrogate-Control", "no-store");
-  
+
   // Força navegador a não usar cache do disco
   response.headers.set("Clear-Site-Data", '"cache"');
 

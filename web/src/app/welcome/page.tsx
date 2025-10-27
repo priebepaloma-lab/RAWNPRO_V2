@@ -6,10 +6,6 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import WelcomeInstall from "@/components/WelcomeInstall";
 
-// Evita cache na CDN/SSG para refletir mudanças imediatamente
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 export default function WelcomePage() {
   const router = useRouter();
 
