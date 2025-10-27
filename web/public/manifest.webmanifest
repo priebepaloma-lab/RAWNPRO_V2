@@ -4,9 +4,11 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
   "description": "Ciência em conversa. Clareza em ação.",
+  "categories": ["health", "fitness", "productivity"],
   "icons": [
     {
       "src": "/icons/rawnpro-192.png",

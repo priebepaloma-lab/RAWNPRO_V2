@@ -13,6 +13,14 @@ export const metadata = {
     icon: "/icons/rawnpro-192.png",
     apple: "/icons/apple-touch-icon-180.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "RAWN PRO",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     title: "RAWN PRO",
     description: "Inteligência de performance humana",
@@ -28,6 +36,14 @@ export const metadata = {
     description: "Inteligência de performance humana",
     images: ["/brand/Tela Walcome rawn pro.png"],
   },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+  },
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
