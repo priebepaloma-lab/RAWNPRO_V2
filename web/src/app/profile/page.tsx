@@ -53,7 +53,7 @@ export default function ProfilePage() {
     formData.name && formData.ageRange && formData.level && formData.goal;
 
   return (
-    <div className="min-h-screen bg-rawn-bg-base flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-rawn-bg-base flex flex-col items-center px-4 py-12 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
