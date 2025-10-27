@@ -22,14 +22,27 @@ import Link from "next/link";
 export default function LandingFitness() {
   return (
     <div className="min-h-screen bg-black">
-      {/* Header Fixo */}
-      <header className="fixed top-0 w-full bg-black/80 backdrop-blur-xl z-50 border-b border-[#00FF9C]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center">
-          <img src="/brand/header-48.png" alt="RAWN PRO" className="h-12" />
+      {/* Header Fixo - Minimalista e Elegante */}
+      <header className="fixed top-0 w-full bg-black/90 backdrop-blur-xl z-50 border-b border-[#00FF9C]/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex justify-between items-center">
+            <img
+              src="/brand/header-48.png"
+              alt="RAWN PRO"
+              className="h-8 sm:h-10 opacity-90 hover:opacity-100 transition-opacity"
+            />
+            <a
+              href="#planos"
+              className="px-6 py-2.5 bg-[#00FF9C]/10 hover:bg-[#00FF9C]/20 text-[#00FF9C] font-semibold rounded-lg transition-all border border-[#00FF9C]/30 text-sm sm:text-base"
+            >
+              Ver Planos
+            </a>
+          </div>
         </div>
-      </header>{" "}
+      </header>
+
       {/* Hero Section - IMPACTO MÁXIMO */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+      <section className="pt-40 pb-24 px-4 relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#00FF9C]/5 blur-[120px] rounded-full" />
 
@@ -39,6 +52,15 @@ export default function LandingFitness() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Logo Grande no Hero */}
+            <div className="mb-8 flex justify-center">
+              <img
+                src="/brand/header-48.png"
+                alt="RAWN PRO"
+                className="h-20 sm:h-24 md:h-28 opacity-95"
+              />
+            </div>
+
             {/* Badge de autoridade */}
             <div className="inline-flex items-center gap-2 bg-[#00FF9C]/10 border border-[#00FF9C]/30 rounded-full px-6 py-3 mb-8">
               <Brain className="w-5 h-5 text-[#00FF9C]" />
@@ -48,7 +70,7 @@ export default function LandingFitness() {
             </div>
 
             {/* Headline - DOR + DESEJO */}
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
               Pare de Confiar em
               <span className="block text-[#00FF9C] mt-2">
                 Respostas Genéricas de IA
@@ -56,7 +78,7 @@ export default function LandingFitness() {
             </h1>
 
             {/* Subheadline - SOLUÇÃO + PROVA */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed px-4">
               Conheça o{" "}
               <strong className="text-white">
                 primeiro treinador de elite 24/7
@@ -70,15 +92,15 @@ export default function LandingFitness() {
             </p>
 
             {/* Proof Point - DIFERENCIAL */}
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6 mb-12 max-w-3xl mx-auto">
+            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6 sm:p-8 mb-12 max-w-3xl mx-auto">
               <div className="flex items-start gap-4">
                 <AlertCircle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
                 <div className="text-left">
-                  <p className="text-white font-semibold mb-2">
+                  <p className="text-white font-semibold mb-2 text-sm sm:text-base">
                     ChatGPT, Gemini e outras IAs abertas NÃO são treinadas para
                     fitness.
                   </p>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
                     Elas podem dar respostas contraditórias, perigosas ou
                     desatualizadas. O RAWN PRO foi{" "}
                     <strong className="text-[#00FF9C]">
@@ -489,22 +511,26 @@ export default function LandingFitness() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="py-12 px-4 bg-black border-t border-[#00FF9C]/20">
+      <footer className="py-16 px-4 bg-black border-t border-[#00FF9C]/20">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold text-[#00FF9C] mb-4">
-                RAWN PRO
-              </h3>
-              <p className="text-gray-400 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div className="md:col-span-1">
+              <img
+                src="/brand/header-48.png"
+                alt="RAWN PRO"
+                className="h-12 mb-6 opacity-90"
+              />
+              <p className="text-gray-400 text-sm leading-relaxed">
                 Inteligência aplicada à performance humana.
                 <br />
-                Ciência que fala com você.
+                <span className="text-[#00FF9C]">
+                  Ciência que fala com você.
+                </span>
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-4">Links</h4>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-3 text-sm">
                 <li>
                   <Link
                     href="/chat"
