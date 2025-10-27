@@ -112,15 +112,21 @@ export default function WelcomeInstall() {
             >
               <p className="flex items-start gap-3 text-white text-sm">
                 <span className="font-bold text-base">1.</span>
-                <span>Toque no ícone de compartilhar (quadrado com seta para cima)</span>
+                <span>
+                  Toque no ícone de compartilhar (quadrado com seta para cima)
+                </span>
               </p>
               <p className="flex items-start gap-3 text-white text-sm">
                 <span className="font-bold text-base">2.</span>
-                <span>Role para baixo e toque em "Adicionar à Tela de Início"</span>
+                <span>
+                  Role para baixo e toque em "Adicionar à Tela de Início"
+                </span>
               </p>
               <p className="flex items-start gap-3 text-white text-sm">
                 <span className="font-bold text-base">3.</span>
-                <span>Confirme e pronto! Abra o app pelo ícone na sua tela inicial</span>
+                <span>
+                  Confirme e pronto! Abra o app pelo ícone na sua tela inicial
+                </span>
               </p>
             </motion.div>
           )}
@@ -142,10 +148,15 @@ export default function WelcomeInstall() {
             </motion.div>
           )}
 
-          {/* Marcador de versão visível */}
-          <p className="text-center text-xs text-white/30 font-mono">
-            v5-nocache
-          </p>
+          {/* Marcador de versão GRANDE e visível */}
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <p className="text-center text-lg font-bold text-rawn-accent-neon font-mono animate-pulse">
+              ✓ v6-FINAL
+            </p>
+            <p className="text-center text-xs text-white/40 mt-1">
+              {new Date().toLocaleString("pt-BR")}
+            </p>
+          </div>
         </div>
       </motion.div>
     </div>
