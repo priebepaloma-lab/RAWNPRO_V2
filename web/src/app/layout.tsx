@@ -10,8 +10,8 @@ export const metadata = {
   metadataBase: new URL("http://localhost:3000"),
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/brand/Favicon rawn pro.png",
-    apple: "/brand/Favicon rawn pro.png",
+    icon: "/icons/rawnpro-192.png",
+    apple: "/icons/apple-touch-icon-180.png",
   },
   openGraph: {
     title: "RAWN PRO",
