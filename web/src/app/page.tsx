@@ -24,17 +24,10 @@ export default function LandingFitness() {
     <div className="min-h-screen bg-black">
       {/* Header Fixo */}
       <header className="fixed top-0 w-full bg-black/80 backdrop-blur-xl z-50 border-b border-[#00FF9C]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-[#00FF9C]">RAWN PRO</div>
-          <Link
-            href="/chat"
-            className="px-6 py-2 bg-[#00FF9C]/10 hover:bg-[#00FF9C]/20 text-[#00FF9C] rounded-lg transition-all border border-[#00FF9C]/30"
-          >
-            Acessar
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center">
+          <img src="/brand/header-48.png" alt="RAWN PRO" className="h-12" />
         </div>
-      </header>
-
+      </header>{" "}
       {/* Hero Section - IMPACTO MÁXIMO */}
       <section className="pt-32 pb-20 px-4 relative overflow-hidden">
         {/* Glow effect */}
@@ -126,7 +119,6 @@ export default function LandingFitness() {
           </motion.div>
         </div>
       </section>
-
       {/* Stats - PROVA SOCIAL */}
       <section className="py-16 bg-[#00FF9C]/5 border-y border-[#00FF9C]/20">
         <div className="max-w-6xl mx-auto px-4">
@@ -154,7 +146,6 @@ export default function LandingFitness() {
           </div>
         </div>
       </section>
-
       {/* Problema vs Solução - COMPARAÇÃO ESTRATÉGICA */}
       <section className="py-20 px-4" id="comparacao">
         <div className="max-w-6xl mx-auto">
@@ -257,7 +248,6 @@ export default function LandingFitness() {
           </div>
         </div>
       </section>
-
       {/* Especialidades - RELEVÂNCIA E AUTORIDADE */}
       <section className="py-20 px-4 bg-[#00FF9C]/5">
         <div className="max-w-6xl mx-auto">
@@ -320,7 +310,6 @@ export default function LandingFitness() {
           </div>
         </div>
       </section>
-
       {/* Benefícios + Preços + CTA + Footer */}
       <section className="py-20 px-4">
         <div className="max-w-5xl mx-auto text-center mb-20">
@@ -470,7 +459,6 @@ export default function LandingFitness() {
           </div>
         </div>
       </section>
-
       {/* CTA Final */}
       <section className="py-20 px-4 bg-[#00FF9C]/5">
         <div className="max-w-4xl mx-auto text-center">
@@ -500,7 +488,6 @@ export default function LandingFitness() {
           </p>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="py-12 px-4 bg-black border-t border-[#00FF9C]/20">
         <div className="max-w-6xl mx-auto">
