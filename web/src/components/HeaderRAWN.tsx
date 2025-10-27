@@ -8,6 +8,13 @@ import MenuFloating from "./MenuFloating";
 export default function HeaderRAWN() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const handleClearChat = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("rawn.chat.history");
+      window.location.reload();
+    }
+  };
+
   return (
     <header
       className="sticky top-0 z-20 h-14 w-full border-b border-rawn-border-panel bg-rawn-bg-base/95 backdrop-blur-panel"
@@ -45,7 +52,11 @@ export default function HeaderRAWN() {
         </button>
       </div>
 
-      <MenuFloating isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <MenuFloating
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        onClearChat={handleClearChat}
+      />
     </header>
   );
 }

@@ -23,9 +23,15 @@ const menuItems: MenuItem[] = [
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onClearChat: () => void;
 };
 
-export default function MenuFloating({ isOpen, onClose }: Props) {
+export default function MenuFloating({ isOpen, onClose, onClearChat }: Props) {
+  const handleClearChat = () => {
+    onClearChat();
+    onClose();
+  };
+
   return (
     <>
       {/* Backdrop */}
@@ -78,6 +84,20 @@ export default function MenuFloating({ isOpen, onClose }: Props) {
                 },
               }}
             >
+              {/* Limpar Conversa - Special Action */}
+              <motion.button
+                onClick={handleClearChat}
+                variants={{
+                  hidden: { opacity: 0, y: -6 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                className="group flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-rawn-accent-neon transition-all hover:translate-x-1 hover:bg-rawn-accent-neon/10"
+              >
+                <span className="h-1 w-1 rounded-full bg-rawn-accent-neon opacity-0 transition-opacity group-hover:opacity-100" />
+                Limpar Conversa
+              </motion.button>
+
+              {/* Regular Menu Items */}
               {menuItems.map((item) => (
                 <Link key={item.href} href={item.href} onClick={onClose}>
                   <motion.div
