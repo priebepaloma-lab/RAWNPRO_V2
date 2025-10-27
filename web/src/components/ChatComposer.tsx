@@ -10,6 +10,7 @@ type Props = {
 
 export default function ChatComposer({ onSend, onTypingStart }: Props) {
   const [text, setText] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -19,6 +20,8 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
     onTypingStart?.();
     onSend?.(value);
     setText("");
+    // Mantém o foco no input após enviar (melhor UX mobile)
+    setTimeout(() => inputRef.current?.focus(), 100);
   }
 
   return (
@@ -29,11 +32,16 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
         aria-label="Compositor de mensagem"
       >
         <input
+          ref={inputRef}
           aria-label="Escreva sua mensagem"
           placeholder="Escreva sua mensagem..."
           className="flex-1 rounded-pill border border-rawn-border-neon bg-rawn-bg-base/50 px-5 py-3 text-sm text-rawn-text-primary outline-none placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:shadow-neon-focus transition-all"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="sentences"
+          enterKeyHint="send"
         />
         <motion.button
           whileHover={{ scale: 1.05 }}

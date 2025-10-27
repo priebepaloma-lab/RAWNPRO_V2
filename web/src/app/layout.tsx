@@ -8,9 +8,22 @@ export const metadata = {
   title: "RAWN PRO",
   description: "Ciência em conversa. Clareza em ação.",
   metadataBase: new URL("http://localhost:3000"),
+  manifest: "/manifest.json",
   icons: {
     icon: "/brand/Favicon rawn pro.png",
     apple: "/brand/Favicon rawn pro.png",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  themeColor: "#0F0F0F",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "RAWN PRO",
   },
   openGraph: {
     title: "RAWN PRO",

@@ -6,6 +6,9 @@ html,
 body,
 #__next {
   height: 100%;
+  /* Better mobile support */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 body {
@@ -14,6 +17,19 @@ body {
     Roboto, "Helvetica Neue", Arial;
   background: radial-gradient(ellipse at center, #101010 0%, #030303 100%);
   background-attachment: fixed;
+  /* Mobile optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overflow-x: hidden;
+}
+
+/* iOS Safari viewport height fix */
+@supports (-webkit-touch-callout: none) {
+  html {
+    height: -webkit-fill-available;
+  }
 }
 
 /* Scrollbar customization for dark theme */
@@ -32,4 +48,27 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 255, 156, 0.3);
+}
+
+/* Mobile-friendly input styles */
+input,
+textarea,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* Better touch targets */
+button,
+a {
+  min-height: 44px;
+  min-width: 44px;
 }
