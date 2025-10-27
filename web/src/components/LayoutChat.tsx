@@ -20,9 +20,23 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   const [isTyping, setIsTyping] = React.useState(false);
   const { profile } = useProfile();
   const toast = useToast();
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
   // chave de armazenamento local
   const STORAGE_KEY = "rawn.chat.history";
+
+  // Auto-scroll para a última mensagem
+  const scrollToBottom = React.useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, []);
+
+  // Scroll quando mensagens mudam
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
 
   // carrega histórico persistido ao montar
   React.useEffect(() => {
@@ -223,6 +237,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
                 />
               );
             })}
+            <div ref={messagesEndRef} />
           </section>
         </motion.div>
       </main>
