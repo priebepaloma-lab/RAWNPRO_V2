@@ -22,16 +22,25 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
   }
 
   return (
-    <div className="sticky bottom-0 z-20 w-full border-t border-rawn-border-panel bg-rawn-bg-base/95 backdrop-blur-panel">
+    <div 
+      className="w-full border-t border-rawn-border-panel bg-rawn-bg-base backdrop-blur-panel safe-area-bottom"
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 30,
+      }}
+    >
       <form
         onSubmit={handleSubmit}
-        className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3"
+        className="mx-auto flex max-w-3xl items-center gap-2 px-3 py-2.5"
         aria-label="Compositor de mensagem"
       >
         <input
           aria-label="Escreva sua mensagem"
           placeholder="Escreva sua mensagem..."
-          className="flex-1 rounded-pill border border-rawn-border-neon bg-rawn-bg-base/50 px-5 py-3 text-base text-rawn-text-primary outline-none placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:shadow-neon-focus transition-all"
+          className="flex-1 rounded-full border border-rawn-border-neon bg-rawn-bg-base/80 px-4 py-2.5 text-rawn-text-primary outline-none placeholder:text-rawn-text-muted focus:border-rawn-accent-neon focus:shadow-neon-focus transition-all"
           value={text}
           onChange={(e) => setText(e.target.value)}
           enterKeyHint="send"
@@ -43,9 +52,9 @@ export default function ChatComposer({ onSend, onTypingStart }: Props) {
         />
         <motion.button
           whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.95 }}
           type="submit"
-          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-rawn-accent-neon bg-transparent text-rawn-accent-neon shadow-neon-soft transition-all hover:bg-rawn-accent-neon hover:text-rawn-bg-base hover:shadow-neon-glow focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon focus:ring-offset-2 focus:ring-offset-rawn-bg-base"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border-2 border-rawn-accent-neon bg-rawn-accent-neon/10 text-rawn-accent-neon shadow-neon-soft transition-all hover:bg-rawn-accent-neon hover:text-rawn-bg-base hover:shadow-neon-glow active:scale-95 focus:outline-none focus:ring-2 focus:ring-rawn-accent-neon"
           aria-label="Enviar mensagem"
         >
           <svg

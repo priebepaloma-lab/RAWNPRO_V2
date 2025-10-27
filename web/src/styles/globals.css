@@ -56,6 +56,11 @@ textarea {
   font-size: 16px !important;
 }
 
+/* Safe area for notch and home indicator */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 /* Scrollbar customization for dark theme */
 ::-webkit-scrollbar {
   width: 8px;
