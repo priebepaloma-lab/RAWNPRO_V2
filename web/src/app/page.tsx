@@ -13,7 +13,7 @@ export default function Page() {
         {
           id: "m1",
           role: "system",
-          text: "E aí! Pronto para evoluir hoje? Pode falar — treino, dieta, sono, o que precisar. Vamos direto ao ponto.",
+          text: "Seja bem-vindo! Eu sou RAWN PRO, e vou estar com você na sua jornada de evolução de mente, corpo e hábito. Vamos começar?",
         },
       ]}
     />
