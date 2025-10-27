@@ -65,20 +65,33 @@ export default function MenuFloating({ isOpen, onClose }: Props) {
               </button>
             </div>
 
-            {/* Items */}
-            <nav className="py-2">
-              {menuItems.map((item, index) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={onClose}
-                  className="group flex items-center gap-3 px-4 py-3 text-sm text-rawn-text-primary transition-all hover:translate-x-1 hover:bg-rawn-accent-neon/10 hover:text-rawn-accent-neon"
-                >
-                  <span className="h-1 w-1 rounded-full bg-rawn-accent-neon opacity-0 transition-opacity group-hover:opacity-100" />
-                  {item.label}
+            {/* Items with stagger */}
+            <motion.nav
+              className="py-2"
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: {},
+                show: {
+                  transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+                },
+              }}
+            >
+              {menuItems.map((item) => (
+                <Link key={item.href} href={item.href} onClick={onClose}>
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: -6 },
+                      show: { opacity: 1, y: 0 },
+                    }}
+                    className="group flex items-center gap-3 px-4 py-3 text-sm text-rawn-text-primary transition-all hover:translate-x-1 hover:bg-rawn-accent-neon/10 hover:text-rawn-accent-neon"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-rawn-accent-neon opacity-0 transition-opacity group-hover:opacity-100" />
+                    {item.label}
+                  </motion.div>
                 </Link>
               ))}
-            </nav>
+            </motion.nav>
           </motion.div>
         )}
       </AnimatePresence>

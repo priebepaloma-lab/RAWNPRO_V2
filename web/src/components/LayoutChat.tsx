@@ -6,6 +6,8 @@ import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
 import { motion } from "framer-motion";
+import TypingIndicator from "@/components/TypingIndicator";
+import { useToast } from "@/components/ToastProvider";
 
 type Msg = { id: string; role: "user" | "system"; text: string };
 
@@ -17,6 +19,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   const [messages, setMessages] = React.useState<Msg[]>(initialMessages);
   const [isTyping, setIsTyping] = React.useState(false);
   const { profile } = useProfile();
+  const toast = useToast();
 
   // chave de armazenamento local
   const STORAGE_KEY = "rawn.chat.history";
@@ -147,7 +150,10 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
       ]);
     } catch (e: any) {
       const errId = Math.random().toString(36).slice(2);
-      const errorMsg = e?.message
+      const isAbort = e?.name === "AbortError";
+      const errorMsg = isAbort
+        ? "Tempo de resposta excedido. Tente novamente."
+        : e?.message
         ? `Desculpe, ocorreu um erro: ${e.message}`
         : "Desculpe, ocorreu um erro ao obter a resposta.";
       setMessages((prev) => [
@@ -158,6 +164,9 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
           text: errorMsg,
         },
       ]);
+      try {
+        toast.error(errorMsg);
+      } catch {}
     } finally {
       setIsTyping(false);
     }
@@ -204,11 +213,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
           </section>
         </motion.div>
       </main>
-      {isTyping && (
-        <div className="mx-auto w-full max-w-3xl px-4 py-2 text-sm italic text-rawn-text-muted animate-pulse">
-          digitando...
-        </div>
-      )}
+      {isTyping && <TypingIndicator />}
       <ChatComposer
         onSend={handleSend}
         onTypingStart={() => setIsTyping(true)}
