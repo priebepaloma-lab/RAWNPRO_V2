@@ -1,5 +1,6 @@
-# Ignorar diretórios não relacionados ao deploy do web
-api/
+# Ignorar diretórios de nível raiz não relacionados ao deploy do web
+# Use caminho ancorado para não afetar web/src/app/api
+/api/
 docs/
 docs_rawn/
 infra/
