@@ -15,11 +15,6 @@ export default function WelcomePage() {
 
   return (
     <div className="min-h-screen bg-rawn-bg-base flex flex-col items-center justify-center px-4 relative">
-      {/* MARCADOR DE VERSÃO VISÍVEL - v6-FINAL */}
-      <div className="fixed top-4 right-4 z-[60] bg-rawn-accent-neon text-black px-4 py-2 rounded-lg font-mono text-xs font-bold shadow-lg">
-        v6-FINAL
-      </div>
-
       {/* Install overlay shown only when not installed/dismissed */}
       <WelcomeInstall />
       <motion.div

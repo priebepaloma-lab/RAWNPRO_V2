@@ -91,14 +91,14 @@ export default function WelcomeInstall() {
             </div>
           </motion.div>
 
-          {/* Título em caixa alta */}
+          {/* Título obrigatório - instalação necessária */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
             <h1 className="text-lg font-bold text-white uppercase leading-tight px-4">
-              TENHA A EXPERIÊNCIA COMPLETA INSTALANDO O APP :
+              INSTRUÇÕES PARA INSTALAÇÃO DO APP :
             </h1>
           </motion.div>
 
@@ -147,16 +147,6 @@ export default function WelcomeInstall() {
               </button>
             </motion.div>
           )}
-
-          {/* Marcador de versão GRANDE e visível */}
-          <div className="mt-8 pt-6 border-t border-white/10">
-            <p className="text-center text-lg font-bold text-rawn-accent-neon font-mono animate-pulse">
-              ✓ v6-FINAL
-            </p>
-            <p className="text-center text-xs text-white/40 mt-1">
-              {new Date().toLocaleString("pt-BR")}
-            </p>
-          </div>
         </div>
       </motion.div>
     </div>

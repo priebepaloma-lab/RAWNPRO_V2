@@ -14,13 +14,13 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: "RAWN PRO - v6",
+  title: "RAWN PRO",
   description: "Ciência em conversa. Clareza em ação.",
   metadataBase: new URL("http://localhost:3000"),
-  manifest: "/manifest.webmanifest?v=6",
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/icons/rawnpro-192.png?v=6",
-    apple: "/icons/apple-touch-icon-180.png?v=6",
+    icon: "/icons/rawnpro-192.png",
+    apple: "/icons/apple-touch-icon-180.png",
   },
   appleWebApp: {
     capable: true,
