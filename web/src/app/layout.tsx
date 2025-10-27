@@ -8,6 +8,7 @@ export const metadata = {
   title: "RAWN PRO",
   description: "Ciência em conversa. Clareza em ação.",
   metadataBase: new URL("http://localhost:3000"),
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: "/brand/Favicon rawn pro.png",
     apple: "/brand/Favicon rawn pro.png",
