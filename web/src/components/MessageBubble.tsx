@@ -68,6 +68,13 @@ export default function MessageBubble({
         displayText
       ));
 
+  // Detecta tópicos sensíveis (medicação, hormônios, etc.) para reforçar aviso
+  const isSensitiveTopic =
+    !isUser &&
+    /(monjaro|mounjaro|ozempic|semaglutida|liraglutida|tirzepatida|saxenda|rem[eé]dio|medicamento|anabol|esteroide|horm[oô]nio|\btrt\b|cortic[oó]ide|corticosteroide|benzodiazep|antidepressivo|anticoncepcional|hgh|insulina)/i.test(
+      displayText
+    );
+
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(displayText);
@@ -178,11 +185,12 @@ export default function MessageBubble({
             {expanded ? "mostrar menos" : "mostrar mais"}
           </button>
         )}
-        {isInstructionalContent && (
+        {(isInstructionalContent || isSensitiveTopic) && (
           <div className="mt-3 border-t border-white/20 pt-2 text-[11px] italic text-white/70">
-            Este conteúdo tem caráter educativo e não substitui acompanhamento
-            profissional. Se sentir dor, desconforto ou agravamento de sintomas,
-            procure um especialista.
+            Conteúdo educativo. Medicamentos e terapias exigem prescrição e
+            acompanhamento médico. Não inicie, suspenda ou ajuste doses sem
+            orientação profissional. Se sentir dor, desconforto ou agravamento
+            de sintomas, procure um especialista.
           </div>
         )}
         {canActions && (

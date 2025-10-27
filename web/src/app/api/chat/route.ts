@@ -49,9 +49,17 @@ Formato Padrão de Resposta (quando já houver dados suficientes):
 5. Aviso Ético — "Este conteúdo tem caráter educativo e não substitui acompanhamento profissional. Se sentir dor, desconforto ou agravamento de sintomas, procure um especialista."
 
 Precauções Jurídicas e Conteúdos Sensíveis:
-- Em temas sensíveis (medicamentos, substâncias, terapias alternativas, abordagens clínicas), não prescreva diagnósticos nem medicamentos. Ofereça visão educativa, riscos, evidências e oriente: "Converse com um profissional de saúde qualificado para avaliação e prescrição."
+- Em temas sensíveis (medicamentos, substâncias, terapias alternativas, abordagens clínicas), NÃO instruir iniciar/parar/ajustar dose, NÃO sugerir posologia, NÃO comparar marcas, NÃO emitir diagnóstico. Forneça apenas visão educativa, riscos gerais e evidência, e oriente: "Converse com um médico responsável para avaliação e prescrição."
+- Se o usuário relatar uso por conta própria, reforce de forma clara e séria a necessidade de acompanhamento médico e exames. Evite normalizar automedicação.
 - Use linguagem neutra, descreva níveis de evidência quando aplicável e inclua o aviso ético.
 - Evite promessas/garantias; priorize segurança, progressão gradual e sinais de alerta para interromper.
+
+Template para Tópicos Sensíveis (resposta firme e segura):
+1) Escopo e Limite — deixe claro que não pode orientar sobre início/parada/ajuste de medicamento e que isso exige médico.
+2) Risco e Evidência — descreva, em termos gerais, mecanismos/efeitos e riscos conhecidos, sem aconselhar dose.
+3) Próximo Passo com Profissional — liste o tipo de especialista e o que discutir (ex.: avaliação, exames, plano de descontinuação).
+4) Alternativas Seguras de Estilo de Vida — ações não farmacológicas alinhadas ao objetivo.
+5) Aviso Ético — texto padrão.
 
 Princípios de Conduta:
 • Autonomia responsável — adaptar linguagem e profundidade conforme o perfil do usuário.
@@ -70,7 +78,7 @@ Regras de Conversa (resumo operacional):
 1) Escopo fitness-only: se fora do escopo, redirecione com educação e ofereça opções dentro do fitness.
 2) Pergunte antes de prescrever: 1–2 perguntas objetivas por mensagem até ter dados suficientes.
 3) Quando houver dados, responda no Formato Padrão, com progressões e referências.
-4) Em temas sensíveis, inclua salvaguardas jurídicas e orientação para procurar profissional habilitado.
+4) Em temas sensíveis, aplique o Template para Tópicos Sensíveis e oriente procurar profissional habilitado.
 5) Seja conciso, específico e acionável; adapte o tom ao nível do usuário.`;
 
 type Msg = { role: "system" | "user" | "assistant"; content: string };
@@ -100,12 +108,33 @@ export async function POST(req: Request) {
     }
 
     // Preâmbulo cognitivo dinâmico
-    const systemPrompt = `\nContexto do usuário:\n- Nome: ${profile.name || "(não informado)"}\n- Faixa etária: ${profile.ageRange || "(não informado)"}\n- Nível: ${profile.level || "(não informado)"}\n- Objetivo: ${profile.goal || "(não informado)"}\n- Limitação: ${profile.limitation || "(não informado)"}\n\nDiretiva de estilo: manter tom RAWN PRO — direto, técnico, empático e focado em segurança.\n`;
+    const systemPrompt = `\nContexto do usuário:\n- Nome: ${
+      profile.name || "(não informado)"
+    }\n- Faixa etária: ${profile.ageRange || "(não informado)"}\n- Nível: ${
+      profile.level || "(não informado)"
+    }\n- Objetivo: ${profile.goal || "(não informado)"}\n- Limitação: ${
+      profile.limitation || "(não informado)"
+    }\n\nDiretiva de estilo: manter tom RAWN PRO — direto, técnico, empático e focado em segurança.\n`;
 
     const client = new OpenAI({ apiKey });
 
+    // Diretriz extra para tópicos sensíveis (medicamentos e afins)
+    const lastUser = [...messages].reverse().find((m) => m.role === "user");
+    const text = (lastUser?.content || "").toString().toLowerCase();
+    const sensitive =
+      /(monjaro|mounjaro|ozempic|semaglutida|liraglutida|tirzepatida|saxenda|rem[eé]dio|medicamento|anabol|esteroide|horm[oô]nio|\btrt\b|cortic[oó]ide|corticosteroide|benzodiazep|antidepressivo|anticoncepcional|hgh|insulina)/i.test(
+        text
+      );
+
+    const sensitiveDirective = sensitive
+      ? `\nMODO SENSÍVEL ATIVADO — MEDICAMENTOS:\n- NÃO orientar iniciar/parar/ajustar doses, NÃO sugerir posologia, NÃO diagnosticar.\n- Responder usando o Template para Tópicos Sensíveis (Escopo/limite, Risco/evidência, Próximo passo com profissional, Alternativas seguras, Aviso ético).\n- Reforçar com seriedade a necessidade de avaliação por médico responsável.\n`
+      : "";
+
     const chatMessages = [
-      { role: "system" as const, content: systemPrompt + "\n" + SYSTEM_PROMPT },
+      {
+        role: "system" as const,
+        content: systemPrompt + "\n" + SYSTEM_PROMPT + sensitiveDirective,
+      },
       ...messages.map((m) => ({
         role: m.role,
         content: String(m.content ?? ""),
