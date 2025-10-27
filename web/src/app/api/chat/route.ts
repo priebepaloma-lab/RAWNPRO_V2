@@ -317,3 +317,21 @@ Se houver estudos sobre interação exercício/nutrição com o medicamento, exp
     );
   }
 }
+
+// Some platforms/browsers may hit a redirect that changes POST to GET.
+// Provide a safe GET handler to avoid 405 and help diagnostics.
+export async function GET() {
+  return NextResponse.json(
+    {
+      ok: true,
+      endpoint: "/api/chat",
+      usage: "Send a POST with { messages: [{role, content}], profile }",
+    },
+    { status: 200 }
+  );
+}
+
+// Handle CORS preflight just in case (even though same-origin should not require it)
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 204 });
+}
