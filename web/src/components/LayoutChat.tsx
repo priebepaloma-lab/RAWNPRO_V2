@@ -6,9 +6,11 @@ import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
 import WelcomeInstall from "@/components/WelcomeInstall";
+import UpgradeBanner from "@/components/UpgradeBanner";
 import { motion } from "framer-motion";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/components/ToastProvider";
+import { useSubscription } from "@/hooks/useSubscription";
 
 type Msg = { id: string; role: "user" | "system"; text: string };
 
@@ -21,6 +23,8 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   const [isTyping, setIsTyping] = React.useState(false);
   const { profile } = useProfile();
   const toast = useToast();
+  const { canSendMessage, trackMessage, remainingMessages, isPremium } =
+    useSubscription();
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const mainRef = React.useRef<HTMLDivElement>(null);
 
@@ -85,6 +89,14 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   async function handleSend(text: string) {
     const value = text.trim();
 
+    // Verifica limite de mensagens
+    if (!canSendMessage()) {
+      toast.show(
+        "Você atingiu o limite de mensagens gratuitas hoje. Faça upgrade para continuar!"
+      );
+      return;
+    }
+
     // comando /limpar (case-insensitive)
     if (/^\/limpar\b/i.test(value)) {
       try {
@@ -102,6 +114,9 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
 
     const id = Math.random().toString(36).slice(2);
     setMessages((prev) => [...prev, { id, role: "user", text: value }]);
+
+    // Incrementa contador de mensagens (apenas free)
+    trackMessage();
 
     // Ativa indicador de digitação
     setIsTyping(true);
@@ -201,6 +216,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
       <WelcomeInstall />
       <div className="flex h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
         <HeaderRAWN />
+        <UpgradeBanner />
         <main
           ref={mainRef}
           className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"

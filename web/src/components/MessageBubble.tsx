@@ -76,7 +76,9 @@ export default function MessageBubble({
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ type: "spring", stiffness: 380, damping: 22, mass: 0.6 }}
-      className={`flex w-full ${isUser ? "justify-end pr-2" : "justify-start pl-2"}`}
+      className={`flex w-full ${
+        isUser ? "justify-end pr-2" : "justify-start pl-2"
+      }`}
       role="listitem"
       aria-label={isUser ? "Mensagem do usuário" : "Mensagem do sistema"}
     >
