@@ -5,6 +5,7 @@ import { useProfile } from "@/app/profile/ProfileContext";
 import HeaderRAWN from "@/components/HeaderRAWN";
 import MessageBubble from "@/components/MessageBubble";
 import ChatComposer from "@/components/ChatComposer";
+import InstallPrompt from "@/components/InstallPrompt";
 import { motion } from "framer-motion";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/components/ToastProvider";
@@ -246,6 +247,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         onSend={handleSend}
         onTypingStart={() => setIsTyping(true)}
       />
+      <InstallPrompt />
     </div>
   );
 }
