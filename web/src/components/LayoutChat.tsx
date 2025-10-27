@@ -257,7 +257,10 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
             )}
           </motion.div>
         </main>
-        <ChatComposer onSend={handleSend} />
+        <ChatComposer
+          onSend={handleSend}
+          onTypingStart={() => setIsTyping(true)}
+        />
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function TypingIndicator() {
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-2 text-sm text-rawn-text-muted flex items-center gap-2">
-      <span className="sr-only">digitando…</span>
+      <span className="sr-only">escrevendo…</span>
       <div className="flex items-center gap-1.5" aria-hidden>
         <motion.span
           initial={{ opacity: 0.2, y: 0 }}
@@ -27,7 +27,7 @@ export default function TypingIndicator() {
           className="h-2 w-2 rounded-full bg-rawn-accent-neon/80 shadow-neon-soft"
         />
       </div>
-      <span className="italic">digitando…</span>
+      <span className="italic text-white/90">escrevendo…</span>
     </div>
   );
 }

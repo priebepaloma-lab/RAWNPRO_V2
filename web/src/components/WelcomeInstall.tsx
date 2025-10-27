@@ -2,12 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Download, Smartphone, Zap } from "lucide-react";
+import { Download } from "lucide-react";
 import Image from "next/image";
 
 export default function WelcomeInstall() {
   const [showWelcome, setShowWelcome] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
+  const [showHelp, setShowHelp] = React.useState(false);
 
   React.useEffect(() => {
     // Verifica se já está instalado
@@ -15,15 +16,13 @@ export default function WelcomeInstall() {
       "(display-mode: standalone)"
     ).matches;
     const isInstalled = localStorage.getItem("pwa-installed");
-    const welcomeDismissed = localStorage.getItem("welcome-dismissed");
 
     console.log("WelcomeInstall - Debug:", {
       isStandalone,
       isInstalled,
-      welcomeDismissed,
     });
 
-    if (isStandalone || isInstalled || welcomeDismissed) {
+    if (isStandalone || isInstalled) {
       console.log("WelcomeInstall - Não mostrando (já instalado ou dismissed)");
       setShowWelcome(false);
       return;
@@ -61,17 +60,12 @@ export default function WelcomeInstall() {
       }
       setDeferredPrompt(null);
     } else {
-      // iOS - mostra instruções
+      // iOS (ou navegadores sem beforeinstallprompt) – mostra instruções
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       if (isIOS) {
-        // Não fecha a tela, deixa as instruções visíveis
+        setShowHelp(true);
       }
     }
-  };
-
-  const handleSkip = () => {
-    localStorage.setItem("welcome-dismissed", "true");
-    setShowWelcome(false);
   };
 
   console.log("WelcomeInstall - Render, showWelcome:", showWelcome);
@@ -89,7 +83,7 @@ export default function WelcomeInstall() {
         className="w-full max-w-md"
       >
         <div className="text-center space-y-6">
-          {/* Logo */}
+          {/* Logo (sempre colorido) */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -98,10 +92,10 @@ export default function WelcomeInstall() {
           >
             <div className="relative h-24 w-24">
               <Image
-                src="/icons/rawnpro-192.png"
+                src="/brand/Tela Walcome rawn pro.png"
                 alt="RAWN PRO"
-                width={96}
-                height={96}
+                width={120}
+                height={120}
                 className="object-contain"
               />
             </div>
@@ -123,47 +117,25 @@ export default function WelcomeInstall() {
             </p>
           </motion.div>
 
-          {/* Benefícios */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-3 text-left"
-          >
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-rawn-bg-surface/50 border border-rawn-border-neon/20">
-              <Smartphone
-                className="text-rawn-accent-neon flex-shrink-0 mt-0.5"
-                size={20}
-              />
-              <div>
-                <p className="text-white text-sm font-medium">Acesso rápido</p>
-                <p className="text-rawn-text-muted text-xs">
-                  Abra direto da tela inicial
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-rawn-bg-surface/50 border border-rawn-border-neon/20">
-              <Zap
-                className="text-rawn-accent-neon flex-shrink-0 mt-0.5"
-                size={20}
-              />
-              <div>
-                <p className="text-white text-sm font-medium">Tela cheia</p>
-                <p className="text-rawn-text-muted text-xs">
-                  Experiência sem navegador
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          {/* Benefícios removidos para experiência direta */}
 
-          {/* Instruções iOS ou Botão Android */}
+          {/* Botão principal de instalação e instruções (quando necessário) */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
             className="space-y-4"
           >
-            {isIOS ? (
+            <button
+              onClick={handleInstall}
+              className="w-full rounded-full bg-rawn-accent-neon px-6 py-4 text-base font-bold text-black shadow-neon-glow hover:shadow-neon-intense transition-all flex items-center justify-center gap-2"
+            >
+              <Download size={20} />
+              Instalar agora
+            </button>
+
+            {/* Instruções aparecem quando necessário (iOS ou sem evento) */}
+            {isIOS && showHelp && (
               <div className="bg-rawn-bg-surface/50 border border-rawn-accent-neon/30 rounded-xl p-4 text-left space-y-3">
                 <p className="text-white font-semibold text-sm">
                   Como instalar no iOS:
@@ -195,23 +167,9 @@ export default function WelcomeInstall() {
                   </p>
                 </div>
               </div>
-            ) : (
-              <button
-                onClick={handleInstall}
-                className="w-full rounded-full bg-rawn-accent-neon px-6 py-4 text-base font-bold text-black shadow-neon-glow hover:shadow-neon-intense transition-all flex items-center justify-center gap-2"
-              >
-                <Download size={20} />
-                Instalar agora
-              </button>
             )}
 
-            {/* Botão pular */}
-            <button
-              onClick={handleSkip}
-              className="w-full text-sm text-rawn-text-muted hover:text-white transition-colors"
-            >
-              Continuar no navegador
-            </button>
+            {/* Removido: ação de pular para simplificar a decisão de instalar */}
           </motion.div>
         </div>
       </motion.div>
