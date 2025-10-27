@@ -43,8 +43,36 @@ export default function LandingFitness() {
 
       {/* Hero Section - IMPACTO MÁXIMO */}
       <section className="pt-40 pb-24 px-4 relative overflow-hidden">
-        {/* Glow effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#00FF9C]/5 blur-[120px] rounded-full" />
+        {/* Background glow + premium particles */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-[#00FF9C]/5 blur-[140px] rounded-full" />
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute top-16 left-[8%] w-2 h-2 rounded-full bg-[#00FF9C] opacity-40 blur-[2px]"
+          animate={{ y: [0, -12, 0], x: [0, 6, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute top-40 right-[12%] w-3 h-3 rounded-full bg-white opacity-20 blur-[2px]"
+          animate={{ y: [0, 10, 0], x: [0, -8, 0] }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.3,
+          }}
+        />
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute bottom-24 left-[18%] w-2 h-2 rounded-full bg-[#00FF9C] opacity-30 blur-[1px]"
+          animate={{ y: [0, -14, 0], x: [0, 10, 0] }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.6,
+          }}
+        />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
@@ -52,23 +80,6 @@ export default function LandingFitness() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Logo Grande no Hero */}
-            <div className="mb-8 flex justify-center">
-              <img
-                src="/brand/header-48.png"
-                alt="RAWN PRO"
-                className="h-20 sm:h-24 md:h-28 opacity-95"
-              />
-            </div>
-
-            {/* Badge de autoridade */}
-            <div className="inline-flex items-center gap-2 bg-[#00FF9C]/10 border border-[#00FF9C]/30 rounded-full px-6 py-3 mb-8">
-              <Brain className="w-5 h-5 text-[#00FF9C]" />
-              <span className="text-[#00FF9C] font-semibold">
-                IA Especializada em Performance Humana
-              </span>
-            </div>
-
             {/* Headline - DOR + DESEJO */}
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
               Pare de Confiar em
@@ -118,10 +129,23 @@ export default function LandingFitness() {
                 href="https://pay.kiwify.com.br/uSs6hgG"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group px-10 py-5 bg-[#00FF9C] hover:bg-[#00DD88] text-black font-bold text-xl rounded-xl transition-all shadow-[0_0_30px_rgba(0,255,156,0.3)] hover:shadow-[0_0_50px_rgba(0,255,156,0.5)] flex items-center justify-center gap-3"
+                className="relative group px-10 py-5 bg-[#00FF9C] hover:bg-[#00DD88] text-black font-bold text-xl rounded-xl transition-all shadow-[0_0_30px_rgba(0,255,156,0.35)] hover:shadow-[0_0_60px_rgba(0,255,156,0.6)] overflow-hidden"
               >
-                Começar Agora por R$ 19,90
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10 inline-flex items-center justify-center gap-3">
+                  Começar Agora por R$ 19,90
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                </span>
+                {/* Shine */}
+                <motion.span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{ x: ["-120%", "160%"] }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
               </a>
               <a
                 href="#comparacao"
@@ -155,8 +179,10 @@ export default function LandingFitness() {
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ y: -4 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
+                className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-[#00FF9C]/40 hover:bg-white/10 transition-all hover:shadow-[0_0_30px_rgba(0,255,156,0.15)]"
               >
                 <stat.icon className="w-10 h-10 text-[#00FF9C] mx-auto mb-3" />
                 <div className="text-4xl font-bold text-white mb-2">
@@ -460,9 +486,19 @@ export default function LandingFitness() {
                 href="https://pay.kiwify.com.br/ocIXXfO"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full py-4 bg-[#00FF9C] hover:bg-[#00DD88] text-black font-bold rounded-xl text-center transition-all shadow-[0_0_30px_rgba(0,255,156,0.4)]"
+                className="relative group block w-full py-4 bg-[#00FF9C] hover:bg-[#00DD88] text-black font-bold rounded-xl text-center transition-all shadow-[0_0_30px_rgba(0,255,156,0.4)] overflow-hidden"
               >
-                Garantir Vitalício Agora
+                <span className="relative z-10">Garantir Vitalício Agora</span>
+                <motion.span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{ x: ["-120%", "160%"] }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
               </a>
             </motion.div>
           </div>
