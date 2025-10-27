@@ -175,4 +175,9 @@ export default function WelcomeInstall() {
       </motion.div>
     </div>
   );
+
+  {
+    /* Build marker para confirmar versão no dispositivo */
+  }
+  <p className="text-center text-[10px] text-white/40">build 97dc90f</p>;
 }
