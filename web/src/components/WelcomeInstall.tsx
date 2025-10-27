@@ -8,22 +8,17 @@ import Image from "next/image";
 export default function WelcomeInstall() {
   const [showWelcome, setShowWelcome] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
-  const [showHelp, setShowHelp] = React.useState(false);
+  const [showHelp, setShowHelp] = React.useState(true);
 
   React.useEffect(() => {
     // Verifica se já está instalado
     const isStandalone = window.matchMedia(
       "(display-mode: standalone)"
     ).matches;
-    const isInstalled = localStorage.getItem("pwa-installed");
+    console.log("WelcomeInstall - Debug:", { isStandalone });
 
-    console.log("WelcomeInstall - Debug:", {
-      isStandalone,
-      isInstalled,
-    });
-
-    if (isStandalone || isInstalled) {
-      console.log("WelcomeInstall - Não mostrando (já instalado ou dismissed)");
+    if (isStandalone) {
+      console.log("WelcomeInstall - Não mostrando (standalone)");
       setShowWelcome(false);
       return;
     }
@@ -59,12 +54,6 @@ export default function WelcomeInstall() {
         setShowWelcome(false);
       }
       setDeferredPrompt(null);
-    } else {
-      // iOS (ou navegadores sem beforeinstallprompt) – mostra instruções
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      if (isIOS) {
-        setShowHelp(true);
-      }
     }
   };
 
@@ -135,8 +124,8 @@ export default function WelcomeInstall() {
               Instalar agora
             </button>
 
-            {/* Instruções aparecem quando necessário (iOS ou sem evento) */}
-            {isIOS && showHelp && (
+            {/* Instruções iOS sempre visíveis abaixo do botão */}
+            {isIOS && (
               <div className="bg-rawn-bg-surface/50 border border-rawn-accent-neon/30 rounded-xl p-4 text-left space-y-3">
                 <p className="text-white font-semibold text-sm">
                   Como instalar no iOS:
@@ -172,7 +161,7 @@ export default function WelcomeInstall() {
 
             {/* marcador de build para validar atualização no device */}
             <p className="text-center text-[10px] text-white/40">
-              build mobile-1
+              build mobile-2
             </p>
           </motion.div>
         </div>
