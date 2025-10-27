@@ -39,20 +39,8 @@ export default function MessageBubble({
 
   const isUser = role === "user";
 
-  // Adaptação de tom para respostas do sistema
-  let displayText = text;
-  if (role === "system" && profile?.style) {
-    if (profile.style === "humano" || profile.style === "humanizado") {
-      displayText = displayText + " 😊";
-    } else if (profile.style === "técnico") {
-      displayText = displayText.replace(/\!+/g, ".");
-    } else if (profile.style === "sintético") {
-      displayText = displayText.replace(
-        /(.+?)([.!?])?$/,
-        (_m: string, p: string) => p + "."
-      );
-    }
-  }
+  // Texto da mensagem (sem adaptação de tom)
+  const displayText = text;
 
   const isLong = (displayText ?? "").length > 800;
   const [expanded, setExpanded] = React.useState(false);
@@ -187,10 +175,9 @@ export default function MessageBubble({
         )}
         {(isInstructionalContent || isSensitiveTopic) && (
           <div className="mt-3 border-t border-white/20 pt-2 text-[11px] italic text-white/70">
-            Conteúdo educativo. Medicamentos e terapias exigem prescrição e
-            acompanhamento médico. Não inicie, suspenda ou ajuste doses sem
-            orientação profissional. Se sentir dor, desconforto ou agravamento
-            de sintomas, procure um especialista.
+            {isSensitiveTopic
+              ? "Conteúdo educativo. Medicamentos e terapias exigem prescrição médica. Não inicie, suspenda ou ajuste doses sem orientação profissional. Recomenda-se acompanhamento médico para decisões sobre saúde."
+              : "Recomenda-se acompanhamento profissional (educador físico, nutricionista ou fisioterapeuta) para orientações personalizadas e seguras. Se sentir dor ou desconforto, consulte um especialista."}
           </div>
         )}
         {canActions && (
