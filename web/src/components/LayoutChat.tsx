@@ -86,18 +86,21 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
     setMessages((prev) => [...prev, { id, role: "user", text: value }]);
 
     try {
+      // Limita histórico a últimas 20 mensagens para evitar contexto excessivo
+      const recentMessages = messages.slice(-20);
+
       const payload = {
         messages: [
-          ...messages.map((m) => ({ role: m.role, content: m.text })),
+          ...recentMessages.map((m) => ({ role: m.role, content: m.text })),
           { role: "user" as const, content: value },
         ],
         profile,
       };
 
       async function call(attempt = 1): Promise<string> {
-        // timeout curto para evitar travas esporádicas
+        // timeout aumentado para contextos longos (60s)
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000);
+        const timeout = setTimeout(() => controller.abort(), 60000);
         try {
           const res = await fetch("/api/chat", {
             method: "POST",

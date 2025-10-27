@@ -4,8 +4,6 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface Profile {
   name: string;
-  focus: string;
-  style: string;
   ageRange?: string;
   level?: string;
   goal?: string;
@@ -18,7 +16,13 @@ interface ProfileContextValue {
   saveProfile: (data: Partial<Profile>) => void;
 }
 
-const defaultProfile: Profile = { name: "", focus: "rotina", style: "humano" };
+const defaultProfile: Profile = {
+  name: "",
+  ageRange: "",
+  level: "",
+  goal: "",
+  limitation: "",
+};
 const ProfileContext = createContext<ProfileContextValue>({
   profile: defaultProfile,
   updateProfile: () => {},
@@ -31,23 +35,39 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [profile, setProfile] = useState<Profile>(defaultProfile);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  // Carrega perfil do localStorage uma única vez ao montar
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setProfile(JSON.parse(saved));
-    } catch {
-      // ignore
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Garante que todos os campos estejam presentes
+        setProfile({
+          name: parsed.name || "",
+          ageRange: parsed.ageRange || "",
+          level: parsed.level || "",
+          goal: parsed.goal || "",
+          limitation: parsed.limitation || "",
+        });
+      }
+    } catch (err) {
+      console.error("Erro ao carregar perfil:", err);
+    } finally {
+      setIsLoaded(true);
     }
   }, []);
 
+  // Sincroniza com localStorage sempre que o perfil mudar (após carregamento inicial)
   useEffect(() => {
+    if (!isLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-    } catch {
-      // ignore
+    } catch (err) {
+      console.error("Erro ao salvar perfil:", err);
     }
-  }, [profile]);
+  }, [profile, isLoaded]);
 
   const updateProfile = (data: Partial<Profile>) =>
     setProfile((prev) => ({ ...prev, ...data }));
