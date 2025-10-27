@@ -25,7 +25,7 @@ export default function HeaderRAWN() {
         <div className="flex items-center gap-3">
           <div className="relative h-12 w-12 overflow-hidden">
             <Image
-              src="/brand/Header do Chat 32px.png"
+              src="/brand/header-48.png"
               alt="Logo RAWN PRO"
               width={48}
               height={48}
