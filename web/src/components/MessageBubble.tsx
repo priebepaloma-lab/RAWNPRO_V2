@@ -76,16 +76,16 @@ export default function MessageBubble({
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ type: "spring", stiffness: 380, damping: 22, mass: 0.6 }}
-      className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}
+      className={`flex w-full ${isUser ? "justify-end pr-2" : "justify-start pl-2"}`}
       role="listitem"
       aria-label={isUser ? "Mensagem do usuário" : "Mensagem do sistema"}
     >
       <div
         className={[
-          "max-w-[85%] px-4 py-3 text-[15px] shadow-md",
+          "max-w-[80%] px-4 py-3 text-[15px] shadow-md",
           isUser
-            ? "bg-[#00FF9C] text-black rounded-[18px] rounded-tr-md ml-auto"
-            : "bg-[#2A2A2A] text-white rounded-[18px] rounded-tl-md prose prose-invert max-w-none [&>div]:!leading-relaxed",
+            ? "bg-[#00FF9C] text-black rounded-[20px] rounded-br-[4px]"
+            : "bg-[#2A2A2A] text-white rounded-[20px] rounded-tl-[4px] prose prose-invert max-w-none [&>div]:!leading-relaxed",
         ].join(" ")}
       >
         {isUser && profile?.name ? (
