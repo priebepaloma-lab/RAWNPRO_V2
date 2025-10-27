@@ -22,21 +22,24 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
   const { profile } = useProfile();
   const toast = useToast();
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const mainRef = React.useRef<HTMLDivElement>(null);
 
   // chave de armazenamento local
   const STORAGE_KEY = "rawn.chat.history";
 
   // Auto-scroll para a última mensagem
   const scrollToBottom = React.useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
+    if (mainRef.current) {
+      mainRef.current.scrollTop = mainRef.current.scrollHeight;
+    }
   }, []);
 
-  // Scroll quando mensagens mudam
+  // Scroll quando mensagens mudam (com delay para garantir renderização)
   React.useEffect(() => {
-    scrollToBottom();
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+    return () => clearTimeout(timer);
   }, [messages, scrollToBottom]);
 
   // carrega histórico persistido ao montar
@@ -99,7 +102,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
 
     const id = Math.random().toString(36).slice(2);
     setMessages((prev) => [...prev, { id, role: "user", text: value }]);
-    
+
     // Ativa indicador de digitação
     setIsTyping(true);
 
@@ -197,6 +200,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
     <div className="flex h-screen w-full flex-col bg-rawn-bg-base text-rawn-text-primary">
       <HeaderRAWN />
       <main
+        ref={mainRef}
         className="flex-1 overflow-y-auto overscroll-none mx-auto w-full max-w-3xl px-4 py-4"
         role="main"
         aria-label="Conversa com RAWN PRO"
