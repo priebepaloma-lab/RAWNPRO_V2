@@ -47,13 +47,13 @@ function WidgetComposer({
 
 export default function LeadChatWidget() {
   type Msg = { id: string; role: "user" | "system"; text: string };
-  const MAX_MESSAGES = 20;
+  const MAX_MESSAGES = 10;
   const [open, setOpen] = React.useState(false);
   const [messages, setMessages] = React.useState<Msg[]>([
     {
       id: "welcome",
       role: "system",
-      text: "Bem-vindo(a)! Sou especialista do RAWN PRO. Posso entender sua situação (rotina, tempo e objetivo) para te orientar sobre o melhor plano?",
+      text: "Bem-vindo(a)! Para te entender de forma precisa: como está sua rotina hoje (tempo disponível e local — casa ou academia) e qual seu objetivo principal agora?",
     },
   ]);
   const [typing, setTyping] = React.useState(false);
@@ -105,23 +105,34 @@ export default function LeadChatWidget() {
 
   function detectIntent(
     text: string
-  ): { intent: "buy"; plan?: "mensal" | "lifetime" } | { intent: "other" } {
+  ):
+    | { intent: "buy"; plan?: "mensal" | "lifetime" }
+    | { intent: "np" }
+    | { intent: "other" } {
     const t = text.toLowerCase();
     const wants =
       /(comprar|assinar|assino|assinei|quero|ativar|contratar)/i.test(t);
-    if (!wants) return { intent: "other" };
-    const mensal = /(mensal|mês|mesal)/i.test(t);
-    const vital = /(vital[ií]cio|vitalicio|lifetime)/i.test(t);
-    if (mensal && !vital) return { intent: "buy", plan: "mensal" };
-    if (vital && !mensal) return { intent: "buy", plan: "lifetime" };
-    return { intent: "buy" };
+    if (wants) {
+      const mensal = /(mensal|mês|mesal)/i.test(t);
+      const vital = /(vital[ií]cio|vitalicio|lifetime)/i.test(t);
+      if (mensal && !vital) return { intent: "buy", plan: "mensal" };
+      if (vital && !mensal) return { intent: "buy", plan: "lifetime" };
+      return { intent: "buy" };
+    }
+    // sinais de Need-Payoff (curiosidade/prontidão)
+    const needPayoff =
+      /(como funciona|vale a pena|me ajuda|quero melhorar|como começo|como comeco|posso começar|posso comecar|preç|quanto|demonstração|demonstracao|teste)/i.test(
+        t
+      );
+    if (needPayoff) return { intent: "np" };
+    return { intent: "other" };
   }
 
   async function handleSend(text: string) {
     // Limite duro de 20 mensagens totais
     if (messages.length >= MAX_MESSAGES) {
       appendSystem(
-        "Vamos finalizar para não ultrapassar nosso limite. Posso te levar direto ao checkout? Escolha: Mensal (R$ 29,90 no 1º mês, depois R$ 49,90/mês) ou Vitalício (R$ 449,90)."
+        "Podemos avançar quando quiser. Prefere ver como começar agora? Posso abrir o Mensal ou o Vitalício para você."
       );
       setShowPlanPicker(true);
       return;
@@ -140,8 +151,14 @@ export default function LeadChatWidget() {
         return;
       }
       // Pergunta escolha de plano
+      appendSystem("Perfeito! Prefere começar pelo Mensal ou pelo Vitalício?");
+      setShowPlanPicker(true);
+      setTyping(false);
+      return;
+    }
+    if (intent.intent === "np") {
       appendSystem(
-        "Perfeito! Você prefere o Mensal (R$ 29,90 no 1º mês; depois R$ 49,90/mês) ou o Vitalício (R$ 449,90)?"
+        "Se fizer sentido, posso te mostrar como começar — prefere Mensal ou Vitalício?"
       );
       setShowPlanPicker(true);
       setTyping(false);
@@ -166,7 +183,7 @@ export default function LeadChatWidget() {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 60000);
-      const res = await fetch("/api/chat", {
+      const res = await fetch("/api/chat/spin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
