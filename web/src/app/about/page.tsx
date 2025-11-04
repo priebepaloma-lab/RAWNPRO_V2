@@ -73,6 +73,28 @@ export default function AboutPage() {
         Científico. Efeito real.
       </p>
 
+      <h3>Por que não é “mais uma IA genérica”?</h3>
+      <ul>
+        <li>
+          <strong>Protocolos RAWN PRO</strong> — linguagem e heurísticas
+          próprias para performance humana, com foco em segurança, autonomia e
+          consistência.
+        </li>
+        <li>
+          <strong>Tom educativo e não prescritivo</strong> — sugere caminhos e
+          práticas baseadas em evidências, sem substituir profissionais
+          habilitados.
+        </li>
+        <li>
+          <strong>Arquitetura de privacidade</strong> — minimização de dados e
+          processamento local sempre que possível.
+        </li>
+        <li>
+          <strong>Experiência 100% conversacional</strong> — nada de ruído
+          visual; só ciência aplicada ao seu contexto.
+        </li>
+      </ul>
+
       <h3>Três Princípios Centrais</h3>
 
       <ol>

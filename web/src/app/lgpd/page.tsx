@@ -108,11 +108,30 @@ export default function LGPDPage() {
         </li>
       </ul>
 
-      <h3>Ausência de Transferência Internacional</h3>
+      <h3>Operadores de Dados e Pagamentos</h3>
       <p>
-        Nenhum dado pessoal é transferido para fora do Brasil ou para servidores
-        internacionais. Todo processamento ocorre localmente no dispositivo do
-        usuário.
+        Para processamento de pagamentos e assinaturas, o RAWN PRO utiliza a
+        plataforma <strong>Stripe</strong>
+        como <em>operador de dados</em>, atuando em nome do controlador (RAWN
+        PRO) exclusivamente para execução da cobrança e gestão de assinaturas.
+      </p>
+      <ul>
+        <li>
+          Dados de cartão e cobrança são tratados diretamente pelo Stripe.
+        </li>
+        <li>O RAWN PRO não armazena credenciais de pagamento.</li>
+        <li>
+          Recebemos apenas identificadores técnicos e status da transação.
+        </li>
+      </ul>
+
+      <h3>Transferência Internacional</h3>
+      <p>
+        No uso conversacional do app, o processamento ocorre localmente no
+        dispositivo do usuário. Para pagamentos, o <strong>Stripe</strong> pode
+        realizar <strong>transferência internacional de dados</strong>,
+        observando as bases legais e salvaguardas adequadas previstas na LGPD e
+        em sua política própria.
       </p>
 
       <h3>Exclusão de Dados</h3>

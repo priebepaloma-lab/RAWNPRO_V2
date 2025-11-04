@@ -95,6 +95,11 @@ function SuccessContent() {
           </ul>
         </motion.div>
 
+        <div className="mt-4 text-xs text-rawn-text-muted mb-6">
+          Conteúdo educativo e informativo. Não substitui avaliação, diagnóstico
+          ou orientação de profissionais habilitados.
+        </div>
+
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -102,12 +107,19 @@ function SuccessContent() {
           onClick={() => router.push("/")}
           className="w-full bg-rawn-accent-neon text-black font-bold py-4 rounded-full hover:brightness-110 shadow-neon-glow hover:shadow-neon-intense transition-all"
         >
-          Começar Agora
+          Iniciar Protocolo
         </motion.button>
 
-        <p className="mt-6 text-sm text-rawn-text-muted">
-          Recebeu um email de confirmação com os detalhes da sua assinatura.
-        </p>
+        <div className="mt-6 text-sm text-rawn-text-muted">
+          <p>
+            Você receberá um e-mail do Stripe com os detalhes da sua assinatura
+            e cobranças.
+          </p>
+          <p className="mt-1">
+            Cancelamento a qualquer momento antes da próxima renovação. Garantia
+            de 7 dias.
+          </p>
+        </div>
       </motion.div>
     </div>
   );

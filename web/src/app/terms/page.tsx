@@ -41,6 +41,52 @@ export default function TermsPage() {
         </li>
       </ul>
 
+      <h3>3. Assinaturas, Pagamentos e Cancelamento</h3>
+      <p>
+        As assinaturas do RAWN PRO são processadas com <strong>Stripe</strong>.
+        O plano mensal possui cobrança recorrente após um período promocional
+        (quando aplicável). O usuário pode
+        <strong> cancelar a qualquer momento</strong> antes da próxima
+        renovação, evitando nova cobrança.
+      </p>
+      <ul>
+        <li>
+          Promoção atual: R$ 29,90 no 1º mês; a partir do 2º mês: R$ 49,90/mês.
+        </li>
+        <li>
+          Cupons e descontos podem ser aplicados automaticamente no checkout.
+        </li>
+        <li>
+          Pagamentos e dados de cartão são tratados diretamente pelo Stripe; o
+          RAWN PRO não armazena essas credenciais.
+        </li>
+      </ul>
+
+      <h3>4. Garantia e Reembolso</h3>
+      <p>
+        O usuário tem <strong>garantia de 7 dias</strong> para arrependimento,
+        conforme legislação aplicável. Em caso de insatisfação, poderá solicitar
+        reembolso pelo canal oficial de suporte, dentro do prazo, desde que não
+        haja violação de uso indevido.
+      </p>
+
+      <h3>5. Acesso Vitalício</h3>
+      <p>
+        O plano vitalício concede acesso{" "}
+        <strong>enquanto o produto/serviço estiver disponível e mantido</strong>{" "}
+        pela RAWN PRO, para uso pessoal e não transferível. Não há mensalidades;
+        podem ocorrer atualizações técnicas e mudanças de funcionalidades ao
+        longo do tempo.
+      </p>
+
+      <h3>6. Preços e Alterações</h3>
+      <p>
+        O RAWN PRO pode ajustar preços, benefícios ou funcionalidades,
+        informando com antecedência razoável. Em assinaturas, novos preços
+        passam a valer no próximo ciclo de cobrança; o usuário pode cancelar
+        antes da renovação se não concordar.
+      </p>
+
       <h3>3. Responsabilidade do Usuário</h3>
       <p>O usuário compromete-se a:</p>
       <ul>
@@ -55,7 +101,7 @@ export default function TermsPage() {
         </li>
       </ul>
 
-      <h3>4. Limitação de Responsabilidade</h3>
+      <h3>7. Limitação de Responsabilidade</h3>
       <p>
         O RAWN PRO não se responsabiliza por decisões, ações ou resultados
         obtidos a partir das informações fornecidas.
@@ -70,7 +116,7 @@ export default function TermsPage() {
         decorrentes do uso do aplicativo.
       </p>
 
-      <h3>5. Propriedade Intelectual</h3>
+      <h3>8. Propriedade Intelectual</h3>
       <p>
         Todo o conteúdo, metodologia, arquitetura de raciocínio, estrutura
         conversacional e materiais do RAWN PRO são protegidos por direitos
@@ -81,7 +127,7 @@ export default function TermsPage() {
         autorização expressa e escrita.
       </p>
 
-      <h3>6. Privacidade e Proteção de Dados</h3>
+      <h3>9. Privacidade e Proteção de Dados</h3>
       <p>
         O tratamento de informações é regido pela Política de Privacidade
         vigente, parte integrante deste documento.
@@ -92,14 +138,14 @@ export default function TermsPage() {
         conformidade com a legislação aplicável.
       </p>
 
-      <h3>7. Modificações do Serviço</h3>
+      <h3>10. Modificações do Serviço</h3>
       <p>
         O RAWN PRO pode atualizar, aprimorar, suspender ou descontinuar
         funcionalidades sem aviso prévio, a qualquer momento, visando segurança,
         melhoria técnica ou conformidade legal.
       </p>
 
-      <h3>8. Isenção de Garantias</h3>
+      <h3>11. Isenção de Garantias</h3>
       <p>
         O serviço é oferecido "como está", sem garantias expressas ou implícitas
         quanto a resultados de desempenho, ganhos físicos ou cognitivos.
@@ -109,7 +155,7 @@ export default function TermsPage() {
         gerais, podendo não se aplicar a casos individuais.
       </p>
 
-      <h3>9. Encerramento de Uso</h3>
+      <h3>12. Encerramento de Uso</h3>
       <p>O usuário pode encerrar o uso do RAWN PRO a qualquer momento.</p>
       <p>O encerramento não gera obrigações adicionais ou retenção de dados.</p>
       <p>
@@ -117,14 +163,14 @@ export default function TermsPage() {
         conteúdo local é eliminado.
       </p>
 
-      <h3>10. Legislação Aplicável e Foro</h3>
+      <h3>13. Legislação Aplicável e Foro</h3>
       <p>Estes Termos são regidos pelas leis do Brasil.</p>
       <p>
         Em caso de controvérsia, fica eleito o foro da comarca do domicílio do
         usuário, com renúncia a qualquer outro.
       </p>
 
-      <h3>11. Concordância Integral</h3>
+      <h3>14. Concordância Integral</h3>
       <p>
         O uso do RAWN PRO implica ciência e concordância integral com esta
         Política de Privacidade e com os presentes Termos de Uso.

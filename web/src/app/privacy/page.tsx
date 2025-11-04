@@ -41,8 +41,9 @@ export default function PrivacyPage() {
 
       <h3>3. Dados Coletados e Processados</h3>
       <p>
-        O RAWN PRO <strong>não coleta</strong> nome, e-mail, CPF, localização,
-        nem qualquer informação pessoal identificável.
+        No uso conversacional do app, o RAWN PRO <strong>não coleta</strong>{" "}
+        nome, e-mail, CPF, localização, nem qualquer informação pessoal
+        identificável.
       </p>
       <p>
         O aplicativo armazena apenas{" "}
@@ -51,9 +52,43 @@ export default function PrivacyPage() {
         conversacional.
       </p>
       <p>
-        Esses dados <strong>nunca são enviados a servidores externos</strong> e{" "}
+        Esses dados <strong>não são enviados a servidores externos</strong> e{" "}
         <strong>não são utilizados para treinamento de algoritmos</strong>.
       </p>
+
+      <h3>3.1 Pagamentos e Checkout (Stripe)</h3>
+      <p>
+        As assinaturas e pagamentos do RAWN PRO são processados com segurança
+        pela plataforma
+        <strong> Stripe</strong>. Durante o processo de checkout, os dados de
+        pagamento (como informações de cartão, e-mail e dados de cobrança) são
+        coletados e tratados diretamente pelo Stripe, conforme a
+        <a
+          href="https://stripe.com/privacy"
+          target="_blank"
+          rel="noreferrer"
+          className="text-rawn-accent-neon"
+        >
+          {" "}
+          Política de Privacidade do Stripe
+        </a>
+        .
+      </p>
+      <ul>
+        <li>
+          O RAWN PRO <strong>não armazena</strong> dados de cartão ou
+          credenciais de pagamento.
+        </li>
+        <li>
+          Recebemos apenas identificadores técnicos (ex.: <em>session_id</em>) e
+          o status da transação para ativação de acesso.
+        </li>
+        <li>
+          O Stripe pode realizar{" "}
+          <strong>transferência internacional de dados</strong>, conforme suas
+          próprias bases legais.
+        </li>
+      </ul>
 
       <h3>4. Armazenamento Local e Exclusão de Dados</h3>
       <p>
@@ -78,8 +113,10 @@ export default function PrivacyPage() {
 
       <h3>6. Compartilhamento de Dados</h3>
       <p>
-        O RAWN PRO <strong>não compartilha dados com terceiros</strong>, nem com
-        empresas, parceiros, anunciantes ou plataformas externas.
+        O RAWN PRO <strong>não compartilha dados com terceiros</strong> para
+        fins de marketing ou perfilização. Para fins de{" "}
+        <strong>processamento de pagamentos</strong>, utilizamos o Stripe como
+        operador de dados.
       </p>
       <p>
         Não há uso de cookies, rastreadores, nem ferramentas de análise
@@ -109,8 +146,10 @@ export default function PrivacyPage() {
         segurança.
       </p>
       <p>
-        Não há tratamento de dados sensíveis ou transferência internacional de
-        informações.
+        Não há tratamento de dados sensíveis no uso conversacional do app. Para
+        pagamentos, o Stripe poderá realizar{" "}
+        <strong>transferência internacional</strong> conforme suas políticas e
+        leis aplicáveis.
       </p>
 
       <h3>10. Alterações desta Política</h3>
