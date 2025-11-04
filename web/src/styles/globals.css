@@ -12,6 +12,7 @@ html {
   width: 100%;
   height: 100%;
   overscroll-behavior: none;
+  overflow-x: hidden;
   background-color: #000000;
 }
 
@@ -20,6 +21,7 @@ body,
   height: 100%;
   width: 100%;
   overscroll-behavior: none;
+  overflow-x: hidden;
   background-color: #000000;
 }
 
@@ -28,7 +30,15 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, "Helvetica Neue", Arial;
   background: radial-gradient(ellipse at center, #101010 0%, #030303 100%);
+  /* Fixed backgrounds can cause jank on mobile Safari; disable on small screens */
   background-attachment: fixed;
+}
+
+/* On small screens, avoid background-attachment: fixed to prevent 'dancing' */
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Fix mobile keyboard white flash - force black everywhere */

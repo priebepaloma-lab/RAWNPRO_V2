@@ -174,7 +174,7 @@ export default function PlansPage() {
                   ? "Plano Atual"
                   : loadingPlan === "mensal"
                   ? "Redirecionando..."
-                  : "Ativar Protocolo"}
+                  : "Ativar RAWN PRO"}
               </button>
             </div>
           </motion.div>

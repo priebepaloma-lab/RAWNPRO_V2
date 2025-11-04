@@ -70,7 +70,6 @@ HABILIDADES TÉCNICAS DE COACH DE ELITE:
    - Lesões/reabilitação: abordagem return-to-play, carga progressiva, pain science
 
 7. PSICOLOGIA DA PERFORMANCE
-   - Aderência: hábitos atômicos (James Clear), gamificação, accountability
    - Motivação intrínseca vs. extrínseca, teoria da autodeterminação
    - Gestão de plateaus: expectativas realistas, small wins, process goals vs. outcome goals
    - Mindset de crescimento (Dweck), resiliência, autorregulação
@@ -310,7 +309,40 @@ Se houver estudos sobre interação exercício/nutrição com o medicamento, exp
         max_tokens: 4096,
       });
 
-      const content = completion.choices?.[0]?.message?.content ?? "";
+      let content = completion.choices?.[0]?.message?.content ?? "";
+
+      // HARD GUARD: em modo lead-spin, bloquear respostas com plano prescritivo ou dieta detalhada
+      if (mode === "lead-spin") {
+        const riskyRegexes: RegExp[] = [
+          new RegExp("\\b\\d+\\s*x\\s*\\d+\\b", "i"), // 3x10, 4 x 12 etc.
+          /\bseries?\b/i,
+          new RegExp("\\brepeti(?:\\u00E7|c)(?:\\u00F5|o)es\\b", "i"), // repetições/repeticoes
+          /\bRPE\b/i,
+          /\bRIR\b/i,
+          /\bdeload\b/i,
+          /\bmicrociclo\b/i,
+          /\bmesociclo\b/i,
+          /\btreinos?\b/i,
+          /protocolos?:\s*/i,
+          /\blist(a|e)\b/i,
+          new RegExp(
+            "(segunda|ter(?:\\u00E7|c)a|quarta|quinta|sexta|s(?:\\u00E1|a)bado|domingo)\\s*:",
+            "i"
+          ), // dias da semana seguidos de ':'
+          /\bkcal\b/i,
+          new RegExp("\\bg\\s*\\/\\s*kg\\b", "i"),
+          new RegExp("\\bg\\s*\\/\\s*dia\\b", "i"),
+          /\bmacros?\b/i,
+          new RegExp("card(?:\\u00E1|a)pio", "i"), // cardápio/cardapio
+          new RegExp("refei(?:\\u00E7|c)(?:\\u00F5|o)es", "i"), // refeições/refeicoes
+        ];
+        const risky = riskyRegexes.some((rx) => rx.test(content || ""));
+        if (risky) {
+          content =
+            "Posso te explicar como o RAWN PRO resolve suas dores e como funciona a ativação, mas os protocolos personalizados são gerados somente após a assinatura. Prefere ver os planos agora? (/plans) ou entender como funciona? (/about)";
+        }
+      }
+
       return NextResponse.json({ role: "system", content });
     } catch (err: any) {
       // Normaliza erros da OpenAI para depuração leve no cliente

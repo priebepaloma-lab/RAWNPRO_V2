@@ -21,7 +21,7 @@ const stagger = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-[100svh] md:min-h-[100dvh] bg-black text-white overflow-x-hidden">
       <LeadChatWidget />
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
