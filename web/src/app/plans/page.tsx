@@ -100,6 +100,12 @@ export default function PlansPage() {
             plano ideal para sua jornada.
           </p>
 
+          <p className="mt-4 text-xs text-rawn-text-muted max-w-2xl mx-auto">
+            RAWN PRO é uma plataforma de bem-estar e performance guiada por IA.
+            Conteúdo educativo e informativo — não substitui avaliação,
+            diagnóstico ou orientação de profissionais habilitados.
+          </p>
+
           {isPremium && (
             <div className="mt-6 inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-full px-4 py-2">
               <Check className="text-green-500" size={18} />
@@ -168,7 +174,7 @@ export default function PlansPage() {
                   ? "Plano Atual"
                   : loadingPlan === "mensal"
                   ? "Redirecionando..."
-                  : "Assinar Agora"}
+                  : "Ativar Protocolo"}
               </button>
             </div>
           </motion.div>
@@ -230,7 +236,7 @@ export default function PlansPage() {
                   ? "Plano Atual"
                   : loadingPlan === "lifetime"
                   ? "Redirecionando..."
-                  : "Garantir Acesso Vitalício"}
+                  : "Ativar Acesso Vitalício"}
               </button>
             </div>
           </motion.div>

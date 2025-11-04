@@ -27,12 +27,19 @@ export default function HomePage() {
         </div>
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-4 text-5xl font-extrabold leading-tight sm:text-6xl">
-            Treinador de Elite 24/7
-            <span className="block text-emerald-400">baseado em ciência</span>
+            Plataforma de performance 24/7
+            <span className="block text-emerald-400">
+              guiada por IA e ciência aplicada
+            </span>
           </h1>
-          <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-300">
-            RAWN PRO une treino, nutrição, sono e performance com diretrizes
-            validadas por ACSM/WHO/IOC. Pergunte, ajuste e evolua todos os dias.
+          <p className="mx-auto mb-4 max-w-3xl text-lg text-gray-300">
+            RAWN PRO é uma plataforma de bem-estar e performance que integra
+            movimento, nutrição, sono e hábitos. Conteúdo educativo baseado em
+            evidências — autonomia com segurança e propósito.
+          </p>
+          <p className="mx-auto mb-8 max-w-3xl text-xs text-gray-400">
+            Não substitui avaliação, diagnóstico ou prescrição de profissionais
+            habilitados.
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
@@ -48,25 +55,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Benefits (linguagem blindada) */}
       <section className="px-4 py-16">
         <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            "Treino individualizado",
-            "Nutrição e timing",
-            "Sono e recuperação",
-            "Foco e hábitos",
-            "Prevenção de lesões",
-            "Base científica comprovada",
-          ].map((t, i) => (
+            {
+              title: "Treino individualizado",
+              desc: "Planos inteligentes de movimento. Seu corpo guiado por IA para evoluir com segurança e propósito.",
+            },
+            {
+              title: "Nutrição e timing",
+              desc: "Equilíbrio alimentar inteligente. Estratégias de timing e energia baseadas em evidências, sem substituir orientação profissional.",
+            },
+            {
+              title: "Sono e recuperação",
+              desc: "Recuperação otimizada. Métodos de autocuidado e rotina que potencializam o descanso e a performance mental.",
+            },
+            {
+              title: "Foco e hábitos",
+              desc: "Foco elevado. Protocolos comportamentais guiados por ciência cognitiva e prática de alta performance.",
+            },
+            {
+              title: "Prevenção de lesões",
+              desc: "Movimento consciente. Inteligência preventiva para reduzir riscos e fortalecer a consistência física.",
+            },
+            {
+              title: "Base científica comprovada",
+              desc: "Fundamentado em ciência. Desenvolvido com base em evidências reconhecidas por entidades internacionais de saúde e esporte.",
+            },
+          ].map((item, i) => (
             <div
               key={i}
               className="rounded-2xl border border-white/10 bg-white/5 p-6"
             >
-              <h3 className="mb-2 text-lg font-semibold">{t}</h3>
-              <p className="text-sm text-gray-400">
-                Orientação prática e segura para avançar com consistência.
-              </p>
+              <h3 className="mb-2 text-lg font-semibold">{item.title}</h3>
+              <p className="text-sm text-gray-400">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -103,7 +126,7 @@ export default function HomePage() {
                 href="/plans"
                 className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
               >
-                Assinar Agora
+                Ativar Protocolo
               </Link>
             </div>
           </div>
@@ -131,7 +154,7 @@ export default function HomePage() {
                 href="/plans"
                 className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
               >
-                Garantir Vitalício
+                Ativar Acesso Vitalício
               </Link>
             </div>
           </div>
