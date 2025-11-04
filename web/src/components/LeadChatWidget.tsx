@@ -47,7 +47,7 @@ function WidgetComposer({
 
 export default function LeadChatWidget() {
   type Msg = { id: string; role: "user" | "system"; text: string };
-  const MAX_MESSAGES = 20;
+  const MAX_MESSAGES = 30;
   const [open, setOpen] = React.useState(false);
   const [messages, setMessages] = React.useState<Msg[]>([
     {
@@ -106,7 +106,10 @@ export default function LeadChatWidget() {
 
   function detectIntent(
     text: string
-  ): { intent: "buy"; plan?: "mensal" | "lifetime" } | { intent: "other" } {
+  ):
+    | { intent: "buy"; plan?: "mensal" | "lifetime" }
+    | { intent: "close" }
+    | { intent: "other" } {
     const t = text.toLowerCase();
     // Buy intent only on explicit close/checkout requests
     const wants =
@@ -120,6 +123,10 @@ export default function LeadChatWidget() {
       if (vital && !mensal) return { intent: "buy", plan: "lifetime" };
       return { intent: "buy" };
     }
+    // Closing signals (pricing/decision) → ask plan preference
+    const closing =
+      /(preç|preco|preço|valor|quanto\s*(custa|é|e)|r\$\s*\d+)/i.test(t);
+    if (closing) return { intent: "close" };
     return { intent: "other" };
   }
 
@@ -140,7 +147,7 @@ export default function LeadChatWidget() {
   }
 
   async function handleSend(text: string) {
-    // Encerra no limite exato (mensagem 20): convite suave sem links
+    // Encerra no limite exato (mensagem 30): convite suave sem links
     const nextCount = messages.length + 1;
     if (nextCount >= MAX_MESSAGES) {
       appendSystem(
@@ -173,6 +180,16 @@ export default function LeadChatWidget() {
         leadName
           ? `Perfeito, ${leadName}! Prefere começar pelo Mensal ou pelo Vitalício?`
           : "Perfeito! Prefere começar pelo Mensal ou pelo Vitalício?"
+      );
+      setShowPlanPicker(true);
+      setTyping(false);
+      return;
+    }
+    if (intent.intent === "close") {
+      appendSystem(
+        leadName
+          ? `${leadName}, prefere pagar por mês (Mensal) ou prefere um acesso Vitalício?`
+          : `Prefere pagar por mês (Mensal) ou prefere um acesso Vitalício?`
       );
       setShowPlanPicker(true);
       setTyping(false);
