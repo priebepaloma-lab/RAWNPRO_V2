@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/components/ToastProvider";
 import { useSubscription } from "@/hooks/useSubscription";
+import LegalNote from "@/components/LegalNote";
 
 type Msg = { id: string; role: "user" | "system"; text: string };
 
@@ -272,6 +273,10 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
               </div>
             )}
           </motion.div>
+          {/* Nota legal compacta no rodapé da área de chat */}
+          <div className="mt-6 mb-24 text-center">
+            <LegalNote />
+          </div>
         </main>
         <ChatComposer
           onSend={handleSend}

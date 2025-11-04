@@ -62,7 +62,7 @@ export default function TermsPage() {
         </li>
       </ul>
 
-      <h3>4. Garantia e Reembolso</h3>
+      <h3 id="refund-policy">4. Política de Reembolso</h3>
       <p>
         O usuário tem <strong>garantia de 7 dias</strong> para arrependimento,
         conforme legislação aplicável. Em caso de insatisfação, poderá solicitar

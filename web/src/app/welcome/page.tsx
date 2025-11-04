@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import WelcomeInstall from "@/components/WelcomeInstall";
+import LegalNote from "@/components/LegalNote";
 
 export default function WelcomePage() {
   const router = useRouter();
@@ -65,7 +66,15 @@ export default function WelcomePage() {
           Continuar
         </motion.button>
 
-        {/* Nota legal removida: os termos serão apresentados na próxima etapa */}
+        {/* Nota legal compacta para onboarding */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.5 }}
+          className="mt-6"
+        >
+          <LegalNote />
+        </motion.div>
       </motion.div>
     </div>
   );
