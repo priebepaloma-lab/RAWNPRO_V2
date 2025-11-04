@@ -52,7 +52,7 @@ export default function LeadChatWidget() {
     {
       id: "welcome",
       role: "system",
-      text: "Olá! Sou o RAWN PRO. Posso entender sua situação e objetivo para indicar o melhor caminho? (Prometo ser direto: 1–2 perguntas por vez.)",
+      text: "Bem-vindo(a)! Sou especialista do RAWN PRO. Posso entender sua situação (rotina, tempo e objetivo) para te orientar sobre o melhor plano? Falo em 1–2 perguntas por vez.",
     },
   ]);
   const [typing, setTyping] = React.useState(false);
