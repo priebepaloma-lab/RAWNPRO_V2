@@ -104,7 +104,6 @@ export async function POST(req: Request) {
       /\bdeload\b/i,
       /\bmicrociclo\b/i,
       /\bmesociclo\b/i,
-      /\btreinos?\b/i,
       /protocolos?:\s*/i,
       /\blist(a|e)\b/i,
       new RegExp(
@@ -119,8 +118,33 @@ export async function POST(req: Request) {
       new RegExp("refei(?:\\u00E7|c)(?:\\u00F5|o)es", "i"),
     ];
     if (riskyRegexes.some((rx) => rx.test(content || ""))) {
-      content =
-        "Para entender seu contexto sem te dar algo genérico: você treina onde (casa ou academia) e quanto tempo costuma ter por sessão?";
+      // Heurística simples para progredir no SPIN sem repetir a mesma pergunta
+      const lowerUserHistory = messages
+        .filter((m) => m.role === "user")
+        .map((m) => String(m.content || "").toLowerCase())
+        .join(" \n ") as string;
+
+      const hasPlace =
+        /(casa|academia|home|est[úu]dio|studio|parque|rua|condom)/i.test(
+          lowerUserHistory
+        );
+      const hasTime =
+        /(\b\d{1,3}\s*(min|m|minutos?)\b|\b\d\s*h\b|\b(hora|horas)\b)/i.test(
+          lowerUserHistory
+        );
+      const hasGoal =
+        /(for[çc]a|hipertrof|est[ée]tica|resist|emagrec|energia|sa[úu]de|mobilidade|recupera[çc][ãa]o|reabilita|condicionamento|performance|bem[- ]estar)/i.test(
+          lowerUserHistory
+        );
+
+      const namePrefix = profile?.name ? `${profile.name}, ` : "";
+      if (!hasPlace || !hasTime) {
+        content = `${namePrefix}para entender seu contexto sem te dar algo genérico: você treina onde (casa ou academia) e quanto tempo costuma ter por sessão?`;
+      } else if (!hasGoal) {
+        content = `${namePrefix}entendi. Qual seu objetivo principal agora? Ex.: força, hipertrofia, condicionamento, emagrecimento, mobilidade ou energia.`;
+      } else {
+        content = `${namePrefix}qual sua maior trava hoje — constância, técnica, energia/sono ou nutrição?`;
+      }
     }
 
     return NextResponse.json({ role: "system", content });
