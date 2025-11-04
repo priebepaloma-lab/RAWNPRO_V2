@@ -12,6 +12,7 @@
 ### ✅ Implementado e Deploy Realizado
 
 1. **Landing Page Premium (/)**
+
    - Hero com logo centralizado, badge de autoridade científica, headline/subheadline focada em fitness
    - Animações premium: partículas flutuantes (Framer Motion), glow de fundo, shine nos CTAs
    - Comparação: IAs genéricas vs RAWN PRO (6 dimensões de especialização)
@@ -22,11 +23,13 @@
    - Branding: fundo preto (#0a0a0a), verde neon (#00FF9C)
 
 2. **Chat App (/chat)**
+
    - Interface estilo WhatsApp com bolhas de mensagem left/right
    - Integração com OpenAI (GPT-4)
    - Composer com textarea expansível e botão de envio
 
 3. **Sistema de Assinaturas MVP**
+
    - Tipos: Free (limite 10 msg/dia), Premium Mensal, Premium Vitalício
    - Lógica: `lib/subscription.ts`, hook `useSubscription.ts`
    - localStorage para tracking (mensagens/dia, status, ativação)
@@ -35,6 +38,7 @@
    - Webhook Kiwify: `/api/webhooks/kiwify/route.ts` (valida e ativa premium)
 
 4. **Automação Make.com**
+
    - Documentos criados: `docs/MAKE_BLUEPRINT.md`, `docs/PROMPT_MAKE_BLUEPRINT.md`
    - Cenário: webhook Kiwify → Make.com → ativa premium via API interna
 
@@ -67,6 +71,7 @@
 ### 1. Migração para Stripe (Prioridade Alta)
 
 **Por quê?**
+
 - Sem custo fixo mensal (pay-as-you-go)
 - Melhor UX de checkout
 - Webhooks robustos e Customer Portal nativo
@@ -75,6 +80,7 @@
 **O que fazer:**
 
 #### a) Setup no Stripe Dashboard
+
 - Criar conta Stripe (modo teste primeiro)
 - Criar 2 produtos:
   - **RAWN PRO – Mensal:** price recorrente mensal (ex.: R$ 49,90)
@@ -82,7 +88,9 @@
 - Copiar os `price_id` de cada produto
 
 #### b) Variáveis de Ambiente
+
 Adicionar em `web/.env.local` e no Vercel (Project Settings > Environment Variables):
+
 ```env
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
@@ -90,22 +98,24 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ```
 
 #### c) Criar Endpoint de Checkout
+
 **Arquivo:** `web/src/app/api/checkout/route.ts`
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
+  apiVersion: "2024-06-20",
 });
 
 export async function POST(req: NextRequest) {
   try {
     const { priceId } = await req.json();
-    
+
     const session = await stripe.checkout.sessions.create({
-      mode: priceId.includes('monthly') ? 'subscription' : 'payment',
-      payment_method_types: ['card'],
+      mode: priceId.includes("monthly") ? "subscription" : "payment",
+      payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/plans`,
@@ -119,42 +129,47 @@ export async function POST(req: NextRequest) {
 ```
 
 #### d) Webhook para Ativação
+
 **Arquivo:** `web/src/app/api/webhooks/stripe/route.ts`
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
+  apiVersion: "2024-06-20",
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
-  const signature = req.headers.get('stripe-signature')!;
+  const signature = req.headers.get("stripe-signature")!;
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err: any) {
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+    return NextResponse.json(
+      { error: `Webhook Error: ${err.message}` },
+      { status: 400 }
+    );
   }
 
   // Processar eventos relevantes
   switch (event.type) {
-    case 'checkout.session.completed':
+    case "checkout.session.completed":
       const session = event.data.object as Stripe.Checkout.Session;
       // TODO: Salvar ativação em DB (customer_id, status: 'active', plan)
-      console.log('✅ Checkout completo:', session.customer);
+      console.log("✅ Checkout completo:", session.customer);
       break;
-    
-    case 'customer.subscription.updated':
-    case 'customer.subscription.deleted':
+
+    case "customer.subscription.updated":
+    case "customer.subscription.deleted":
       const subscription = event.data.object as Stripe.Subscription;
       // TODO: Atualizar status no DB
-      console.log('🔄 Subscription atualizada:', subscription.id);
+      console.log("🔄 Subscription atualizada:", subscription.id);
       break;
   }
 
@@ -163,16 +178,19 @@ export async function POST(req: NextRequest) {
 ```
 
 #### e) Atualizar Página de Planos
+
 **Arquivo:** `web/src/app/plans/page.tsx`
+
 - Trocar os links Kiwify por chamadas ao endpoint `/api/checkout`
 - Passar os `priceId` apropriados para cada plano
 
 Exemplo de botão:
+
 ```typescript
 async function handleCheckout(priceId: string) {
-  const res = await fetch('/api/checkout', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ priceId }),
   });
   const { url } = await res.json();
@@ -181,13 +199,16 @@ async function handleCheckout(priceId: string) {
 ```
 
 #### f) Configurar Webhook no Stripe Dashboard
+
 - Ir em Developers > Webhooks > Add endpoint
 - URL: `https://rawn-pro.vercel.app/api/webhooks/stripe`
 - Eventos: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`
 - Copiar o `Signing secret` e atualizar `STRIPE_WEBHOOK_SECRET`
 
 #### g) (Opcional) Customer Portal
+
 Criar endpoint para permitir que o cliente gerencie assinatura/cartão:
+
 ```typescript
 // web/src/app/api/customer-portal/route.ts
 const session = await stripe.billingPortal.sessions.create({
@@ -202,16 +223,19 @@ return NextResponse.json({ url: session.url });
 ### 2. Persistência de Dados (DB) – Recomendado
 
 **Por quê?**
+
 - localStorage não é confiável para prod (pode ser apagado)
 - Webhooks precisam de storage server-side para ativar premium
 - Histórico de mensagens, perfil, etc.
 
 **Opções:**
+
 - **Supabase** (PostgreSQL managed, fácil setup, auth integrado)
 - **Vercel Postgres** (KV para cache rápido + Postgres para dados principais)
 - **Prisma + PlanetScale** (MySQL serverless)
 
 **Schema mínimo:**
+
 ```prisma
 model User {
   id            String   @id @default(cuid())
@@ -276,10 +300,13 @@ model Message {
 ## 🔄 COMO RETOMAR O TRABALHO
 
 ### Gatilho de Retorno
+
 Quando quiser voltar, diga:
+
 > **"Voltei, vamos trabalhar"**
 
 O assistente deverá:
+
 1. Confirmar que está no repositório RAWNPRO_V2
 2. Fazer checkout da branch `main` (ou `backup/checkpoint-2025-10-27`)
 3. Verificar se há mudanças remotas (`git pull`)
@@ -315,6 +342,7 @@ git checkout backup/checkpoint-2025-10-27
 ## 📝 NOTAS TÉCNICAS
 
 ### Estrutura de Pastas (Resumo)
+
 ```
 web/
 ├── src/
@@ -346,6 +374,7 @@ web/
 ```
 
 ### Dependências Principais
+
 ```json
 {
   "framer-motion": "^12.23.0",
@@ -358,6 +387,7 @@ web/
 ```
 
 ### Variáveis de Ambiente Atuais (web/.env.local)
+
 ```env
 OPENAI_API_KEY=sk-...
 NEXT_PUBLIC_URL=https://rawn-pro.vercel.app
@@ -365,6 +395,7 @@ NEXT_PUBLIC_URL=https://rawn-pro.vercel.app
 ```
 
 **Adicionar quando migrar para Stripe:**
+
 ```env
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
@@ -376,17 +407,20 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ## 🎯 DECISÕES DE ARQUITETURA
 
 1. **Por que localStorage para subscriptions?**
+
    - MVP rápido para validar fluxo
    - Fácil de testar localmente sem DB
    - **Limitação:** não persiste entre dispositivos, não é seguro para prod longa
    - **Plano:** migrar para DB quando integrar Stripe
 
 2. **Por que Framer Motion?**
+
    - Animações declarativas e performáticas
    - Bem integrado com React/Next.js
    - Pequeno bundle size
 
 3. **Por que Vercel?**
+
    - Deploy automático via Git
    - Edge Functions para APIs
    - Analytics e logs integrados
@@ -402,16 +436,19 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ## ⚠️ PONTOS DE ATENÇÃO
 
 1. **Segurança:**
+
    - Nunca commitar `.env.local` (já está no `.gitignore`)
    - Validar sempre assinaturas de webhook (Stripe/Kiwify)
    - Rate limiting no endpoint `/api/chat` (TODO)
 
 2. **Performance:**
+
    - Chat pode ficar lento com muitas mensagens no estado
    - Considerar paginação/virtualização
    - Cachear respostas comuns da IA (Redis/Vercel KV)
 
 3. **Custos:**
+
    - OpenAI cobra por token (monitorar uso)
    - Stripe cobra por transação (sem mensalidade)
    - Vercel Free Tier tem limites (bandwidth, edge requests)

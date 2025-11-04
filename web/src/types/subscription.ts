@@ -11,24 +11,7 @@ export interface Subscription {
   plan: SubscriptionPlan;
   status: SubscriptionStatus;
   expiresAt?: number; // timestamp
-  kiwifyOrderId?: string;
-  kiwifyCustomerId?: string;
-}
-
-export interface KiwifyWebhookPayload {
-  order_id: string;
-  order_status: string;
-  product_id: string;
-  customer: {
-    email: string;
-    name: string;
-    phone?: string;
-  };
-  order_date: string;
-  approved_date?: string;
-  product_name: string;
-  product_type: "subscription" | "one_time";
-  subscription_status?: "active" | "cancelled" | "expired";
+  stripeSessionId?: string;
 }
 
 export const PLANS = {
@@ -41,7 +24,7 @@ export const PLANS = {
   mensal: {
     name: "Mensal",
     price: 49.9,
-    checkoutUrl: "https://pay.kiwify.com.br/uSs6hgG",
+    checkoutUrl: "",
     messagesPerDay: -1, // ilimitado
     features: [
       "Mensagens ilimitadas",
@@ -52,8 +35,8 @@ export const PLANS = {
   },
   lifetime: {
     name: "Lifetime",
-    price: 299.0,
-    checkoutUrl: "https://pay.kiwify.com.br/ocIXXfO",
+    price: 449.9,
+    checkoutUrl: "",
     messagesPerDay: -1, // ilimitado
     features: [
       "Acesso vitalício",

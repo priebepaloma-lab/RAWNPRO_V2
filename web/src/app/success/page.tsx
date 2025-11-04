@@ -12,14 +12,12 @@ function SuccessContent() {
   const [activated, setActivated] = React.useState(false);
 
   React.useEffect(() => {
-    // Pega parâmetros da URL (enviados pela Kiwify ou Make.com)
-    const orderId = searchParams.get("order_id");
-    const plan = searchParams.get("plan") as "mensal" | "lifetime";
-    const email = searchParams.get("email");
+    // Stripe Checkout retorna session_id e plan
+    const stripeSessionId = searchParams.get("session_id");
+    const plan = searchParams.get("plan") as "mensal" | "lifetime" | null;
 
-    if (orderId && plan && email) {
-      // Ativa a assinatura localmente
-      activateSubscription(plan, orderId, email);
+    if (plan && stripeSessionId) {
+      activateSubscription(plan, { stripeSessionId });
       setActivated(true);
     }
   }, [searchParams]);

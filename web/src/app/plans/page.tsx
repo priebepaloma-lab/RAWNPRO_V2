@@ -18,10 +18,47 @@ export default function PlansPage() {
     setCurrentSubscription(getSubscription());
   }, []);
 
-  const handleSelectPlan = (planKey: "mensal" | "lifetime") => {
-    const plan = PLANS[planKey];
-    if (plan.checkoutUrl) {
-      window.location.href = plan.checkoutUrl;
+  const [loadingPlan, setLoadingPlan] = React.useState<
+    "mensal" | "lifetime" | null
+  >(null);
+
+  const requireStripe = process.env.NEXT_PUBLIC_STRIPE_REQUIRED !== "false"; // default: require Stripe
+
+  const handleSelectPlan = async (planKey: "mensal" | "lifetime") => {
+    try {
+      setLoadingPlan(planKey);
+      // Try Stripe checkout first
+      const res = await fetch("/api/stripe/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: planKey }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.url) {
+          window.location.href = data.url as string;
+          return;
+        }
+      }
+
+      // Stripe-only: no fallback
+      if (requireStripe) {
+        alert(
+          "Não foi possível iniciar o checkout. Verifique as variáveis do Stripe no deploy (STRIPE_SECRET_KEY, STRIPE_PRICE_MENSAL/LIFETIME, STRIPE_COUPON_MENSAL_FIRST_MONTH)."
+        );
+        return;
+      }
+      // If not requiring Stripe, do nothing else.
+    } catch (e) {
+      console.error("Failed to start checkout:", e);
+      if (requireStripe) {
+        alert(
+          "Erro ao iniciar o checkout. Stripe é obrigatório neste ambiente."
+        );
+      }
+    } finally {
+      setLoadingPlan(null);
     }
   };
 
@@ -100,7 +137,7 @@ export default function PlansPage() {
                 <span className="text-rawn-text-muted">/mês</span>
               </div>
               <p className="text-sm text-rawn-text-muted mt-1">
-                Primeira cobrança: R$ 19,90
+                Primeira cobrança promocional: R$ 29,90
               </p>
             </div>
 
@@ -123,6 +160,8 @@ export default function PlansPage() {
             >
               {currentSubscription.plan === "mensal"
                 ? "Plano Atual"
+                : loadingPlan === "mensal"
+                ? "Redirecionando..."
                 : "Assinar Agora"}
             </button>
           </motion.div>
@@ -155,7 +194,7 @@ export default function PlansPage() {
 
             <div className="mb-6">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold">R$ 299,00</span>
+                <span className="text-4xl font-bold">R$ 449,90</span>
               </div>
               <p className="text-sm text-rawn-accent-neon mt-1 font-medium">
                 Pagamento único • Sem mensalidades
@@ -181,6 +220,8 @@ export default function PlansPage() {
             >
               {currentSubscription.plan === "lifetime"
                 ? "Plano Atual"
+                : loadingPlan === "lifetime"
+                ? "Redirecionando..."
                 : "Garantir Acesso Vitalício"}
             </button>
           </motion.div>

@@ -13,10 +13,12 @@ export const viewport = {
   themeColor: "#000000",
 };
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 export const metadata = {
   title: "RAWN PRO",
   description: "Ciência em conversa. Clareza em ação.",
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL(appUrl),
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/icons/rawnpro-192.png",
@@ -34,7 +36,7 @@ export const metadata = {
     title: "RAWN PRO",
     description: "Inteligência de performance humana",
     images: ["/brand/Tela Walcome rawn pro.png"],
-    url: "https://rawn.pro",
+    url: appUrl,
     siteName: "RAWN PRO",
     locale: "pt_BR",
     type: "website",

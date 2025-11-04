@@ -1,16 +1,8 @@
-import type {
-  Subscription,
-  SubscriptionPlan,
-  SubscriptionStatus,
-} from "@/types/subscription";
+import type { Subscription, SubscriptionPlan } from "@/types/subscription";
 
 const STORAGE_KEY = "rawn_subscription";
 
-// IDs dos produtos na Kiwify
-export const KIWIFY_PRODUCT_IDS = {
-  mensal: "uSs6hgG",
-  lifetime: "ocIXXfO",
-} as const;
+// Kiwify removido — fluxo Stripe-only
 
 /**
  * Obtém a assinatura do usuário do localStorage
@@ -118,14 +110,12 @@ export function clearSubscription(): void {
  */
 export function activateSubscription(
   plan: SubscriptionPlan,
-  kiwifyOrderId: string,
-  kiwifyCustomerId: string
+  opts?: { stripeSessionId?: string }
 ): void {
   const subscription: Subscription = {
     plan,
     status: "active",
-    kiwifyOrderId,
-    kiwifyCustomerId,
+    stripeSessionId: opts?.stripeSessionId,
   };
 
   // Mensal expira em 30 dias

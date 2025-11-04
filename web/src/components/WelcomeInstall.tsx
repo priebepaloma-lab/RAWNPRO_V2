@@ -61,7 +61,9 @@ export default function WelcomeInstall() {
 
   if (!showWelcome) return null;
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isIOS =
+    typeof navigator !== "undefined" &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6">

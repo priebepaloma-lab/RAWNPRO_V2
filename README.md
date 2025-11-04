@@ -31,7 +31,14 @@ RAWNPRO_V2/
    ```bash
    cd web
    cp .env.example .env.local
-   # Adicione sua OPENAI_API_KEY no arquivo .env.local
+   # Preencha as chaves abaixo no arquivo .env.local
+   # OPENAI_API_KEY=...
+   # NEXT_PUBLIC_APP_URL=http://localhost:3000
+   # STRIPE_SECRET_KEY=sk_live_or_test_...
+   # STRIPE_WEBHOOK_SECRET=whsec_...
+   # STRIPE_PRICE_MENSAL=price_...   # recorrente (mensal)
+   # STRIPE_PRICE_LIFETIME=price_...
+   # STRIPE_COUPON_MENSAL_FIRST_MONTH=coupon_...  # amount_off=2000, duration=once
    ```
 
 3. **Iniciar servidor de desenvolvimento**
@@ -64,7 +71,23 @@ Adicione no painel da Vercel:
 
 ```
 OPENAI_API_KEY=sk-proj-...
+NEXT_PUBLIC_APP_URL=https://seu-app.vercel.app
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PRICE_MENSAL=price_...
+STRIPE_PRICE_LIFETIME=price_...
+STRIPE_COUPON_MENSAL_FIRST_MONTH=coupon_...
+STRIPE_PROMO_MENSAL_FIRST_MONTH=promo_...
 ```
+
+STRIPE*COUPON_MENSAL_FIRST_MONTH=coupon*... # amount_off=2000, duration=once
+
+> Stripe:
+>
+> - IDs de Coupon geralmente são curtos (ex.: `Ah3bms82`) e não precisam começar com `coupon_`. Use o ID exato do Coupon em `STRIPE_COUPON_MENSAL_FIRST_MONTH`.
+> - Se você criou um Promotion Code (ID começa com `promo_`) vinculado a esse Coupon, pode usar `STRIPE_PROMO_MENSAL_FIRST_MONTH` e o sistema aplicará `promotion_code` automaticamente.
+
+> Stripe: Crie os produtos e preços no Dashboard da Stripe e cole os IDs de preço nos campos `STRIPE_PRICE_*`. Para a promoção (R$ 29,90 no 1º mês), crie um Coupon com `amount_off = 2000 (R$ 20,00)`, `currency = BRL`, `duration = once` e defina `STRIPE_COUPON_MENSAL_FIRST_MONTH`. Configure o endpoint de webhook em `/api/stripe/webhook`.
 
 > Importante: Atualize a `OPENAI_API_KEY` no painel da Vercel sempre que a chave for rotacionada localmente.
 
