@@ -65,14 +65,7 @@ export default function HomePage() {
               Performance e bem-estar guiados por IA.
             </span>
           </motion.h1>
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto mt-4 max-w-2xl text-balance text-gray-300"
-          >
-            Evolua com método.{" "}
-            <span className="text-white">Planos inteligentes.</span> Resultados
-            consistentes.
-          </motion.p>
+          {/* Removed per request: Evolua com método / Planos inteligentes / Resultados consistentes */}
           <motion.div
             variants={fadeUp}
             className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
@@ -102,10 +95,16 @@ export default function HomePage() {
           >
             Base científica.
           </motion.h3>
-          <motion.p variants={fadeUp} className="mt-2 text-sm text-gray-300">
+          <motion.p
+            variants={fadeUp}
+            className="mt-2 text-base leading-relaxed text-gray-300 text-pretty"
+          >
             Diretrizes ACSM, OMS, NSCA e revisões Cochrane.
           </motion.p>
-          <motion.p variants={fadeUp} className="mt-1 text-sm text-gray-400">
+          <motion.p
+            variants={fadeUp}
+            className="mt-1 text-base leading-relaxed text-gray-300/90 text-pretty"
+          >
             Evidência traduzida em prática real.
           </motion.p>
         </div>
@@ -137,7 +136,7 @@ export default function HomePage() {
               <motion.div
                 key={t}
                 variants={fadeUp}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-gray-200"
+                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-base leading-relaxed text-gray-200 text-pretty"
               >
                 {t}
               </motion.div>
@@ -161,7 +160,10 @@ export default function HomePage() {
           >
             Todas as dimensões.
           </motion.h3>
-          <motion.p variants={fadeUp} className="mt-2 text-sm text-gray-300">
+          <motion.p
+            variants={fadeUp}
+            className="mt-2 text-base leading-relaxed text-gray-300 text-pretty"
+          >
             Força, resistência, mobilidade, estética, equilíbrio e mente.
           </motion.p>
         </div>
@@ -182,7 +184,10 @@ export default function HomePage() {
           >
             IA com inteligência real.
           </motion.h3>
-          <motion.p variants={fadeUp} className="mt-2 text-sm text-gray-300">
+          <motion.p
+            variants={fadeUp}
+            className="mt-2 text-base leading-relaxed text-gray-300 text-pretty"
+          >
             Mais que anamnese. RAWN PRO compreende objetivos, interpreta padrões
             e se ajusta em tempo real — criando o plano ideal para cada fase da
             sua evolução.
@@ -215,7 +220,7 @@ export default function HomePage() {
               <motion.div
                 key={t}
                 variants={fadeUp}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-sm text-gray-200"
+                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-base text-gray-200"
               >
                 {t}
               </motion.div>
@@ -239,10 +244,16 @@ export default function HomePage() {
           >
             Planos
           </motion.h3>
-          <motion.p variants={fadeUp} className="mt-2 text-sm text-gray-300">
+          <motion.p
+            variants={fadeUp}
+            className="mt-2 text-base leading-relaxed text-gray-300 text-pretty"
+          >
             Mensal — R$ 29,90 1º mês, depois R$ 49,90/mês.
           </motion.p>
-          <motion.p variants={fadeUp} className="text-sm text-gray-300">
+          <motion.p
+            variants={fadeUp}
+            className="text-base leading-relaxed text-gray-300 text-pretty"
+          >
             Vitalício — R$ 449,90.
           </motion.p>
           <motion.div
@@ -268,7 +279,7 @@ export default function HomePage() {
         <div className="fixed inset-x-0 bottom-0 z-30 block sm:hidden">
           <div className="mx-3 mb-3 rounded-full border border-emerald-400/30 bg-black/80 backdrop-blur supports-[padding:env(safe-area-inset-bottom)]:pb-[env(safe-area-inset-bottom)]">
             <div className="flex items-center justify-between px-4 py-3">
-              <span className="text-xs text-gray-300">
+              <span className="text-sm text-gray-300">
                 1º mês R$ 29,90 • Depois R$ 49,90/mês
               </span>
               <Link
@@ -299,7 +310,7 @@ export default function HomePage() {
           </motion.h3>
           <motion.p
             variants={fadeUp}
-            className="mt-2 text-[12px] leading-relaxed text-gray-400"
+            className="mt-2 text-sm leading-relaxed text-gray-400 text-pretty"
           >
             RAWN PRO é tecnologia de apoio à performance e bem-estar. Não
             substitui diagnóstico, prescrição ou orientação profissional.
@@ -316,7 +327,7 @@ export default function HomePage() {
               alt="RAWN PRO"
               className="mb-3 h-8 w-auto opacity-90"
             />
-            <p className="text-xs text-gray-400">
+            <p className="text-sm text-gray-400">
               Educativo. Não substitui profissionais. 7 dias de garantia.
             </p>
           </div>
