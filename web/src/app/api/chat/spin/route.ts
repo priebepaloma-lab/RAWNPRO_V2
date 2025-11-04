@@ -52,6 +52,7 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const messages = (body?.messages ?? []) as Msg[];
+    const profile = body?.profile as { name?: string } | undefined;
     const leadMeta = body?.leadMeta as
       | { turn?: number; remaining?: number; max?: number }
       | undefined;
@@ -62,9 +63,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const nameLine = profile?.name
+      ? `Nome do lead: ${String(
+          profile.name
+        )}. Use o nome com naturalidade quando apropriado (sem exagero).`
+      : "";
     const preamble = `Contexto: Landing page pública. Turno ${Number(
       leadMeta?.turn ?? 0
-    )} de ${Number(leadMeta?.max ?? 0)}.`;
+    )} de ${Number(leadMeta?.max ?? 0)}. ${nameLine}`;
 
     const client = new OpenAI({ apiKey });
 

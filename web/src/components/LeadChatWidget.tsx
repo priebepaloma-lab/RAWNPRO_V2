@@ -47,17 +47,18 @@ function WidgetComposer({
 
 export default function LeadChatWidget() {
   type Msg = { id: string; role: "user" | "system"; text: string };
-  const MAX_MESSAGES = 10;
+  const MAX_MESSAGES = 20;
   const [open, setOpen] = React.useState(false);
   const [messages, setMessages] = React.useState<Msg[]>([
     {
       id: "welcome",
       role: "system",
-      text: "Bem-vindo(a)! Para te entender de forma precisa: como está sua rotina hoje (tempo disponível e local — casa ou academia) e qual seu objetivo principal agora?",
+      text: "Bem-vindo(a)! Antes de começarmos, como posso te chamar?",
     },
   ]);
   const [typing, setTyping] = React.useState(false);
   const [showPlanPicker, setShowPlanPicker] = React.useState(false);
+  const [leadName, setLeadName] = React.useState<string | null>(null);
   const panelRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -105,13 +106,13 @@ export default function LeadChatWidget() {
 
   function detectIntent(
     text: string
-  ):
-    | { intent: "buy"; plan?: "mensal" | "lifetime" }
-    | { intent: "np" }
-    | { intent: "other" } {
+  ): { intent: "buy"; plan?: "mensal" | "lifetime" } | { intent: "other" } {
     const t = text.toLowerCase();
+    // Buy intent only on explicit close/checkout requests
     const wants =
-      /(comprar|assinar|assino|assinei|quero|ativar|contratar)/i.test(t);
+      /(comprar|assinar|fechar|ativar|contratar|checkout|pagar|link(?:\s+de\s+compra)?)/i.test(
+        t
+      );
     if (wants) {
       const mensal = /(mensal|mês|mesal)/i.test(t);
       const vital = /(vital[ií]cio|vitalicio|lifetime)/i.test(t);
@@ -119,20 +120,33 @@ export default function LeadChatWidget() {
       if (vital && !mensal) return { intent: "buy", plan: "lifetime" };
       return { intent: "buy" };
     }
-    // sinais de Need-Payoff (curiosidade/prontidão)
-    const needPayoff =
-      /(como funciona|vale a pena|me ajuda|quero melhorar|como começo|como comeco|posso começar|posso comecar|preç|quanto|demonstração|demonstracao|teste)/i.test(
-        t
-      );
-    if (needPayoff) return { intent: "np" };
     return { intent: "other" };
   }
 
+  function extractName(raw: string): string | null {
+    const t = raw.trim();
+    if (!t) return null;
+    let n = t
+      .replace(/^meu nome é\s*/i, "")
+      .replace(/^meu nome e\s*/i, "")
+      .replace(/^me chamo\s*/i, "")
+      .replace(/^sou\s*/i, "")
+      .replace(/^eu sou\s*/i, "")
+      .trim();
+    const parts = n.split(/\s+/).slice(0, 2);
+    n = parts.join(" ");
+    if (n.length > 0 && n.length <= 40) return n;
+    return null;
+  }
+
   async function handleSend(text: string) {
-    // Limite duro de 20 mensagens totais
-    if (messages.length >= MAX_MESSAGES) {
+    // Encerra no limite exato (mensagem 20): convite suave sem links
+    const nextCount = messages.length + 1;
+    if (nextCount >= MAX_MESSAGES) {
       appendSystem(
-        "Podemos avançar quando quiser. Prefere ver como começar agora? Posso abrir o Mensal ou o Vitalício para você."
+        leadName
+          ? `${leadName}, vou encerrar por aqui para manter a conversa objetiva. Se fizer sentido, posso abrir o Mensal ou o Vitalício para você agora.`
+          : `Vou encerrar por aqui para manter a conversa objetiva. Se fizer sentido, posso abrir o Mensal ou o Vitalício para você agora.`
       );
       setShowPlanPicker(true);
       return;
@@ -140,6 +154,10 @@ export default function LeadChatWidget() {
 
     const id = Math.random().toString(36).slice(2);
     setMessages((prev) => [...prev, { id, role: "user", text }]);
+    if (!leadName) {
+      const maybe = extractName(text);
+      if (maybe) setLeadName(maybe);
+    }
     setTyping(true);
 
     // Detecta intenção de compra e plano
@@ -151,14 +169,10 @@ export default function LeadChatWidget() {
         return;
       }
       // Pergunta escolha de plano
-      appendSystem("Perfeito! Prefere começar pelo Mensal ou pelo Vitalício?");
-      setShowPlanPicker(true);
-      setTyping(false);
-      return;
-    }
-    if (intent.intent === "np") {
       appendSystem(
-        "Se fizer sentido, posso te mostrar como começar — prefere Mensal ou Vitalício?"
+        leadName
+          ? `Perfeito, ${leadName}! Prefere começar pelo Mensal ou pelo Vitalício?`
+          : "Perfeito! Prefere começar pelo Mensal ou pelo Vitalício?"
       );
       setShowPlanPicker(true);
       setTyping(false);
@@ -171,7 +185,7 @@ export default function LeadChatWidget() {
     );
     const payload = {
       messages: history.map((m) => ({ role: m.role, content: m.text })),
-      profile: {},
+      profile: { name: leadName || undefined },
       mode: "lead-spin",
       leadMeta: {
         turn: history.length + 1,
@@ -284,8 +298,8 @@ export default function LeadChatWidget() {
                     <TypingIndicator />
                   </div>
                 )}
-                {/* CTA de fechamento quando perto do limite ou quando usuário quer comprar */}
-                {(showPlanPicker || messages.length >= MAX_MESSAGES - 3) && (
+                {/* CTA: apenas quando solicitado explicitamente ou no encerramento */}
+                {showPlanPicker && (
                   <div className="mt-3 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-gray-200">
                     <div className="mb-2 font-semibold">Escolha seu plano</div>
                     <div className="flex gap-2">
