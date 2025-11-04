@@ -39,10 +39,10 @@ export default function HomePage() {
               href="/plans"
               className="rounded-xl bg-emerald-400 px-8 py-4 font-bold text-black shadow-[0_0_24px_rgba(16,185,129,0.45)] transition hover:bg-emerald-300"
             >
-              Começar por R$ 49,90/mês
+              Começar por R$ 29,90 no 1º mês
             </Link>
             <span className="text-sm text-gray-400">
-              Primeiro mês promocional: <strong>R$ 29,90</strong>
+              Depois: <strong>R$ 49,90/mês</strong>
             </span>
           </div>
         </div>
@@ -80,31 +80,36 @@ export default function HomePage() {
         </div>
         <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
           {/* Mensal */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col">
             <h3 className="mb-2 text-xl font-bold">Mensal</h3>
             <div className="mb-1 flex items-baseline gap-2">
-              <span className="text-4xl font-extrabold">R$ 49,90</span>
-              <span className="text-sm text-gray-400">/mês</span>
+              <span className="text-5xl font-extrabold tracking-tight">
+                R$ 29,90
+              </span>
+              <span className="text-sm text-gray-400">no 1º mês</span>
             </div>
             <p className="mb-4 text-sm text-gray-400">
-              Primeiro mês promocional: R$ 29,90
+              A partir do 2º mês:{" "}
+              <span className="text-white font-semibold">R$ 49,90/mês</span>
             </p>
-            <ul className="mb-6 space-y-2 text-sm text-gray-300">
+            <ul className="mb-6 space-y-2 text-sm text-gray-300 flex-1">
               <li>Mensagens ilimitadas</li>
               <li>Acesso completo ao RAWN PRO</li>
               <li>Atualizações contínuas</li>
               <li>Suporte prioritário</li>
             </ul>
-            <Link
-              href="/plans"
-              className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
-            >
-              Assinar Agora
-            </Link>
+            <div className="mt-auto">
+              <Link
+                href="/plans"
+                className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
+              >
+                Assinar Agora
+              </Link>
+            </div>
           </div>
 
           {/* Vitalício */}
-          <div className="rounded-2xl border-2 border-emerald-400 bg-emerald-400/10 p-6">
+          <div className="rounded-2xl border-2 border-emerald-400 bg-emerald-400/10 p-6 flex flex-col">
             <div className="mb-2 inline-block rounded-full bg-emerald-400 px-3 py-1 text-xs font-bold text-black">
               MELHOR VALOR
             </div>
@@ -113,21 +118,67 @@ export default function HomePage() {
               <span className="text-4xl font-extrabold">R$ 449,90</span>
             </div>
             <p className="mb-4 text-sm text-emerald-300">
-              Pagamento único • Acesso para sempre
+              Pagamento único • Sem mensalidades
             </p>
-            <ul className="mb-6 space-y-2 text-sm text-gray-200">
+            <ul className="mb-6 space-y-2 text-sm text-gray-200 flex-1">
               <li>Tudo do plano mensal</li>
               <li>Sem mensalidades</li>
               <li>Suporte VIP</li>
               <li>Atualizações futuras</li>
             </ul>
-            <Link
-              href="/plans"
-              className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
-            >
-              Garantir Vitalício
-            </Link>
+            <div className="mt-auto">
+              <Link
+                href="/plans"
+                className="block w-full rounded-xl bg-emerald-400 py-3 text-center font-bold text-black transition hover:bg-emerald-300"
+              >
+                Garantir Vitalício
+              </Link>
+            </div>
           </div>
+        </div>
+
+        {/* Legal fine print for compliance */}
+        <div className="mx-auto mt-6 max-w-4xl text-xs leading-relaxed text-gray-400">
+          <p className="mb-2">
+            Oferta promocional: R$ 29,90 no 1º mês com desconto aplicado
+            automaticamente no checkout Stripe. Cobrança recorrente mensal a
+            partir do 2º mês no valor de R$ 49,90/mês. Você pode cancelar a
+            qualquer momento antes da próxima renovação. Garantia incondicional
+            de 7 dias conforme legislação aplicável. O plano Vitalício refere-se
+            ao acesso enquanto o produto/serviço estiver disponível e mantido
+            pela RAWN PRO, para uso pessoal e não transferível.
+          </p>
+          <p className="mb-2">
+            O conteúdo do RAWN PRO tem caráter educativo e informativo. Não
+            substitui avaliação, diagnóstico ou prescrição de profissional de
+            saúde, treinamento físico, nutricional, psicológico, médico,
+            jurídico ou financeiro. Resultados variam de acordo com contexto
+            individual e não são garantidos. Ao prosseguir, você concorda com
+            nossos
+            <Link href="/terms" className="text-emerald-300 hover:underline">
+              {" "}
+              Termos de Uso
+            </Link>
+            ,
+            <Link href="/privacy" className="text-emerald-300 hover:underline">
+              {" "}
+              Política de Privacidade
+            </Link>
+            ,
+            <Link href="/lgpd" className="text-emerald-300 hover:underline">
+              {" "}
+              Aviso de LGPD
+            </Link>{" "}
+            e
+            <Link
+              href="/disclaimer"
+              className="text-emerald-300 hover:underline"
+            >
+              {" "}
+              Aviso Legal
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
@@ -146,7 +197,23 @@ export default function HomePage() {
                 você.
               </p>
             </div>
-            <div className="text-sm text-gray-500">© 2025 RAWN PRO</div>
+            <div className="flex flex-col items-center gap-3 text-sm text-gray-500 sm:items-end">
+              <div className="flex gap-4">
+                <Link href="/terms" className="hover:text-gray-300">
+                  Termos de Uso
+                </Link>
+                <Link href="/privacy" className="hover:text-gray-300">
+                  Privacidade
+                </Link>
+                <Link href="/lgpd" className="hover:text-gray-300">
+                  LGPD
+                </Link>
+                <Link href="/disclaimer" className="hover:text-gray-300">
+                  Aviso Legal
+                </Link>
+              </div>
+              <div>© 2025 RAWN PRO</div>
+            </div>
           </div>
         </div>
       </footer>
