@@ -193,6 +193,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const messages = (body?.messages ?? []) as Msg[];
     const profile = body?.profile ?? {};
+    const mode = body?.mode as string | undefined;
     if (!Array.isArray(messages)) {
       return NextResponse.json(
         {
@@ -268,10 +269,20 @@ Se houver estudos sobre interação exercício/nutrição com o medicamento, exp
 `
       : "";
 
+    const spinDirective =
+      mode === "lead-spin"
+        ? `\nMODO VENDAS (SPIN SELLING) ATIVADO — LEAD NA LANDING\n\nObjetivo: Conduzir a conversa com estrutura SPIN (Situação → Problema → Implicação → Necessidade/Payoff), de forma sutil, empática e técnica, para entender o contexto do lead e apresentar o RAWN PRO como solução.\n\nRegras de atuação:\n- 1 a 2 perguntas por turno, no máximo, sempre objetivas e relevantes.\n- Não usar jargões de vendas; manter tom mentor técnico/sereno do RAWN PRO.\n- Conectar benefícios do RAWN PRO às dores explicitadas pelo lead.\n- Quando houver sinal de prontidão, oferecer CTA neutra: “Posso te mostrar os planos?” ou “Quer começar agora?” (link /plans).\n- Em dúvidas sobre funcionamento, encaminhar para /about com explicação breve.\n- Preço: Mensal R$ 29,90 (1º mês), R$ 49,90/mês após; Vitalício R$ 449,90. Não forçar, apenas informar quando relevante.\n- Blindagem: educativo, sem promessas de resultado, sem prescrição.\n\nSequência SPIN sugerida (adaptar conforme contexto):\n1) Situação: rotina, tempo, local de treino, objetivo principal.\n2) Problema: principais dificuldades (aderência, técnica, sono, nutrição, lesões).\n3) Implicação: como essas dificuldades impactam evolução/energia/constância.\n4) Necessidade-Payoff: como seria a solução ideal; mapeie com os recursos do RAWN PRO.\n\nFinalização suave: quando alinhado, indique “/plans” para ativar.\n`
+        : "";
+
     const chatMessages = [
       {
         role: "system" as const,
-        content: systemPrompt + "\n" + SYSTEM_PROMPT + sensitiveDirective,
+        content:
+          systemPrompt +
+          "\n" +
+          SYSTEM_PROMPT +
+          spinDirective +
+          sensitiveDirective,
       },
       ...messages.map((m) => ({
         role: m.role,

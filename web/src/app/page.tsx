@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import LeadChatWidget from "@/components/LeadChatWidget";
 
 const easing = [0.22, 1, 0.36, 1] as const;
 const fadeUp = {
@@ -21,6 +22,7 @@ const stagger = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeadChatWidget />
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
