@@ -6,10 +6,34 @@ import { motion } from "framer-motion";
 type Props = {
   onSend?: (text: string) => void;
   onTypingStart?: () => void;
+  initialText?: string;
+  autoSendInitial?: boolean;
 };
 
-export default function ChatComposer({ onSend, onTypingStart }: Props) {
-  const [text, setText] = React.useState("");
+export default function ChatComposer({
+  onSend,
+  onTypingStart,
+  initialText,
+  autoSendInitial,
+}: Props) {
+  const [text, setText] = React.useState(initialText ?? "");
+  const sentOnceRef = React.useRef(false);
+
+  // Optionally auto-send a seeded message once on mount (for deep links)
+  React.useEffect(() => {
+    if (
+      autoSendInitial &&
+      !sentOnceRef.current &&
+      typeof initialText === "string" &&
+      initialText.trim().length > 0
+    ) {
+      sentOnceRef.current = true;
+      onTypingStart?.();
+      onSend?.(initialText.trim());
+      setText("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

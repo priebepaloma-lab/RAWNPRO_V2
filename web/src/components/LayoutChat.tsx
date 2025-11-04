@@ -17,9 +17,15 @@ type Msg = { id: string; role: "user" | "system"; text: string };
 
 type Props = {
   initialMessages?: Msg[];
+  seedMessage?: string;
+  autoSendSeed?: boolean;
 };
 
-export default function LayoutChat({ initialMessages = [] }: Props) {
+export default function LayoutChat({
+  initialMessages = [],
+  seedMessage,
+  autoSendSeed,
+}: Props) {
   const [messages, setMessages] = React.useState<Msg[]>(initialMessages);
   const [isTyping, setIsTyping] = React.useState(false);
   const { profile } = useProfile();
@@ -28,6 +34,8 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
     useSubscription();
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const mainRef = React.useRef<HTMLDivElement>(null);
+  const [hadHistory, setHadHistory] = React.useState(false);
+  const seededOnceRef = React.useRef(false);
 
   // chave de armazenamento local
   const STORAGE_KEY = "rawn.chat.history";
@@ -55,6 +63,7 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         const parsed = JSON.parse(saved) as Msg[];
         if (Array.isArray(parsed)) {
           setMessages(parsed);
+          setHadHistory(true);
         }
       }
 
@@ -77,6 +86,21 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // If deep-link provided a seed message and there's no prior history, auto-send once
+  React.useEffect(() => {
+    if (
+      !hadHistory &&
+      !seededOnceRef.current &&
+      typeof seedMessage === "string" &&
+      seedMessage.trim().length > 0 &&
+      autoSendSeed
+    ) {
+      seededOnceRef.current = true;
+      handleSend(seedMessage.trim());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hadHistory, seedMessage, autoSendSeed]);
 
   // sincroniza sempre que mensagens mudarem
   React.useEffect(() => {
@@ -281,6 +305,8 @@ export default function LayoutChat({ initialMessages = [] }: Props) {
         <ChatComposer
           onSend={handleSend}
           onTypingStart={() => setIsTyping(true)}
+          initialText={seedMessage}
+          autoSendInitial={autoSendSeed && !hadHistory}
         />
       </div>
     </>
