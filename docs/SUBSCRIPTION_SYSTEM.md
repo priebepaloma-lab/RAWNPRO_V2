@@ -1,91 +1,46 @@
-# Sistema de Assinaturas - RAWN PRO
+# Sistema de Assinaturas - RAWN PRO (Stripe)
 
-Integração com Kiwify para gerenciar assinaturas e pagamentos.
+Kiwify foi removido. O sistema atual usa Stripe (Checkout + Webhook) para assinaturas e pagamento vitalício.
 
 ## 📋 Estrutura
 
 ```
 src/
-├── types/subscription.ts          # Tipos TypeScript
+├── types/subscription.ts          # Tipos TypeScript (Stripe-only)
 ├── lib/subscription.ts            # Lógica de assinatura (localStorage)
 ├── hooks/useSubscription.ts       # Hook React para gerenciar estado
 ├── app/
-│   ├── plans/page.tsx            # Página de planos
-│   ├── success/page.tsx          # Página de sucesso pós-compra
-│   └── api/webhooks/kiwify/      # Webhook da Kiwify
+│   ├── plans/page.tsx            # Página de planos (inicia Stripe Checkout)
+│   ├── success/page.tsx          # Página de sucesso (lê session_id)
+│   └── api/stripe/               # Endpoints Stripe (checkout + webhook)
 └── components/
-    └── UpgradeBanner.tsx         # Banner de upgrade no chat
+  └── UpgradeBanner.tsx         # Banner de upgrade no chat
 ```
 
 ## 🔐 Planos Disponíveis
 
-| Plano    | Preço     | Link de Checkout                  | Product ID |
-| -------- | --------- | --------------------------------- | ---------- |
-| Mensal   | R$ 49,90  | https://pay.kiwify.com.br/uSs6hgG | uSs6hgG    |
-| Lifetime | R$ 299,00 | https://pay.kiwify.com.br/ocIXXfO | ocIXXfO    |
+| Plano    | Preço     | Como funciona                           |
+| -------- | --------- | --------------------------------------- |
+| Mensal   | R$ 49,90  | Stripe Checkout (primeiro mês R$ 29,90) |
+| Lifetime | R$ 449,90 | Stripe Checkout (pagamento único)       |
 
 **Primeira cobrança Mensal**: R$ 19,90 (configurado na Kiwify)
 
-## 🔗 Configuração da Kiwify
+## 🔗 Configuração do Stripe (resumo)
 
-### 1. Webhook URL
-
-Configure o webhook da Kiwify para enviar eventos para Make.com:
-
-```
-https://hook.us2.make.com/m0nyfkfap2j8fsprumxrqa6qqmkew7um
-```
-
-**Eventos importantes:**
-
-- `paid` - Pagamento aprovado
-- `approved` - Compra aprovada
-- `completed` - Transação completa
-- `cancelled` - Assinatura cancelada
-- `expired` - Assinatura expirada
-
-### 2. Configurar Make.com (Automação)
-
-O webhook do Make.com deve:
-
-1. **Receber evento da Kiwify**
-2. **Validar status** (`paid`, `approved`, `completed`)
-3. **Identificar produto** (mensal ou lifetime)
-4. **Enviar para nosso webhook** (Next.js):
-   ```
-   POST https://seu-dominio.com/api/webhooks/kiwify
-   ```
-5. **Redirecionar usuário** para página de sucesso:
-   ```
-   https://seu-dominio.com/success?order_id=XXX&plan=mensal&email=usuario@email.com
-   ```
-
-### 3. URL de Redirecionamento (Kiwify)
-
-Configure nas configurações de cada produto na Kiwify:
-
-**URL de Sucesso:**
-
-```
-https://seu-dominio.com/success?order_id={order_id}&plan={plan}&email={customer_email}
-```
-
-**URL de Cancelamento:**
-
-```
-https://seu-dominio.com/plans
-```
+1. Crie produtos/preços no Dashboard (Mensal recorrente, Lifetime único).
+2. Configure o Webhook em `https://seu-dominio.com/api/stripe/webhook`.
+3. Defina as variáveis de ambiente (ver `web/.env.example`).
+4. `/plans` chama `POST /api/stripe/create-checkout-session` e redireciona para o Checkout.
 
 ## 🚀 Fluxo de Compra
 
 ```
-1. Usuário clica em "Assinar" → Redireciona para Kiwify
-2. Usuário paga na Kiwify
-3. Kiwify envia webhook → Make.com
-4. Make.com processa e envia → Next.js /api/webhooks/kiwify
-5. Make.com redireciona usuário → /success com parâmetros
-6. Página /success ativa assinatura no localStorage
-7. Usuário começa a usar premium imediatamente
+1. Usuário clica em "Assinar" → Cria sessão via /api/stripe/create-checkout-session
+2. Stripe Checkout processa o pagamento
+3. Stripe envia webhook → /api/stripe/webhook (registra evento)
+4. Stripe redireciona usuário → /success?session_id=...
+5. Página /success registra localmente a assinatura (MVP)
 ```
 
 ## 📊 Limites por Plano
@@ -113,15 +68,7 @@ const {
 
 ### `activateSubscription()`
 
-```tsx
-activateSubscription(
-  plan: "mensal" | "lifetime",
-  kiwifyOrderId: string,
-  kiwifyCustomerId: string
-)
-```
-
-Ativa assinatura após pagamento aprovado.
+Registra localmente a assinatura após o retorno do Checkout (MVP). No projeto atual, aceita `stripeSessionId` como metadado de referência.
 
 ## 🎨 Componentes
 
@@ -160,13 +107,7 @@ console.log("Mensagens usadas hoje:", used);
 
 ### Testar webhook localmente
 
-```bash
-# Use ngrok para expor localhost
-ngrok http 3000
-
-# Configure webhook da Kiwify para:
-# https://your-ngrok-url.ngrok.io/api/webhooks/kiwify
-```
+Exponha `http://localhost:3000` via ngrok e aponte o endpoint do Stripe Webhook para `https://<ngrok>/api/stripe/webhook`.
 
 ## 📝 TODO / Melhorias Futuras
 

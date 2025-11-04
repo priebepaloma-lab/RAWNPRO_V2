@@ -24,7 +24,7 @@ Set these in Vercel → Project → Settings → Environment Variables (PRODUCTI
 - STRIPE*PRICE_LIFETIME = price*...
 - STRIPE_COUPON_MENSAL_FIRST_MONTH = Ah3bms82 (or your live coupon id)
 - (Optional) STRIPE*PROMO_MENSAL_FIRST_MONTH = promo*...
-- (Optional) NEXT_PUBLIC_STRIPE_REQUIRED = true (disables Kiwify fallback)
+- (Optional) NEXT_PUBLIC_STRIPE_REQUIRED = true (enforce Stripe-only)
 
 Tip: You can keep TEST keys in Preview env and LIVE keys in Production.
 
@@ -68,5 +68,5 @@ vercel --prod
 - If /api/health/stripe is not ok:
   - Check env names/values in Vercel Production
   - Redeploy after env changes
-- If /plans shows fallback to Kiwify:
-  - Set NEXT_PUBLIC_STRIPE_REQUIRED=true to enforce Stripe-only and reveal misconfiguration early
+- If /plans doesn't open Stripe Checkout:
+  - Set NEXT_PUBLIC_STRIPE_REQUIRED=true to enforce Stripe-only and fail fast if envs are missing

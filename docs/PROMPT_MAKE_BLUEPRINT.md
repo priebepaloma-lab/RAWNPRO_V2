@@ -1,31 +1,17 @@
-# Prompt para ChatGPT - Criação de Blueprint Make.com
-
-Olá! Preciso que você crie um blueprint completo e funcional para o Make.com (Integromat) que automatize o fluxo de pagamentos da Kiwify para minha aplicação Next.js.
+> DEPRECATED: O projeto não utiliza mais Kiwify. Fluxo oficial: Stripe Checkout + Webhook.
 
 ## Contexto do Projeto
 
-Estou vendendo assinaturas de um app SaaS chamado RAWN PRO através da Kiwify. Preciso automatizar o processo de:
+Estou vendendo assinaturas do RAWN PRO via Stripe. O fluxo antigo (Kiwify → Make.com) foi removido.
 
 1. Receber notificação de pagamento da Kiwify
 2. Validar os dados
 3. Notificar meu backend Next.js
 4. Redirecionar o cliente para página de sucesso
 
-## Produtos na Kiwify
+## Pagamentos (atual)
 
-**Plano Mensal:**
-
-- Product ID: `uSs6hgG`
-- Checkout URL: https://pay.kiwify.com.br/uSs6hgG
-- Preço: R$ 49,90/mês (primeira cobrança R$ 19,90)
-- Tipo: Assinatura recorrente
-
-**Plano Lifetime:**
-
-- Product ID: `ocIXXfO`
-- Checkout URL: https://pay.kiwify.com.br/ocIXXfO
-- Preço: R$ 299,00
-- Tipo: Pagamento único
+Stripe: a página `/plans` chama o endpoint interno `/api/stripe/create-checkout-session` que abre o Stripe Checkout.
 
 ## Webhook URLs
 
@@ -35,10 +21,10 @@ Estou vendendo assinaturas de um app SaaS chamado RAWN PRO através da Kiwify. P
 https://hook.us2.make.com/m0nyfkfap2j8fsprumxrqa6qqmkew7um
 ```
 
-**Next.js API Webhook (saída):**
+**Next.js API Webhook (Stripe):**
 
 ```
-https://meu-dominio.vercel.app/api/webhooks/kiwify
+https://seu-dominio.vercel.app/api/stripe/webhook
 ```
 
 **Página de Sucesso:**
@@ -47,9 +33,7 @@ https://meu-dominio.vercel.app/api/webhooks/kiwify
 https://meu-dominio.vercel.app/success
 ```
 
-## Dados que a Kiwify Envia
-
-A Kiwify envia webhooks no seguinte formato:
+## Referências atuais
 
 ```json
 {
@@ -68,9 +52,7 @@ A Kiwify envia webhooks no seguinte formato:
 }
 ```
 
-## Requisitos do Blueprint
-
-### 1. Validação de Status
+Para integração e deploy com Stripe, consulte:
 
 Processar APENAS estes status:
 
@@ -80,17 +62,11 @@ Processar APENAS estes status:
 
 Ignorar: `pending`, `cancelled`, `refunded`, `expired`
 
-### 2. Identificação de Plano
+infra/VERCEL_DEPLOY.md e `web/src/app/api/stripe/*`.
 
-Baseado no `product_id`:
+### Observação
 
-- Se contém `uSs6hgG` → plan = "mensal"
-- Se contém `ocIXXfO` → plan = "lifetime"
-- Caso contrário → Enviar alerta de erro
-
-### 3. Notificação ao Next.js
-
-Fazer POST para `/api/webhooks/kiwify` com:
+Este arquivo foi mantido apenas para histórico, mas não deve ser seguido em produção.
 
 ```json
 {
@@ -103,14 +79,6 @@ Fazer POST para `/api/webhooks/kiwify` com:
   "product_name": "{{product_name}}",
   "product_type": "{{product_type}}"
 }
-```
-
-### 4. Redirecionamento do Cliente
-
-Após processar, redirecionar (HTTP 302) para:
-
-```
-/success?order_id={{order_id}}&plan={{plan}}&email={{customer.email}}
 ```
 
 ## Módulos Necessários

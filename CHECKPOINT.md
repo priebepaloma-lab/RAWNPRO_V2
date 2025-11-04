@@ -34,8 +34,9 @@
    - Lógica: `lib/subscription.ts`, hook `useSubscription.ts`
    - localStorage para tracking (mensagens/dia, status, ativação)
    - UpgradeBanner condicional no chat
-   - Páginas: `/plans` (exibe planos e links Kiwify), `/success` (ativação pós-compra com Suspense)
-   - Webhook Kiwify: `/api/webhooks/kiwify/route.ts` (valida e ativa premium)
+
+- Páginas: `/plans` (Stripe Checkout), `/success` (ativação pós-compra com Stripe session)
+- Webhook Stripe: `/api/stripe/webhook` (valida eventos e ativa/cancela premium)
 
 4. **Automação Make.com**
 
@@ -50,8 +51,7 @@
 
 - **Domínio:** https://rawn-pro.vercel.app
 - **GitHub:** https://github.com/priebepaloma-lab/RAWNPRO_V2
-- **Kiwify Mensal:** https://pay.kiwify.com.br/uSs6hgG
-- **Kiwify Vitalício:** https://pay.kiwify.com.br/ocIXXfO
+  (Checkout agora é feito exclusivamente via Stripe Checkout a partir de `/plans`)
 
 ### 🛠️ Stack Técnica
 
@@ -61,14 +61,14 @@
 - **Ícones:** Lucide React
 - **IA:** OpenAI SDK (GPT-4)
 - **Deploy:** Vercel
-- **Pagamento Atual:** Kiwify (checkout links + webhook)
+- **Pagamento Atual:** Stripe (Checkout + Webhook)
 - **Controle de Estado:** localStorage (temporário; ideal migrar para DB)
 
 ---
 
 ## 🚀 PRÓXIMOS PASSOS PLANEJADOS
 
-### 1. Migração para Stripe (Prioridade Alta)
+### 1. Stripe (Checkout + Webhook)
 
 **Por quê?**
 
@@ -181,7 +181,7 @@ export async function POST(req: NextRequest) {
 
 **Arquivo:** `web/src/app/plans/page.tsx`
 
-- Trocar os links Kiwify por chamadas ao endpoint `/api/checkout`
+- Usar o endpoint `/api/stripe/create-checkout-session` para iniciar o Stripe Checkout
 - Passar os `priceId` apropriados para cada plano
 
 Exemplo de botão:
@@ -353,8 +353,8 @@ web/
 │   │   ├── success/page.tsx       # Sucesso (/success)
 │   │   ├── api/
 │   │   │   ├── chat/route.ts      # Endpoint OpenAI
-│   │   │   └── webhooks/
-│   │   │       └── kiwify/route.ts  # Webhook Kiwify
+│   │   │   └── stripe/
+│   │   │       └── webhook/route.ts  # Webhook Stripe
 │   │   └── ...
 │   ├── components/
 │   │   ├── ChatComposer.tsx
@@ -391,7 +391,7 @@ web/
 ```env
 OPENAI_API_KEY=sk-...
 NEXT_PUBLIC_URL=https://rawn-pro.vercel.app
-# (Kiwify webhook secret, se houver)
+# (Kiwify removido — fluxo Stripe-only)
 ```
 
 **Adicionar quando migrar para Stripe:**

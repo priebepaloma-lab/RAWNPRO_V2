@@ -87,7 +87,7 @@ Isso facilita compartilhar ambiente completo de projeto. Visual Studio Code
  
 4. Camadas e Responsabilidades de Pastas  
 • /api/: Back-end. Contém código de lógica servidor, endpoints, 
-orquestração com modelo IA, integração com Kiwify, autenticação, dados 
+orquestração com modelo IA, integração com Stripe, autenticação, dados 
 (perfil do usuário).  
 • /web/: Front-end. UI PWA, componentes de chat, integração com API 
 back-end, experiência mobile -first.  
