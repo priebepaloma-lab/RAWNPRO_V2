@@ -117,7 +117,7 @@ export default function PlansPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="relative bg-rawn-bg-surface border border-white/10 rounded-2xl p-8 hover:border-rawn-accent-neon/50 transition-all"
+            className="relative bg-rawn-bg-surface border border-white/10 rounded-2xl p-8 hover:border-rawn-accent-neon/50 transition-all flex flex-col"
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-rawn-accent-neon/10 rounded-xl">
@@ -133,15 +133,20 @@ export default function PlansPage() {
 
             <div className="mb-6">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold">R$ 49,90</span>
-                <span className="text-rawn-text-muted">/mês</span>
+                <span className="text-5xl font-extrabold tracking-tight">
+                  R$ 29,90
+                </span>
+                <span className="text-rawn-text-muted text-sm font-medium">
+                  no 1º mês
+                </span>
               </div>
-              <p className="text-sm text-rawn-text-muted mt-1">
-                Primeira cobrança promocional: R$ 29,90
+              <p className="text-sm text-rawn-text-muted mt-2">
+                A partir do 2º mês:{" "}
+                <span className="text-white font-semibold">R$ 49,90/mês</span>
               </p>
             </div>
 
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 flex-1">
               {PLANS.mensal.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-3">
                   <Check
@@ -153,17 +158,19 @@ export default function PlansPage() {
               ))}
             </ul>
 
-            <button
-              onClick={() => handleSelectPlan("mensal")}
-              disabled={currentSubscription.plan === "mensal"}
-              className="w-full bg-rawn-accent-neon text-black font-bold py-4 rounded-full hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {currentSubscription.plan === "mensal"
-                ? "Plano Atual"
-                : loadingPlan === "mensal"
-                ? "Redirecionando..."
-                : "Assinar Agora"}
-            </button>
+            <div className="mt-auto">
+              <button
+                onClick={() => handleSelectPlan("mensal")}
+                disabled={currentSubscription.plan === "mensal"}
+                className="w-full bg-rawn-accent-neon text-black font-bold py-4 rounded-full hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {currentSubscription.plan === "mensal"
+                  ? "Plano Atual"
+                  : loadingPlan === "mensal"
+                  ? "Redirecionando..."
+                  : "Assinar Agora"}
+              </button>
+            </div>
           </motion.div>
 
           {/* Plano Lifetime */}
@@ -171,7 +178,7 @@ export default function PlansPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="relative bg-gradient-to-br from-rawn-accent-neon/10 to-purple-500/10 border-2 border-rawn-accent-neon rounded-2xl p-8"
+            className="relative bg-gradient-to-br from-rawn-accent-neon/10 to-purple-500/10 border-2 border-rawn-accent-neon rounded-2xl p-8 flex flex-col"
           >
             {/* Badge "Melhor Valor" */}
             <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -201,7 +208,7 @@ export default function PlansPage() {
               </p>
             </div>
 
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 flex-1">
               {PLANS.lifetime.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-3">
                   <Sparkles
@@ -213,17 +220,19 @@ export default function PlansPage() {
               ))}
             </ul>
 
-            <button
-              onClick={() => handleSelectPlan("lifetime")}
-              disabled={currentSubscription.plan === "lifetime"}
-              className="w-full bg-rawn-accent-neon text-black font-bold py-4 rounded-full hover:brightness-110 shadow-neon-glow hover:shadow-neon-intense transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {currentSubscription.plan === "lifetime"
-                ? "Plano Atual"
-                : loadingPlan === "lifetime"
-                ? "Redirecionando..."
-                : "Garantir Acesso Vitalício"}
-            </button>
+            <div className="mt-auto">
+              <button
+                onClick={() => handleSelectPlan("lifetime")}
+                disabled={currentSubscription.plan === "lifetime"}
+                className="w-full bg-rawn-accent-neon text-black font-bold py-4 rounded-full hover:brightness-110 shadow-neon-glow hover:shadow-neon-intense transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {currentSubscription.plan === "lifetime"
+                  ? "Plano Atual"
+                  : loadingPlan === "lifetime"
+                  ? "Redirecionando..."
+                  : "Garantir Acesso Vitalício"}
+              </button>
+            </div>
           </motion.div>
         </div>
 
